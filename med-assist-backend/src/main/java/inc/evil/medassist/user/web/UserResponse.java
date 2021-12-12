@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserResponse {
     private String id;
     private String firstName;

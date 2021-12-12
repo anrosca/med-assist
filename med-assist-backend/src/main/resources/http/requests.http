@@ -55,3 +55,19 @@ Authorization: {{authKey}}
 ###
 GET http://localhost:8080/api/v1/doctors
 Authorization: {{authKey}}
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/doctors
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+  "username": "vusaci",
+  "email" : "vusaci@gmail.com",
+  "firstName" : "Vasile",
+  "lastName" : "Usaci",
+  "password": "123456",
+  "telephoneNumber": "37369666666",
+  "specialty": "ORTHODONTIST",
+  "authorities" : ["DOCTOR"]
+}

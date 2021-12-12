@@ -14,7 +14,7 @@ public interface UserFacade {
 
     UserResponse findByUsername(String username);
 
-    void delete(String id);
+    void deleteById(String id);
 
     UserResponse update(String id, UpsertUserRequest request);
 
