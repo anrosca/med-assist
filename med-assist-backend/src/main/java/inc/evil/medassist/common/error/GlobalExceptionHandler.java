@@ -1,10 +1,12 @@
 package inc.evil.medassist.common.error;
 
+import inc.evil.medassist.common.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -42,6 +44,18 @@ public class GlobalExceptionHandler {
 				.path(request.getServletPath())
 				.build();
 		return ResponseEntity.internalServerError()
+				.body(errorModel);
+	}
+
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<ErrorResponse> onNotFoundException(NotFoundException e, HttpServletRequest request) {
+		log.warn("Patient not found", e);
+		var errorMessages = List.of(e.getMessage());
+		ErrorResponse errorModel = ErrorResponse.builder()
+				.messages(errorMessages)
+				.path(request.getServletPath())
+				.build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(errorModel);
 	}
 

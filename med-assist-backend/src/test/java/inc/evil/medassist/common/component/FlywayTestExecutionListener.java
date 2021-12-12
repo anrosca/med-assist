@@ -1,4 +1,4 @@
-package inc.evil.medassist.common;
+package inc.evil.medassist.common.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.flywaydb.core.Flyway;

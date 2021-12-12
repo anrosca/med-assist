@@ -1,4 +1,4 @@
-package inc.evil.medassist.common;
+package inc.evil.medassist.common.component;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
