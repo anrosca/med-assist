@@ -2,7 +2,7 @@ package inc.evil.medassist.common.error;
 
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -10,5 +10,5 @@ import java.util.List;
 @Builder
 public class ErrorResponse {
 	private String path;
-	private List<String> messages;
+	private Set<String> messages;
 }

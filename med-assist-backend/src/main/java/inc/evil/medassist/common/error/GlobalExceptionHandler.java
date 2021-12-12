@@ -4,7 +4,6 @@ import inc.evil.medassist.common.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.core.MethodParameter;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +19,12 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
 @ControllerAdvice
-@Order(Ordered.LOWEST_PRECEDENCE)
+@Order
 @Slf4j
 public class GlobalExceptionHandler {
 	private final MessageSource messageSource;
@@ -38,7 +36,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorResponse> onException(Exception e, HttpServletRequest request) {
 		log.error("Exception while handling request", e);
-		var errorMessages = List.of(e.getMessage());
+		var errorMessages = Set.of(e.getMessage());
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
 				.path(request.getServletPath())
@@ -50,7 +48,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<ErrorResponse> onNotFoundException(NotFoundException e, HttpServletRequest request) {
 		log.warn("Patient not found", e);
-		var errorMessages = List.of(e.getMessage());
+		var errorMessages = Set.of(e.getMessage());
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
 				.path(request.getServletPath())
@@ -66,7 +64,7 @@ public class GlobalExceptionHandler {
 		String message = "Parameter: '" + e.getParameterName() + "' of type " + e.getParameterType() +
 				" is required but is missing";
 		log.error("Exception while handling request: " + message, e);
-		var errorMessages = List.of(message);
+		var errorMessages = Set.of(message);
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
 				.path(request.getServletPath())
@@ -80,7 +78,7 @@ public class GlobalExceptionHandler {
 			HttpServletRequest request) {
 		log.error("Exception while handling request.", e);
 		BindingResult bindingResult = e.getBindingResult();
-		List<String> errorMessages = new ArrayList<>();
+		Set<String> errorMessages = new HashSet<>();
 		for (ObjectError error : bindingResult.getAllErrors()) {
 			String resolvedMessage = messageSource.getMessage(error, Locale.US);
 			if (error instanceof FieldError fieldError) {
@@ -105,7 +103,7 @@ public class GlobalExceptionHandler {
 			HttpServletRequest request) {
 		log.error("Exception while handling request.", e);
 		Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-		List<String> errorMessages = new ArrayList<>();
+		Set<String> errorMessages = new HashSet<>();
 		for (ConstraintViolation<?> violation : constraintViolations) {
 			errorMessages.add(
 					String.format("Field '%s' %s but value was '%s'", violation.getPropertyPath(),
@@ -127,7 +125,7 @@ public class GlobalExceptionHandler {
 		String message = "Parameter: '" + parameter.getParameterName() + "' is not valid. " +
 				"Value '" + e.getValue() + "' could not be bound to type: '" + parameter.getParameterType() + "'";
 		log.error("Exception while handling request: " + message, e);
-		var errorMessages = List.of(message);
+		var errorMessages = Set.of(message);
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
 				.path(request.getServletPath())
