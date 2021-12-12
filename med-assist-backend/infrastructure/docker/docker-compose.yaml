@@ -1,0 +1,41 @@
+---
+version: '2'
+services:
+  #MedAssist operational db
+  medassist-operational-db:
+    image: postgres:13.3
+    container_name: medassist-operational-db
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: med-assist-db
+    ports:
+      - "5432:5432"
+
+#  #Redis cache
+#  redis-cpt-cache:
+#    image: redis
+#    container_name: redis-cpt-cache
+#    ports:
+#      - "6379:6379"
+
+#  #Prometheus
+#  prometheus:
+#    image: prom/prometheus:v2.28.1
+#    container_name: prometheus
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+#  #Grafana dashboard
+#  grafana:
+#    image: grafana/grafana:8.0.6
+#    container_name: grafana
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      - prometheus
