@@ -4,7 +4,7 @@ on:
 
 jobs:
   test:
-    name: Unit-Test
+    name: Continuous integration job
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -26,5 +26,6 @@ jobs:
         working-directory: ./med-assist-backend
         run: mvn clean package
       - name: Maven Verify
+        working-directory: ./med-assist-backend
         run: mvn clean verify -DskipTests
       - run: echo "🍏 This job's status is ${{ job.status }}."
