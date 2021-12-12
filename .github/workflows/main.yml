@@ -24,6 +24,7 @@ jobs:
         with:
           java-version: 17
       - name: Maven Package
+        working-directory: ./med-assist
         run: mvn clean package
       - name: Maven Verify
         run: mvn clean verify -DskipTests
