@@ -1,8 +1,7 @@
 name: Feature Branch
 on:
   push:
-    branches-ignore:
-      - 'master'
+
 jobs:
   test:
     name: Unit-Test
