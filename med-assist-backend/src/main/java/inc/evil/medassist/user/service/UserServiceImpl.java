@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.validation.ValidationException;
 import java.util.HashSet;
@@ -54,8 +55,9 @@ class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void delete(final String id) {
-        userRepository.deleteById(id);
+    public void deleteById(final String id) {
+        final User toDelete = findById(id);
+        userRepository.delete(toDelete);
     }
 
     @Override
@@ -70,7 +72,7 @@ class UserServiceImpl implements UserService {
             user.setEmail(newUserState.getEmail());
         if (newUserState.getUsername() != null)
             user.setUsername(newUserState.getUsername());
-        if (newUserState.getAuthorities() != null) {
+        if (!CollectionUtils.isEmpty(newUserState.getAuthorities())) {
             user.getAuthorities().clear();
             newUserState.getAuthorities()
                     .forEach(user::addAuthority);

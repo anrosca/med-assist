@@ -1,44 +1,54 @@
-create table user_authorities
-(
-    id         varchar(255) not null,
-    created_at timestamp    not null,
-    updated_at timestamp    not null,
-    authority  varchar(255) not null,
-    user_id    varchar(255) not null,
-    primary key (id)
-);
-
 create table users
 (
-    id            varchar(255) not null,
-    created_at    timestamp    not null,
-    updated_at    timestamp    not null,
+    id varchar(255) not null
+        constraint users_pkey
+            primary key,
+    created_at timestamp not null,
+    updated_at timestamp not null,
     email_address varchar(255) not null,
-    enabled       boolean      not null,
-    first_name    varchar(255) not null,
-    last_name     varchar(255) not null,
-    password      varchar(255) not null,
-    username      varchar(255) not null,
-    primary key (id)
+    enabled boolean not null,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
+    password varchar(255) not null,
+    username varchar(255) not null
+        constraint unique_username
+            unique
 );
 
-alter table if exists users
-    drop constraint if exists unique_username;
-
-alter table if exists users
-    add constraint unique_username unique (username);
-
-alter table if exists user_authorities
-    add constraint user_id_fk foreign key (user_id) references users;
+create table user_authorities
+(
+    id varchar(255) not null
+        constraint user_authorities_pkey
+            primary key,
+    created_at timestamp not null,
+    updated_at timestamp not null,
+    authority varchar(255) not null,
+    user_id varchar(255) not null
+        constraint user_id_fk
+            references users
+);
 
 create table patients
 (
-    id           varchar(255) not null,
-    created_at   timestamp    not null,
-    updated_at   timestamp    not null,
-    first_name   varchar(255),
-    last_name    varchar(255),
-    birth_date   date         not null,
-    phone_number varchar(20)  not null,
-    primary key (id)
+    id varchar(255) not null
+        constraint patients_pkey
+            primary key,
+    created_at timestamp not null,
+    updated_at timestamp not null,
+    first_name varchar(255),
+    last_name varchar(255),
+    birth_date date not null,
+    phone_number varchar(20) not null
 );
+
+create table doctors
+(
+    specialty varchar(255),
+    telephone_number varchar(255),
+    id varchar(255) not null
+        constraint doctors_pkey
+            primary key
+        constraint fk_user_id
+            references users
+);
+

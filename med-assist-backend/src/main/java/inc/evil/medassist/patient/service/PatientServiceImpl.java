@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class PatientServiceImpl implements PatientService {
+class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
 
     public PatientServiceImpl(PatientRepository patientRepository) {
