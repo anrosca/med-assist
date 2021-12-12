@@ -1,6 +1,6 @@
 package inc.evil.medassist.common.jpa;
 
-import inc.evil.investment.common.AbstractIntegrationTest;
+import inc.evil.medassist.common.AbstractIntegrationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

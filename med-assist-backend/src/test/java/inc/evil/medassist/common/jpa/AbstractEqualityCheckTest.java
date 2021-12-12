@@ -1,6 +1,6 @@
 package inc.evil.medassist.common.jpa;
 
-import inc.evil.investment.entity.Identifiable;
+import inc.evil.medassist.common.entity.Identifiable;
 import org.hibernate.Session;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

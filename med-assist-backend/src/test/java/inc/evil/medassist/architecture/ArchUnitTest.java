@@ -81,7 +81,7 @@ public class ArchUnitTest {
 					.that()
 					.areAnnotatedWith(RestController.class)
 					.should()
-					.resideInAPackage("..controller");
+					.resideInAPackage("..web");
 
 	@ArchTest
 	public static final ArchRule servicesAreInTheServicePackage =
