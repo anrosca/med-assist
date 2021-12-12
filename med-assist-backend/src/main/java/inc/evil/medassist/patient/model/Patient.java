@@ -9,9 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "patients")
-@Builder
-@Getter
-@Setter
+@Builder @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Patient extends AbstractEntity {
