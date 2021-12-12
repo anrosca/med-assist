@@ -14,11 +14,11 @@ public interface UserService {
 
     User findById(String id);
 
-    User create(UpsertUserRequest upsertUserRequest);
+    User create(User newUser);
 
     User findByUsername(String username);
 
     void delete(String id);
 
-    User update(String id, UpsertUserRequest request);
+    User update(String id, User request);
 }

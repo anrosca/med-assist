@@ -26,17 +26,17 @@ public class UpsertUserRequest {
     @NotEmpty(message = "{authorities.not.empty}")
     private Set<String> authorities;
 
-    public static User to(UpsertUserRequest request){
+    public User toUser(){
 
         User user = User.builder()
-                .username(request.getUsername())
-                .email(request.getEmail())
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .password(request.getPassword())
+                .username(this.getUsername())
+                .email(this.getEmail())
+                .firstName(this.getFirstName())
+                .lastName(this.getLastName())
+                .password(this.getPassword())
                 .build();
 
-        request.getAuthorities()
+        this.getAuthorities()
                 .stream()
                 .map(a -> new UserAuthority(Authority.valueOf(a)))
                 .forEach(user::addAuthority);

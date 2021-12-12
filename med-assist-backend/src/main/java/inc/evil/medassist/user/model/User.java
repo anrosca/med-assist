@@ -72,7 +72,7 @@ public class User extends AbstractEntity implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<UserAuthority> getAuthorities() {
         return authorities;
     }
 

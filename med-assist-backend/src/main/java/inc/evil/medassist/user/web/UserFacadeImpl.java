@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +46,7 @@ class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserResponse create(final UpsertUserRequest upsertUserRequest) {
-        return UserResponse.from(userService.create(upsertUserRequest));
+        return UserResponse.from(userService.create(upsertUserRequest.toUser()));
     }
 
     @Override
@@ -60,6 +61,6 @@ class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserResponse update(final String id, final UpsertUserRequest request) {
-        return UserResponse.from(userService.update(id, request));
+        return UserResponse.from(userService.update(id, request.toUser()));
     }
 }
