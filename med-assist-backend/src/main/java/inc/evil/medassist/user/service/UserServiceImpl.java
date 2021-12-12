@@ -45,6 +45,8 @@ class UserServiceImpl implements UserService {
             request.setAuthorities(new HashSet<>());
         }
 
+
+
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())

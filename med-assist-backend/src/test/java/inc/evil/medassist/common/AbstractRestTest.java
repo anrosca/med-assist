@@ -1,9 +1,11 @@
 package inc.evil.medassist.common;
 
+import inc.evil.medassist.common.security.TestSecurityConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
@@ -11,6 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.UrlPathHelper;
 
+@ContextConfiguration(classes = TestSecurityConfiguration.class)
 public class AbstractRestTest {
 	protected MockMvc mockMvc;
 

@@ -1,4 +1,4 @@
-package inc.evil.medassist.doctor.model;
+package inc.evil.medassist.patient.model;
 
 public enum Speciality {
     ORTHODONTIST

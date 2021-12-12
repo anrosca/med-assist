@@ -8,3 +8,50 @@ Content-Type: application/json
 }
 
 ###
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "username": "square-pants-1",
+  "email" : "sponge-bob@gmail.com",
+  "firstName" : "Sponge",
+  "lastName" : "Bob",
+  "password": "123456",
+  "authorities" : ["POWER_USER"]
+}
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "square-pants-1",
+  "password": "123456"
+}
+
+### All users
+GET http://localhost:8080/api/v1/users/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzcXVhcmUtcGFudHMtMSIsImlzcyI6Im1lZC1hc3Npc3QuaW8iLCJpYXQiOjE2MzkzMjMyODcsImV4cCI6MTYzOTQwOTY4N30.Omn7xitfSKRlIAJNYy1Pz18f4l6k9ezeHtF5npnKrpn6YD9T9ETNUPLgc6RQhbzTlS5zR_2z1JvwP8ZHrxHjzw
+
+
+### User by id
+GET http://localhost:8080/api/v1/users/7afdf291-cd73-4055-b2e4-ada5bc21bfca
+Content-Type: application/json
+Authorization: {{authKey}}
+
+### Send PUT request with json body
+PUT http://localhost:8080/api/v1/users/7afdf291-cd73-4055-b2e4-ada5bc21bfca
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+  "email" : "bdylan@rocknrollcafe.com"
+}
+
+###
+GET http://localhost:8080/api/v1/doctors
+Authorization: {{authKey}}

@@ -12,22 +12,21 @@ import java.util.Set;
 
 @Data
 public class UpsertUserRequest {
-    @NotBlank(message = "{first.name.required}")
+    @NotBlank
     private String firstName;
-    @NotBlank(message = "{last.name.required}")
+    @NotBlank
     private String lastName;
-    @NotBlank(message = "{username.required}")
+    @NotBlank
     private String username;
-    @NotBlank(message = "{email.required}")
-    @Email(message = "{email.invalid.format}")
+    @NotBlank
+    @Email
     private String email;
-    @NotBlank(message = "{password.required}")
+    @NotBlank
     private String password;
-    @NotEmpty(message = "{authorities.not.empty}")
+    @NotEmpty
     private Set<String> authorities;
 
     public static User to(UpsertUserRequest request){
-
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -42,6 +41,5 @@ public class UpsertUserRequest {
                 .forEach(user::addAuthority);
 
         return user;
-
     }
 }
