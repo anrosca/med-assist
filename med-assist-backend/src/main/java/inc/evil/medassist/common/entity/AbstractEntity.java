@@ -6,6 +6,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -19,11 +21,11 @@ public abstract class AbstractEntity implements Identifiable<String> {
 
     @Column(name = "created_at", nullable = false)
     @CreatedDate
-    protected OffsetDateTime createdAt;
+    protected LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
-    protected OffsetDateTime updatedAt;
+    protected LocalDateTime updatedAt;
 
     protected AbstractEntity() {
     }
@@ -32,19 +34,19 @@ public abstract class AbstractEntity implements Identifiable<String> {
         return id;
     }
 
-    public OffsetDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public OffsetDateTime getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
