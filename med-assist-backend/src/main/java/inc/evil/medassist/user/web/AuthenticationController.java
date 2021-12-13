@@ -1,9 +1,10 @@
 package inc.evil.medassist.user.web;
 
-
+import inc.evil.medassist.common.validation.OnCreate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public UserResponse register(@RequestBody UpsertUserRequest request) {
+    public UserResponse register(@RequestBody @Validated(OnCreate.class) UpsertUserRequest request) {
         return userFacade.create(request);
     }
 

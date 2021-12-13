@@ -20,7 +20,6 @@ public class AbstractWebIntegrationTest extends AbstractIntegrationTest {
 
     protected <T> RequestEntity<T> makeRequestFor(String urlTemplate, HttpMethod httpMethod, T payload) {
         return RequestEntity.method(httpMethod, "http://localhost:{port}" + urlTemplate, port)
-//                .header(HttpHeaders.AUTHORIZATION, BASIC_AUTHENTICATION_HEADER_VALUE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(payload);
     }

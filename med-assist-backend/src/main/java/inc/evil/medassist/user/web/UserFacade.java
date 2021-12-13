@@ -1,8 +1,5 @@
 package inc.evil.medassist.user.web;
 
-import inc.evil.medassist.user.model.User;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 public interface UserFacade {
