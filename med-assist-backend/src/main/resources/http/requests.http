@@ -56,6 +56,24 @@ Authorization: {{authKey}}
 GET http://localhost:8080/api/v1/doctors
 Authorization: {{authKey}}
 
+###
+GET http://localhost:8080/api/v1/patients
+Authorization: {{authKey}}
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/patients
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+
+  "firstName" : "Vasile",
+  "lastName" : "Usaci",
+  "phoneNumber": "37369666666",
+  "birthDate": "1995-11-15"
+}
+
+
 ### Send POST request with json body
 POST http://localhost:8080/api/v1/doctors
 Content-Type: application/json
@@ -71,3 +89,22 @@ Authorization: {{authKey}}
   "specialty": "ORTHODONTIST",
   "authorities" : ["DOCTOR"]
 }
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/appointments
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+  "patientId": "505eeca9-cb8f-4420-bf28-1bc7b313acbb",
+  "doctorId": "aa80a68a-7a6f-43be-a88b-e88cc467cbf6",
+  "appointmentDate" : "2021-12-15",
+  "startTime" : "17:00:00",
+  "endTime" : "18:00:00",
+  "operation": "Cleaning",
+  "details": "New patient"
+}
+
+###
+GET http://localhost:8080/api/v1/appointments
+Authorization: {{authKey}}

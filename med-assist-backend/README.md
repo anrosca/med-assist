@@ -1,5 +1,21 @@
 # MedAssist
 
+More than a simple software, MedAssist connects the whole operation of your clinic into a single management system, a single flux of working – so that teams are able to work intelligently.
+
+## Local setup
+
+Run the infrastructure:
+```sh
+$ cd infrastructure/docker
+$ docker-compose up
+```
+
+Run the application. Go to the med-assist-backend folder and execute:
+
+```shell
+$ mvn spring-boot:run
+```
+
 ### Reference Documentation
 
 For further reference, please consider the following sections:
