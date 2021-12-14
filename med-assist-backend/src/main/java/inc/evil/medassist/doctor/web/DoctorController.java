@@ -2,6 +2,7 @@ package inc.evil.medassist.doctor.web;
 
 import inc.evil.medassist.common.validation.OnCreate;
 import inc.evil.medassist.common.validation.OnUpdate;
+import inc.evil.medassist.doctor.facade.DoctorFacade;
 import inc.evil.medassist.user.model.Authority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

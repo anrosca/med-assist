@@ -1,19 +1,14 @@
 package inc.evil.medassist.doctor.web;
 
 import inc.evil.medassist.common.AbstractRestTest;
-import inc.evil.medassist.common.ResponseBodyMatchers;
 import inc.evil.medassist.common.error.ErrorResponse;
+import inc.evil.medassist.doctor.facade.DoctorFacade;
 import inc.evil.medassist.user.model.Authority;
-import inc.evil.medassist.user.web.UserController;
-import inc.evil.medassist.user.web.UserFacade;
-import inc.evil.medassist.user.web.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Collections;
 import java.util.Set;

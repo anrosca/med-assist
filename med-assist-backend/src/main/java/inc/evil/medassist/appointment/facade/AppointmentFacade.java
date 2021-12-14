@@ -1,4 +1,7 @@
-package inc.evil.medassist.appointment.web;
+package inc.evil.medassist.appointment.facade;
+
+import inc.evil.medassist.appointment.web.AppointmentResponse;
+import inc.evil.medassist.appointment.web.CreateAppointmentRequest;
 
 import java.util.List;
 

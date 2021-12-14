@@ -1,5 +1,6 @@
 package inc.evil.medassist.patient.web;
 
+import inc.evil.medassist.patient.facade.PatientFacade;
 import inc.evil.medassist.user.model.Authority;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

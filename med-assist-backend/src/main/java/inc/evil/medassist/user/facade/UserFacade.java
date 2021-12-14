@@ -1,4 +1,8 @@
-package inc.evil.medassist.user.web;
+package inc.evil.medassist.user.facade;
+
+import inc.evil.medassist.user.web.AuthRequest;
+import inc.evil.medassist.user.web.UpsertUserRequest;
+import inc.evil.medassist.user.web.UserResponse;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package inc.evil.medassist.user.web;
 
 import inc.evil.medassist.common.validation.OnCreate;
+import inc.evil.medassist.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
