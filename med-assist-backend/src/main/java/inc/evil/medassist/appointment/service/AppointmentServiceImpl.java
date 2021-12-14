@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class AppointmentServiceImpl implements AppointmentService {
+class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
 
     public AppointmentServiceImpl(AppointmentRepository appointmentRepository) {

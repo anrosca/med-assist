@@ -3,6 +3,7 @@ package inc.evil.medassist.user.web;
 import inc.evil.medassist.common.AbstractRestTest;
 import inc.evil.medassist.common.ResponseBodyMatchers;
 import inc.evil.medassist.common.error.ErrorResponse;
+import inc.evil.medassist.user.facade.UserFacade;
 import inc.evil.medassist.user.model.Authority;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

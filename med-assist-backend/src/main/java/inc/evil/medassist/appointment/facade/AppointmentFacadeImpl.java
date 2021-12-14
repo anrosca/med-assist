@@ -1,7 +1,9 @@
-package inc.evil.medassist.appointment.web;
+package inc.evil.medassist.appointment.facade;
 
 import inc.evil.medassist.appointment.model.Appointment;
 import inc.evil.medassist.appointment.service.AppointmentService;
+import inc.evil.medassist.appointment.web.AppointmentResponse;
+import inc.evil.medassist.appointment.web.CreateAppointmentRequest;
 import inc.evil.medassist.doctor.service.DoctorService;
 import inc.evil.medassist.patient.service.PatientService;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AppointmentFacadeImpl implements AppointmentFacade {
+class AppointmentFacadeImpl implements AppointmentFacade {
     private final AppointmentService appointmentService;
     private final DoctorService doctorService;
     private final PatientService patientService;

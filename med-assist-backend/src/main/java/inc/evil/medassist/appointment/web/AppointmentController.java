@@ -1,5 +1,6 @@
 package inc.evil.medassist.appointment.web;
 
+import inc.evil.medassist.appointment.facade.AppointmentFacade;
 import inc.evil.medassist.appointment.web.validation.ValidAppointmentSequence;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

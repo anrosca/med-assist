@@ -1,9 +1,10 @@
-package inc.evil.medassist.doctor.web;
+package inc.evil.medassist.doctor.facade;
 
 import inc.evil.medassist.doctor.service.DoctorService;
+import inc.evil.medassist.doctor.web.DoctorResponse;
+import inc.evil.medassist.doctor.web.UpsertDoctorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;

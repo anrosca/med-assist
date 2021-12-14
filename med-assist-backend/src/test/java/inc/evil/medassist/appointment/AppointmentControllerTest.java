@@ -1,7 +1,7 @@
 package inc.evil.medassist.appointment;
 
 import inc.evil.medassist.appointment.web.AppointmentController;
-import inc.evil.medassist.appointment.web.AppointmentFacade;
+import inc.evil.medassist.appointment.facade.AppointmentFacade;
 import inc.evil.medassist.appointment.web.AppointmentResponse;
 import inc.evil.medassist.common.AbstractRestTest;
 import inc.evil.medassist.common.ResponseBodyMatchers;

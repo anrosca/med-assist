@@ -1,8 +1,11 @@
-package inc.evil.medassist.user.web;
+package inc.evil.medassist.user.facade;
 
 import inc.evil.medassist.config.security.JwtTokenManager;
 import inc.evil.medassist.user.model.User;
 import inc.evil.medassist.user.service.UserService;
+import inc.evil.medassist.user.web.AuthRequest;
+import inc.evil.medassist.user.web.UpsertUserRequest;
+import inc.evil.medassist.user.web.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
