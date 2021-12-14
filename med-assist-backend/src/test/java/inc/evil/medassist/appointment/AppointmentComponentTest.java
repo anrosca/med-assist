@@ -79,6 +79,30 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     }
 
     @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void whenNewAppointmentConflictsWithAnExistingOne_shouldReturnErrorResponse() {
+        String payload = """
+                {
+                   "doctorId": "f23e4567-e89b-12d3-a456-426614174000",
+                   "patientId": "f44e4567-ef9c-12d3-a45b-52661417400a",
+                   "appointmentDate": "2021-12-12",
+                   "startTime": "17:00",
+                   "endTime": "17:30",
+                   "operation": "Inspection",
+                   "details": "Patient will make an appointment"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/", HttpMethod.POST, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.messages[0]")).isEqualTo("Doctor Vasile Usaci has already an appointment, starting from 17:00 till 18:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.path")).isEqualTo("/api/v1/appointments/");
+    }
+
+    @Test
     public void whenAppointmentWithTheGivenIdIsNotFound_shouldReturnErrorResponse() {
         RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/appointments/1", HttpMethod.GET);
 
