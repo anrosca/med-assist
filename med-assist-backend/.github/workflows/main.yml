@@ -23,7 +23,11 @@ jobs:
         with:
           java-version: 17
       - name: Maven Package
+        uses: EnricoMi/publish-unit-test-result-action@v1
         run: mvn clean package
+        with:
+          check_name: Tests
+          files: target/surefire-reports/*.xml
       - name: Maven Verify
         run: mvn clean verify -DskipTests
       - run: echo "🍏 This job's status is ${{ job.status }}."
