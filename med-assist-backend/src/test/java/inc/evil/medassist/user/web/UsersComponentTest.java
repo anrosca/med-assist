@@ -88,4 +88,24 @@ public class UsersComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
     }
+
+    @Test
+    public void shouldBeAbleToUpdateUsers() {
+        String payload = """
+                {
+                    "email": "sponge-robert@gmail.com"
+                }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/users/620e11c0-7d59-45be-85cc-0dc146532e78", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        String responseBody = response.getBody();
+        assertThat(JsonPath.<String>read(responseBody, "$.firstName")).isEqualTo("Sponge");
+        assertThat(JsonPath.<String>read(responseBody, "$.lastName")).isEqualTo("Bob");
+        assertThat(JsonPath.<String>read(responseBody, "$.username")).isEqualTo("square-pants-1");
+        assertThat(JsonPath.<String>read(responseBody, "$.email")).isEqualTo("sponge-robert@gmail.com");
+        assertThat(JsonPath.<String>read(responseBody, "$.authorities[0]")).isEqualTo("ROLE_POWER_USER");
+    }
 }

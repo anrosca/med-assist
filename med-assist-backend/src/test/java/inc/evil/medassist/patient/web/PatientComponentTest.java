@@ -8,11 +8,50 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ComponentTest
 public class PatientComponentTest extends AbstractWebIntegrationTest {
+    @Test
+    @Sql("/test-data/patients/patients.sql")
+    public void shouldBeAbleToFindAllPatients() {
+        PatientResponse[] expectedPatients = {
+            PatientResponse.builder()
+                    .id("123e4567-e89b-12d3-a456-426614174000")
+                    .firstName("Jim")
+                    .lastName("Morrison")
+                    .phoneNumber("+37369952147")
+                    .birthDate("1994-12-13")
+                    .build()
+        };
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/patients/", HttpMethod.GET);
+
+        ResponseEntity<PatientResponse[]> response = restTemplate.exchange(request, PatientResponse[].class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(expectedPatients);
+    }
+
+    @Test
+    @Sql("/test-data/patients/patients.sql")
+    public void shouldBeAbleToFindPatientsById() {
+        PatientResponse expectedPatient = PatientResponse.builder()
+                .id("123e4567-e89b-12d3-a456-426614174000")
+                .firstName("Jim")
+                .lastName("Morrison")
+                .phoneNumber("+37369952147")
+                .birthDate("1994-12-13")
+                .build();
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/patients/123e4567-e89b-12d3-a456-426614174000", HttpMethod.GET);
+
+        ResponseEntity<PatientResponse> response = restTemplate.exchange(request, PatientResponse.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(expectedPatient);
+    }
+
     @Test
     public void shouldBeAbleToCreatePatients() {
         String payload = """
