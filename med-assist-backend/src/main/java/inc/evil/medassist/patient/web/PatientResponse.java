@@ -22,6 +22,7 @@ public class PatientResponse {
                 .firstName(patient.getFirstName())
                 .lastName(patient.getLastName())
                 .birthDate(patient.getBirthDate().toString())
+                .phoneNumber(patient.getPhoneNumber())
                 .build();
     }
 }

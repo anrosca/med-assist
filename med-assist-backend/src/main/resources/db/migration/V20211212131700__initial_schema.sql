@@ -52,3 +52,18 @@ create table doctors
             references users
 );
 
+create table appointments
+(
+    id               varchar(100) primary key,
+    operation        varchar(255) not null,
+    doctor_id        varchar(100) not null,
+    patient_id       varchar(100) not null,
+    appointment_date date         not null,
+    start_time       time         not null,
+    end_time         time         not null,
+    details          varchar(255),
+    created_at timestamp not null,
+    updated_at timestamp not null,
+    constraint doctor_fk foreign key (doctor_id) references doctors (id),
+    constraint patient_fk foreign key (patient_id) references patients (id)
+);

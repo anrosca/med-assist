@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.nio.charset.StandardCharsets;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ResponseBodyMatchers {
@@ -16,7 +18,7 @@ public class ResponseBodyMatchers {
 
 	public <T> ResultMatcher containsObjectAsJson(Object expectedObject, Class<T> targetClass) {
 		return mvcResult -> {
-			String json = mvcResult.getResponse().getContentAsString();
+			String json = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
 			T actualObject = objectMapper.readValue(json, targetClass);
 			assertThat(actualObject).isEqualToComparingFieldByField(expectedObject);
 		};
@@ -24,7 +26,7 @@ public class ResponseBodyMatchers {
 
 	public <T> ResultMatcher containsListAsJson(Object expectedObject) {
 		return mvcResult -> {
-			String json = mvcResult.getResponse().getContentAsString();
+			String json = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
 			JsonNode actualObject = objectMapper.readTree(json);
 			assertThat(actualObject).isEqualToComparingFieldByField(toJsonNode(expectedObject));
 		};
