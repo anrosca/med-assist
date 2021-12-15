@@ -39,6 +39,7 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                                 .authorities(Set.of("ROLE_DOCTOR"))
                                 .specialty(Specialty.ORTHODONTIST.name())
                                 .telephoneNumber("37369666666")
+                                .enabled(true)
                                 .build())
                         .patient(PatientResponse.builder()
                                 .id("f44e4567-ef9c-12d3-a45b-52661417400a")

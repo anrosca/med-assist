@@ -26,6 +26,7 @@ public class UpsertUserRequest {
     private String password;
     @NotEmpty(groups = {OnCreate.class})
     private Set<String> authorities;
+    private boolean enabled = true;
 
     public User toUser() {
 
@@ -35,6 +36,7 @@ public class UpsertUserRequest {
                 .firstName(this.getFirstName())
                 .lastName(this.getLastName())
                 .password(this.getPassword())
+                .enabled(this.isEnabled())
                 .build();
 
         if (this.getAuthorities() != null)

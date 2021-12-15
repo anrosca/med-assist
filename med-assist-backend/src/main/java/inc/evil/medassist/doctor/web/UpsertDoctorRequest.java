@@ -33,6 +33,7 @@ public class UpsertDoctorRequest {
     private String telephoneNumber;
     @NotEmpty(groups = {OnCreate.class})
     private Set<String> authorities;
+    private boolean enabled = true;
 
     public Doctor toDoctor() {
 
@@ -44,6 +45,7 @@ public class UpsertDoctorRequest {
                 .password(this.getPassword())
                 .telephoneNumber(this.getTelephoneNumber())
                 .specialty(this.getSpecialty())
+                .enabled(this.isEnabled())
                 .build();
 
         if (this.getAuthorities() != null)

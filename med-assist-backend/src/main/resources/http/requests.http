@@ -14,7 +14,7 @@ POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "username": "square-pants-1",
+  "username": "square-pants",
   "email" : "sponge-bob@gmail.com",
   "firstName" : "Sponge",
   "lastName" : "Bob",
@@ -35,7 +35,7 @@ Content-Type: application/json
 ### All users
 GET http://localhost:8080/api/v1/users/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzcXVhcmUtcGFudHMtMSIsImlzcyI6Im1lZC1hc3Npc3QuaW8iLCJpYXQiOjE2MzkzMjMyODcsImV4cCI6MTYzOTQwOTY4N30.Omn7xitfSKRlIAJNYy1Pz18f4l6k9ezeHtF5npnKrpn6YD9T9ETNUPLgc6RQhbzTlS5zR_2z1JvwP8ZHrxHjzw
+Authorization: {{authKey}}
 
 
 ### User by id
