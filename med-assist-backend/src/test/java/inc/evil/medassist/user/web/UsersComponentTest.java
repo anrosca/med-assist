@@ -51,6 +51,7 @@ public class UsersComponentTest extends AbstractWebIntegrationTest {
                         .lastName("Bob")
                         .username("square-pants-1")
                         .email("sponge-bob@gmail.com")
+                        .enabled(true)
                         .authorities(Set.of("ROLE_POWER_USER"))
                         .build()
         };
@@ -69,6 +70,7 @@ public class UsersComponentTest extends AbstractWebIntegrationTest {
                 .firstName("Sponge")
                 .lastName("Bob")
                 .username("square-pants-1")
+                .enabled(true)
                 .email("sponge-bob@gmail.com")
                 .authorities(Set.of("ROLE_POWER_USER"))
                 .build();
