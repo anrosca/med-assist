@@ -26,13 +26,13 @@ class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll();
+        return userRepository.findAllWithAuthorities();
     }
 
     @Override
     @Transactional(readOnly = true)
     public User findById(final String id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, "id", id));
+        return userRepository.findByIdWithAuthorities(id).orElseThrow(() -> new NotFoundException(User.class, "id", id));
     }
 
     @Override
@@ -63,7 +63,7 @@ class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User update(final String id, final User newUserState) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, "id", id));
+        User user = userRepository.findByIdWithAuthorities(id).orElseThrow(() -> new NotFoundException(User.class, "id", id));
         if (newUserState.getFirstName() != null)
             user.setFirstName(newUserState.getFirstName());
         if (newUserState.getLastName() != null)

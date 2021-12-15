@@ -14,8 +14,6 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.Set;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ComponentTest
@@ -36,7 +34,6 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                                 .lastName("Usaci")
                                 .username("vusaci")
                                 .email("vusaci@gmail.com")
-                                .authorities(Set.of("ROLE_DOCTOR"))
                                 .specialty(Specialty.ORTHODONTIST.name())
                                 .telephoneNumber("37369666666")
                                 .enabled(true)
@@ -56,6 +53,41 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getBody()).isEqualTo(expectedAppointments);
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToFindAppointmentsById() {
+        AppointmentResponse expectedAppointment = AppointmentResponse.builder()
+                .id("aa3e4567-e89b-12d3-b457-5267141750aa")
+                .appointmentDate("2021-12-12")
+                .startTime("17:00")
+                .endTime("18:00")
+                .operation("Выдача каппы")
+                .doctor(DoctorResponse.builder()
+                        .id("f23e4567-e89b-12d3-a456-426614174000")
+                        .firstName("Vasile")
+                        .lastName("Usaci")
+                        .username("vusaci")
+                        .email("vusaci@gmail.com")
+                        .specialty(Specialty.ORTHODONTIST.name())
+                        .telephoneNumber("37369666666")
+                        .enabled(true)
+                        .build())
+                .patient(PatientResponse.builder()
+                        .id("f44e4567-ef9c-12d3-a45b-52661417400a")
+                        .firstName("Jim")
+                        .lastName("Morrison")
+                        .birthDate("1994-12-13")
+                        .phoneNumber("+37369952147")
+                        .build())
+                .build();
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.GET);
+
+        ResponseEntity<AppointmentResponse> response = restTemplate.exchange(request, AppointmentResponse.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getBody()).isEqualTo(expectedAppointment);
     }
 
     @Test

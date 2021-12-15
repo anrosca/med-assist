@@ -25,13 +25,13 @@ class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional(readOnly = true)
     public List<Doctor> findAll() {
-        return doctorRepository.findAll();
+        return doctorRepository.findAllWithAuthorities();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Doctor findById(String id) {
-        return doctorRepository.findById(id)
+        return doctorRepository.findByIdWithAuthorities(id)
                 .orElseThrow(() -> new NotFoundException(Doctor.class, "id", id));
     }
 
@@ -45,7 +45,7 @@ class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional
     public Doctor update(final String id, final Doctor newDoctorState) {
-        Doctor user = doctorRepository.findById(id).orElseThrow(() -> new NotFoundException(Doctor.class, "id", id));
+        Doctor user = doctorRepository.findByIdWithAuthorities(id).orElseThrow(() -> new NotFoundException(Doctor.class, "id", id));
         if (newDoctorState.getFirstName() != null)
             user.setFirstName(newDoctorState.getFirstName());
         if (newDoctorState.getLastName() != null)

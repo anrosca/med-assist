@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.LockModeType;
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +19,10 @@ public interface DoctorRepository extends JpaRepository<Doctor, String> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select d from Doctor d where d.id = :id")
     Doctor findByIdAndLock(@Param("id") String id);
+
+    @Query("select d from Doctor d join fetch d.authorities where d.id = :id")
+    Optional<Doctor> findByIdWithAuthorities(@Param("id") String id);
+
+    @Query("select d from Doctor d join fetch d.authorities")
+    List<Doctor> findAllWithAuthorities();
 }
