@@ -14,6 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -189,5 +190,109 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                 appointmentRepository.findConflictingAppointment(doctorId, appointmentDate, startTime, endTime);
 
         assertThat(conflictingAppointment).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToFindAppointments_forOneDayTimeRange() {
+        String doctorId = "f23e4567-e89b-12d3-a456-426614174000";
+        LocalDate startDate = LocalDate.of(2021, 12, 12);
+        LocalDate endDate = LocalDate.of(2021, 12, 12);
+        List<Appointment> expectedAppointments = List.of(
+                Appointment.builder()
+                        .id("aa3e4567-e89b-12d3-b457-5267141750aa")
+                        .doctor(entityManager.find(Doctor.class, "f23e4567-e89b-12d3-a456-426614174000"))
+                        .patient(entityManager.find(Patient.class, "f44e4567-ef9c-12d3-a45b-52661417400a"))
+                        .appointmentDate(LocalDate.of(2021, 12, 12))
+                        .startTime(LocalTime.of(17, 0))
+                        .endTime(LocalTime.of(18, 0))
+                        .operation("Выдача каппы")
+                        .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .build()
+        );
+
+        List<Appointment> actualAppointments =
+                appointmentRepository.findByDoctorIdAndTimeRange(doctorId, startDate, endDate);
+
+        assertThat(actualAppointments).usingRecursiveComparison().isEqualTo(expectedAppointments);
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToFindAppointments_forOneMonthTimeRange() {
+        String doctorId = "f23e4567-e89b-12d3-a456-426614174000";
+        LocalDate startDate = LocalDate.of(2021, 11, 1);
+        LocalDate endDate = LocalDate.of(2021, 12, 17);
+        List<Appointment> expectedAppointments = List.of(
+                Appointment.builder()
+                        .id("aa3e4567-e89b-12d3-b457-5267141750aa")
+                        .doctor(entityManager.find(Doctor.class, "f23e4567-e89b-12d3-a456-426614174000"))
+                        .patient(entityManager.find(Patient.class, "f44e4567-ef9c-12d3-a45b-52661417400a"))
+                        .appointmentDate(LocalDate.of(2021, 12, 12))
+                        .startTime(LocalTime.of(17, 0))
+                        .endTime(LocalTime.of(18, 0))
+                        .operation("Выдача каппы")
+                        .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .build()
+        );
+
+        List<Appointment> actualAppointments =
+                appointmentRepository.findByDoctorIdAndTimeRange(doctorId, startDate, endDate);
+
+        assertThat(actualAppointments).usingRecursiveComparison().isEqualTo(expectedAppointments);
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToFindAppointments_forOneWeekTimeRange() {
+        String doctorId = "f23e4567-e89b-12d3-a456-426614174000";
+        LocalDate startDate = LocalDate.of(2021, 12, 10);
+        LocalDate endDate = LocalDate.of(2021, 12, 17);
+        List<Appointment> expectedAppointments = List.of(
+                Appointment.builder()
+                        .id("aa3e4567-e89b-12d3-b457-5267141750aa")
+                        .doctor(entityManager.find(Doctor.class, "f23e4567-e89b-12d3-a456-426614174000"))
+                        .patient(entityManager.find(Patient.class, "f44e4567-ef9c-12d3-a45b-52661417400a"))
+                        .appointmentDate(LocalDate.of(2021, 12, 12))
+                        .startTime(LocalTime.of(17, 0))
+                        .endTime(LocalTime.of(18, 0))
+                        .operation("Выдача каппы")
+                        .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .build()
+        );
+
+        List<Appointment> actualAppointments =
+                appointmentRepository.findByDoctorIdAndTimeRange(doctorId, startDate, endDate);
+
+        assertThat(actualAppointments).usingRecursiveComparison().isEqualTo(expectedAppointments);
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void whenThereAreNoAppointmentsInTimeRange_shouldReturnEmptyList() {
+        String doctorId = "f23e4567-e89b-12d3-a456-426614174000";
+        LocalDate startDate = LocalDate.of(2021, 12, 10);
+        LocalDate endDate = LocalDate.of(2021, 12, 11);
+
+        List<Appointment> actualAppointments =
+                appointmentRepository.findByDoctorIdAndTimeRange(doctorId, startDate, endDate);
+
+        assertThat(actualAppointments).isEmpty();
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void whenDoctorDoesNotExist_shouldReturnEmptyList() {
+        String doctorId = "1";
+        LocalDate startDate = LocalDate.of(2021, 12, 10);
+        LocalDate endDate = LocalDate.of(2021, 12, 11);
+
+        List<Appointment> actualAppointments =
+                appointmentRepository.findByDoctorIdAndTimeRange(doctorId, startDate, endDate);
+
+        assertThat(actualAppointments).isEmpty();
     }
 }

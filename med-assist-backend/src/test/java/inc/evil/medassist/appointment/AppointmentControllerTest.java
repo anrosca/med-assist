@@ -5,6 +5,7 @@ import inc.evil.medassist.appointment.facade.AppointmentFacade;
 import inc.evil.medassist.appointment.web.AppointmentResponse;
 import inc.evil.medassist.common.AbstractRestTest;
 import inc.evil.medassist.common.ResponseBodyMatchers;
+import inc.evil.medassist.doctor.model.Specialty;
 import inc.evil.medassist.doctor.web.DoctorResponse;
 import inc.evil.medassist.patient.web.PatientResponse;
 import org.junit.jupiter.api.Test;
@@ -14,10 +15,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
+import static inc.evil.medassist.common.ResponseBodyMatchers.responseBody;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AppointmentController.class)
 public class AppointmentControllerTest extends AbstractRestTest {
@@ -168,5 +175,96 @@ public class AppointmentControllerTest extends AbstractRestTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'endTime' must not be null but value was 'null'")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
+    }
+
+
+    @Test
+    public void findDoctorAppointments_returnResponse() throws Exception {
+        List<AppointmentResponse> expectedAppointments = List.of(
+                AppointmentResponse.builder()
+                        .id("aa3e4567-e89b-12d3-b457-5267141750aa")
+                        .appointmentDate("2021-12-12")
+                        .startTime("17:00")
+                        .endTime("18:00")
+                        .operation("Выдача каппы")
+                        .doctor(DoctorResponse.builder()
+                                .id("f23e4567-e89b-12d3-a456-426614174000")
+                                .firstName("Vasile")
+                                .lastName("Usaci")
+                                .username("vusaci")
+                                .email("vusaci@gmail.com")
+                                .authorities(Set.of("ROLE_DOCTOR"))
+                                .specialty(Specialty.ORTHODONTIST.name())
+                                .telephoneNumber("37369666666")
+                                .enabled(true)
+                                .build())
+                        .patient(PatientResponse.builder()
+                                .id("f44e4567-ef9c-12d3-a45b-52661417400a")
+                                .firstName("Jim")
+                                .lastName("Morrison")
+                                .birthDate("1994-12-13")
+                                .phoneNumber("+37369952147")
+                                .build())
+                        .build()
+        );
+        when(appointmentFacade.findAppointmentsByDoctorId("f23e4567-e89b-12d3-a456-426614174000")).thenReturn(expectedAppointments);
+
+        mockMvc.perform(get("/api/v1/appointments?doctorId=f23e4567-e89b-12d3-a456-426614174000"))
+                .andExpect(status().isOk())
+                .andExpect(responseBody().containsListAsJson(expectedAppointments));
+    }
+
+    @Test
+    public void findDoctorAppointmentsInTimeRange_returnResponse() throws Exception {
+        List<AppointmentResponse> expectedAppointments = List.of(
+                AppointmentResponse.builder()
+                        .id("aa3e4567-e89b-12d3-b457-5267141750aa")
+                        .appointmentDate("2021-12-12")
+                        .startTime("17:00")
+                        .endTime("18:00")
+                        .operation("Выдача каппы")
+                        .doctor(DoctorResponse.builder()
+                                .id("f23e4567-e89b-12d3-a456-426614174000")
+                                .firstName("Vasile")
+                                .lastName("Usaci")
+                                .username("vusaci")
+                                .email("vusaci@gmail.com")
+                                .authorities(Set.of("ROLE_DOCTOR"))
+                                .specialty(Specialty.ORTHODONTIST.name())
+                                .telephoneNumber("37369666666")
+                                .enabled(true)
+                                .build())
+                        .patient(PatientResponse.builder()
+                                .id("f44e4567-ef9c-12d3-a45b-52661417400a")
+                                .firstName("Jim")
+                                .lastName("Morrison")
+                                .birthDate("1994-12-13")
+                                .phoneNumber("+37369952147")
+                                .build())
+                        .build()
+        );
+        LocalDate startDate = LocalDate.of(2021, 12, 12);
+        LocalDate endDate = LocalDate.of(2021, 12, 12);
+        when(appointmentFacade.findAppointmentsByDoctorIdInTimeRange("f23e4567-e89b-12d3-a456-426614174000", startDate, endDate)).thenReturn(expectedAppointments);
+
+        mockMvc.perform(get("/api/v1/appointments?doctorId=f23e4567-e89b-12d3-a456-426614174000&startDate=2021-12-12&endDate=2021-12-12"))
+                .andExpect(status().isOk())
+                .andExpect(responseBody().containsListAsJson(expectedAppointments));
+    }
+
+    @Test
+    public void findDoctorAppointmentsInTimeRange_whenStartDateIsInvalid_returnErrorResponse() throws Exception {
+        mockMvc.perform(get("/api/v1/appointments?doctorId=f23e4567-e89b-12d3-a456-426614174000&startDate=a&endDate=2021-12-12"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.path", equalTo("/api/v1/appointments")))
+                .andExpect(jsonPath("$.messages[0]", equalTo("Parameter: 'startDate' is not valid. Value 'a' could not be bound to type: 'localdate'")));
+    }
+
+    @Test
+    public void findDoctorAppointmentsInTimeRange_whenEndDateIsInvalid_returnErrorResponse() throws Exception {
+        mockMvc.perform(get("/api/v1/appointments?doctorId=f23e4567-e89b-12d3-a456-426614174000&startDate=2021-12-12&endDate=a"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.path", equalTo("/api/v1/appointments")))
+                .andExpect(jsonPath("$.messages[0]", equalTo("Parameter: 'endDate' is not valid. Value 'a' could not be bound to type: 'localdate'")));
     }
 }

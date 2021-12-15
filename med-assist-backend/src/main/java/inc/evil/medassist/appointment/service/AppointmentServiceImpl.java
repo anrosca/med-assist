@@ -63,4 +63,16 @@ class AppointmentServiceImpl implements AppointmentService {
         });
         return appointmentRepository.save(appointmentToCreate);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Appointment> findByDoctorId(String id) {
+        return appointmentRepository.findByDoctorId(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Appointment> findByDoctorIdAndTimeRange(String id, LocalDate startDate, LocalDate endDate) {
+        return appointmentRepository.findByDoctorIdAndTimeRange(id, startDate, endDate);
+    }
 }

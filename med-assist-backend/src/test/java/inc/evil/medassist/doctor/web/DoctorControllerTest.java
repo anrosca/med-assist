@@ -13,12 +13,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import java.util.Collections;
 import java.util.Set;
 
-import static inc.evil.medassist.common.ResponseBodyMatchers.*;
+import static inc.evil.medassist.common.ResponseBodyMatchers.responseBody;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = DoctorController.class)
 public class DoctorControllerTest extends AbstractRestTest {
@@ -166,5 +167,4 @@ public class DoctorControllerTest extends AbstractRestTest {
                 .andExpect(jsonPath("$[0].telephoneNumber", equalTo("3736932345")))
                 .andExpect(jsonPath("$[0].authorities[0]", equalTo("DOCTOR")));
     }
-
 }

@@ -7,14 +7,7 @@ import inc.evil.medassist.user.model.Authority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.annotation.security.RolesAllowed;
@@ -48,7 +41,7 @@ public class DoctorController {
     public ResponseEntity<?> create(@RequestBody @Validated(OnCreate.class) UpsertDoctorRequest request) {
         DoctorResponse createdDoctor = doctorFacade.create(request);
         URI location = MvcUriComponentsBuilder.fromMethodCall(MvcUriComponentsBuilder.on(getClass())
-                                                                      .findById(createdDoctor.getId()))
+                        .findById(createdDoctor.getId()))
                 .build()
                 .toUri();
         return ResponseEntity.created(location).body(createdDoctor);
@@ -61,4 +54,3 @@ public class DoctorController {
         return ResponseEntity.ok().body(doctorResponse);
     }
 }
-

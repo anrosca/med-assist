@@ -8,6 +8,7 @@ import inc.evil.medassist.doctor.service.DoctorService;
 import inc.evil.medassist.patient.service.PatientService;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -45,6 +46,22 @@ class AppointmentFacadeImpl implements AppointmentFacade {
         Appointment appointmentToCreate = toAppointment(request);
         Appointment createdAppointment = appointmentService.create(appointmentToCreate);
         return AppointmentResponse.from(createdAppointment);
+    }
+
+    @Override
+    public List<AppointmentResponse> findAppointmentsByDoctorId(String doctorId) {
+        return appointmentService.findByDoctorId(doctorId)
+                .stream()
+                .map(AppointmentResponse::from)
+                .toList();
+    }
+
+    @Override
+    public List<AppointmentResponse> findAppointmentsByDoctorIdInTimeRange(String doctorId, LocalDate startDate, LocalDate endDate) {
+        return appointmentService.findByDoctorIdAndTimeRange(doctorId, startDate, endDate)
+                .stream()
+                .map(AppointmentResponse::from)
+                .toList();
     }
 
     private Appointment toAppointment(CreateAppointmentRequest request) {

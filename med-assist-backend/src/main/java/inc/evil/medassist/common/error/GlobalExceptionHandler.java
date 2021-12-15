@@ -136,8 +136,8 @@ public class GlobalExceptionHandler {
 			HttpServletRequest request) {
 		MethodParameter parameter = e.getParameter();
 		String message = "Parameter: '" + parameter.getParameterName() + "' is not valid. " +
-				"Value '" + e.getValue() + "' could not be bound to type: '" + parameter.getParameterType() + "'";
-		log.error("Exception while handling request: " + message, e);
+				"Value '" + e.getValue() + "' could not be bound to type: '" + parameter.getParameterType().getSimpleName().toLowerCase(Locale.ROOT) + "'";
+		log.error("Exception while handling request: {}", message);
 		var errorMessages = Set.of(message);
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
