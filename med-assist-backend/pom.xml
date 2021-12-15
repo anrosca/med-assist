@@ -18,6 +18,8 @@
         <testcontainers.version>1.16.2</testcontainers.version>
         <arhcunit.version>0.22.0</arhcunit.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <log4j2.version>2.16.0</log4j2.version>
+        <logback.version>1.2.8</logback.version>
     </properties>
     <dependencies>
         <dependency>
