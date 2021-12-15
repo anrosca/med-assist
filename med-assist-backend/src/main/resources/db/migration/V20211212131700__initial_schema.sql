@@ -28,6 +28,8 @@ create table user_authorities
             references users
 );
 
+create index user_id_fk_index on user_authorities(user_id);
+
 create table patients
 (
     id varchar(255) not null
@@ -67,3 +69,5 @@ create table appointments
     constraint doctor_fk foreign key (doctor_id) references doctors (id),
     constraint patient_fk foreign key (patient_id) references patients (id)
 );
+
+create index doctor_id_fk_index on appointments (doctor_id);
