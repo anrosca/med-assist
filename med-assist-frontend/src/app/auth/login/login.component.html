@@ -1,0 +1,44 @@
+<div class="container login-container" fxLayout="row" fxLayoutAlign="center center">
+    <form [formGroup]="loginForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
+        <mat-card>
+            <mat-card-title>med-assist-client</mat-card-title>
+            <mat-card-subtitle>Log in to your account</mat-card-subtitle>
+            <mat-card-content>
+
+                <mat-form-field class="full-width">
+                    <input id="usernameInput" matInput placeholder="Username" formControlName="username" autocomplete="username"
+                        type="username">
+
+                    <mat-error id="requiredUsernameError" *ngIf="loginForm.controls['username'].hasError('required')">
+                        Username is
+                        <strong>required</strong>
+                    </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <input id="passwordInput" matInput placeholder="Password" formControlName="password" type="password"
+                        autocomplete="current-password">
+                    <mat-error id="requiredPasswordError" *ngIf="loginForm.controls['username'].hasError('required')">
+                        Password is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="full-width">
+                    <mat-slide-toggle formControlName="rememberMe">Remember me</mat-slide-toggle>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions class="login-actions">
+                <button mat-raised-button id="login" color="primary" [disabled]="loginForm.invalid || loading"
+                    (click)="login()">Login</button>
+                <button mat-button id="resetPassword" (click)="resetPassword()" type="button">Reset Password</button>
+            </mat-card-actions>
+
+        </mat-card>
+
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    </form>
+</div>

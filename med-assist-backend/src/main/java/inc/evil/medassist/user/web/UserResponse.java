@@ -24,18 +24,20 @@ public class UserResponse {
     private String username;
     private String email;
     private Set<String> authorities;
+    private boolean enabled;
 
     private String accessToken;
 
-    public static UserResponse from(User user){
-       return UserResponse.builder()
+    public static UserResponse from(User user) {
+        return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .username(user.getUsername())
-               .authorities(user.getAuthorities().stream().map(
-                       GrantedAuthority::getAuthority).collect(Collectors.toSet()))
-               .build();
+                .authorities(user.getAuthorities().stream().map(
+                        GrantedAuthority::getAuthority).collect(Collectors.toSet()))
+                .enabled(user.isEnabled())
+                .build();
     }
 }

@@ -25,6 +25,7 @@ public class DoctorResponse {
     private Set<String> authorities;
     private String specialty;
     private String telephoneNumber;
+    private boolean enabled;
 
     private String accessToken;
 
@@ -39,6 +40,7 @@ public class DoctorResponse {
                         GrantedAuthority::getAuthority).collect(Collectors.toSet()))
                 .specialty(doctor.getSpecialty().name())
                 .telephoneNumber(doctor.getTelephoneNumber())
+                .enabled(doctor.isEnabled())
                 .build();
     }
 }

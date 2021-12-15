@@ -18,6 +18,7 @@
         <testcontainers.version>1.16.2</testcontainers.version>
         <arhcunit.version>0.22.0</arhcunit.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <datasource-proxy.version>1.7.1</datasource-proxy.version>
     </properties>
     <dependencies>
         <dependency>
