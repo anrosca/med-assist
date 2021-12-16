@@ -1,12 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { Subscription } from 'rxjs';
 
-import { environment } from './../../../environments/environment';
-import { AuthenticationService } from './../../core/services/auth.service';
+import { AuthenticationService } from '../../core/services/auth.service';
 import { SpinnerService } from '../../core/services/spinner.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
+import {TimerObservable} from "rxjs-compat/observable/TimerObservable";
 
 @Component({
     selector: 'app-layout',

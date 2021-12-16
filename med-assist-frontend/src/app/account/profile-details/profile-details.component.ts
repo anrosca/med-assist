@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../core/services/auth.service';
-import {MatDialog} from '@angular/material';
 import {ViewTokenModalComponent} from './view-token-modal/view-token-modal.component';
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-profile-details',

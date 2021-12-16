@@ -1,13 +1,11 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import {Injectable, Inject} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
-import * as moment from 'moment';
-import 'rxjs/add/operator/delay';
 
-import { environment } from '../../../environments/environment';
-import { of, EMPTY } from 'rxjs';
+import {delay, of} from 'rxjs';
 import {User} from '../model/user';
+import {map} from "rxjs/operators";
+
 
 @Injectable({
     providedIn: 'root'
@@ -15,15 +13,16 @@ import {User} from '../model/user';
 export class AuthenticationService {
 
     private authUrl = 'http://localhost:8080/api/v1/auth';
+
     constructor(private http: HttpClient,
-        @Inject('LOCALSTORAGE') private localStorage: Storage) {
+                @Inject('LOCALSTORAGE') private localStorage: Storage) {
     }
 
     login(username: string, password: string) {
         const url = `${this.authUrl}/login`;
 
         return this.http.post<User>(url, {username, password})
-            .pipe(map((user) => {
+            .pipe(map(user => {
                 const decodedToken = jwt_decode(user.accessToken);
 
                 this.localStorage.setItem('currentUser', JSON.stringify({
@@ -52,14 +51,14 @@ export class AuthenticationService {
     }
 
     passwordResetRequest(username: string) {
-        return of(true).delay(1000);
+        return of(true).pipe(delay(1000));
     }
 
     changePassword(username: string, currentPwd: string, newPwd: string) {
-        return of(true).delay(1000);
+        return of(true).pipe(delay(1000));
     }
 
     passwordReset(username: string, token: string, password: string, confirmPassword: string): any {
-        return of(true).delay(1000);
+        return of(true).pipe(delay(1000));
     }
 }

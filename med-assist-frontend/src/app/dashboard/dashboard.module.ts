@@ -1,18 +1,29 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 
-import { DashboardRoutingModule } from './dashboard-routing.module';
-import { SharedModule } from '../shared/shared.module';
-import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
+import {DashboardRoutingModule} from './dashboard-routing.module';
+import {SharedModule} from '../shared/shared.module';
+import {DashboardHomeComponent} from './dashboard-home/dashboard-home.component';
+import {CalendarModule, DateAdapter} from "angular-calendar";
+import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
+import {DemoUtilsModule} from "../demo-utils/module";
+
 
 
 @NgModule({
-  declarations: [DashboardHomeComponent],
+    schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [DashboardHomeComponent],
     imports: [
         CommonModule,
         DashboardRoutingModule,
-        SharedModule
+        SharedModule,
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+        }),
+        DemoUtilsModule
     ],
-  entryComponents: []
+    entryComponents: []
 })
-export class DashboardModule { }
+export class DashboardModule {
+}

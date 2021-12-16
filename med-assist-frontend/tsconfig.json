@@ -1,7 +1,9 @@
 {
   "compileOnSave": false,
+  "enableIvy": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "module": "esnext",
     "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
