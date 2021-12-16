@@ -11,6 +11,7 @@ import {LoggerModule} from 'ngx-logger';
 import {environment} from '../environments/environment';
 import {ViewTokenModalComponent} from './account/profile-details/view-token-modal/view-token-modal.component';
 import {AccountModule} from './account/account.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {AccountModule} from './account/account.module';
             serverLoggingUrl: `http://my-api/logs`,
             level: environment.logLevel,
             serverLogLevel: environment.serverLogLevel
-        })
+        }),
+        NgbModule
     ],
     exports: [
     ],
