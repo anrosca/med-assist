@@ -36,4 +36,19 @@ public class Appointment extends AbstractEntity {
     private String operation;
 
     private String details;
+
+    public Appointment mergeWith(Appointment newAppointment) {
+        return Appointment.builder()
+                .id(getId())
+                .createdAt(getCreatedAt())
+                .updatedAt(getUpdatedAt())
+                .appointmentDate(newAppointment.getAppointmentDate() != null ? newAppointment.getAppointmentDate() : appointmentDate)
+                .startTime(newAppointment.getStartTime() != null ? newAppointment.getStartTime() : startTime)
+                .endTime(newAppointment.getEndTime() != null ? newAppointment.getEndTime() : endTime)
+                .details(newAppointment.getDetails() != null ? newAppointment.getDetails() : details)
+                .operation(newAppointment.getOperation() != null ? newAppointment.getOperation() : operation)
+                .doctor(newAppointment.getDoctor() != null ? newAppointment.getDoctor() : doctor)
+                .patient(newAppointment.getPatient() != null ? newAppointment.getPatient() : patient)
+                .build();
+    }
 }

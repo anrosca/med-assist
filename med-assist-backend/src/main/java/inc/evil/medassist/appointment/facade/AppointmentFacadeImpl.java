@@ -3,7 +3,7 @@ package inc.evil.medassist.appointment.facade;
 import inc.evil.medassist.appointment.model.Appointment;
 import inc.evil.medassist.appointment.service.AppointmentService;
 import inc.evil.medassist.appointment.web.AppointmentResponse;
-import inc.evil.medassist.appointment.web.CreateAppointmentRequest;
+import inc.evil.medassist.appointment.web.UpsertAppointmentRequest;
 import inc.evil.medassist.doctor.service.DoctorService;
 import inc.evil.medassist.patient.service.PatientService;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ class AppointmentFacadeImpl implements AppointmentFacade {
     }
 
     @Override
-    public AppointmentResponse create(CreateAppointmentRequest request) {
+    public AppointmentResponse create(UpsertAppointmentRequest request) {
         Appointment appointmentToCreate = toAppointment(request);
         Appointment createdAppointment = appointmentService.create(appointmentToCreate);
         return AppointmentResponse.from(createdAppointment);
@@ -64,14 +64,21 @@ class AppointmentFacadeImpl implements AppointmentFacade {
                 .toList();
     }
 
-    private Appointment toAppointment(CreateAppointmentRequest request) {
+    @Override
+    public AppointmentResponse update(String id, UpsertAppointmentRequest request) {
+        Appointment newAppointment = toAppointment(request);
+        Appointment originalAppointment = appointmentService.findById(id);
+        return AppointmentResponse.from(appointmentService.update(id, originalAppointment.mergeWith(newAppointment)));
+    }
+
+    private Appointment toAppointment(UpsertAppointmentRequest request) {
         return Appointment.builder()
                 .appointmentDate(request.getAppointmentDate())
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
                 .operation(request.getOperation())
-                .doctor(doctorService.findById(request.getDoctorId()))
-                .patient(patientService.findById(request.getPatientId()))
+                .doctor(request.getDoctorId() != null ? doctorService.findById(request.getDoctorId()) : null)
+                .patient(request.getPatientId() != null ? patientService.findById(request.getPatientId()) : null)
                 .details(request.getDetails())
                 .build();
     }
