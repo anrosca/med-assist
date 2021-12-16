@@ -20,7 +20,7 @@ public class ResponseBodyMatchers {
 		return mvcResult -> {
 			String json = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
 			T actualObject = objectMapper.readValue(json, targetClass);
-			assertThat(actualObject).isEqualToComparingFieldByField(expectedObject);
+			assertThat(actualObject).usingRecursiveComparison().isEqualTo(expectedObject);
 		};
 	}
 
@@ -28,7 +28,7 @@ public class ResponseBodyMatchers {
 		return mvcResult -> {
 			String json = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
 			JsonNode actualObject = objectMapper.readTree(json);
-			assertThat(actualObject).isEqualToComparingFieldByField(toJsonNode(expectedObject));
+			assertThat(actualObject).usingRecursiveComparison().isEqualTo(toJsonNode(expectedObject));
 		};
 	}
 
