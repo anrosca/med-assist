@@ -20,7 +20,7 @@ public class AuthenticationControllerAdvice {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> onBadCredentialsException(BadCredentialsException e, HttpServletRequest request) {
-        log.warn("Authentication failed", e);
+        log.warn("Authentication failed: {}", e.getMessage());
         var errorMessages = Set.of(e.getMessage());
         ErrorResponse errorModel = ErrorResponse.builder()
                 .messages(errorMessages)

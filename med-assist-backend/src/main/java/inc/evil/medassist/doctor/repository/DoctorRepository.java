@@ -14,7 +14,8 @@ import java.util.Optional;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, String> {
-    Optional<Doctor> findByUsername(String username);
+    @Query("select d From Doctor d where d.username = lower(:username)")
+    Optional<Doctor> findByUsername(@Param("username") String username);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select d from Doctor d where d.id = :id")
