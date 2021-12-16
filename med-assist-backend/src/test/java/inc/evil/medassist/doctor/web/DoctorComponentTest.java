@@ -38,6 +38,54 @@ public class DoctorComponentTest extends AbstractWebIntegrationTest {
     }
 
     @Test
+    public void whenTheUsernameOfTheNewDoctorIsTheSameOfAnExistingDoctor_butInDifferentCase_shouldReturnErrorResponse() {
+        String payload = """
+                {
+                     "firstName" : "Bob",
+                     "lastName" : "Dylan",
+                     "username" : "VUSACI",
+                     "email" : "bdylan@email.com",
+                     "password" : "123456",
+                     "specialty" : "ORTHODONTIST",
+                     "telephoneNumber" : "+37369666666",
+                     "authorities" : ["DOCTOR"]
+                }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/doctors/", HttpMethod.POST, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        String responseBody = response.getBody();
+        assertThat(JsonPath.<String>read(responseBody, "$.path")).isEqualTo("/api/v1/doctors/");
+        assertThat(JsonPath.<String>read(responseBody, "$.messages[0]")).isEqualTo("Username exists!");
+    }
+
+    @Test
+    public void whenUsernameAlreadyExists_shouldReturnErrorResponse() {
+        String payload = """
+                {
+                     "firstName" : "Bob",
+                     "lastName" : "Dylan",
+                     "username" : "vusaci",
+                     "email" : "bdylan@email.com",
+                     "password" : "123456",
+                     "specialty" : "ORTHODONTIST",
+                     "telephoneNumber" : "+37369666666",
+                     "authorities" : ["DOCTOR"]
+                }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/doctors/", HttpMethod.POST, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        String responseBody = response.getBody();
+        assertThat(JsonPath.<String>read(responseBody, "$.path")).isEqualTo("/api/v1/doctors/");
+        assertThat(JsonPath.<String>read(responseBody, "$.messages[0]")).isEqualTo("Username exists!");
+    }
+
+    @Test
     public void shouldBeAbleToUpdateDoctor() {
         String payload = """
                 {

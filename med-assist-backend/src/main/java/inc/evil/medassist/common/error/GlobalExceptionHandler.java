@@ -19,6 +19,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -42,6 +43,18 @@ public class GlobalExceptionHandler {
 				.path(request.getServletPath())
 				.build();
 		return ResponseEntity.internalServerError()
+				.body(errorModel);
+	}
+
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<ErrorResponse> onValidationException(ValidationException e, HttpServletRequest request) {
+		log.warn("Validation error while handling request: {}", e.getMessage());
+		var errorMessages = Set.of(e.getMessage());
+		ErrorResponse errorModel = ErrorResponse.builder()
+				.messages(errorMessages)
+				.path(request.getServletPath())
+				.build();
+		return ResponseEntity.badRequest()
 				.body(errorModel);
 	}
 

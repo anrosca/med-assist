@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class User extends AbstractEntity implements UserDetails {
     private String lastName;
 
     @Column(name = "username", unique = true, nullable = false)
+    @ColumnTransformer(write = "lower(?)")
     private String username;
 
     @Builder.Default
