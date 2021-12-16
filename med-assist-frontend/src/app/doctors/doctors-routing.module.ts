@@ -1,21 +1,22 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { LayoutComponent } from '../shared/layout/layout.component';
+import {LayoutComponent} from '../shared/layout/layout.component';
 import {DoctorListComponent} from "./doctor-list/doctor-list.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    component: LayoutComponent,
-    children: [
-      { path: '', component: DoctorListComponent },
-    ]
-  }
+    {
+        path: '',
+        component: LayoutComponent,
+        children: [
+            {path: '', component: DoctorListComponent},
+        ]
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class DoctorsRoutingModule { }
+export class DoctorsRoutingModule {
+}

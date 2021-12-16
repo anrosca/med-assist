@@ -31,6 +31,8 @@ import {AccountModule} from './account/account.module';
             serverLogLevel: environment.serverLogLevel
         })
     ],
+    exports: [
+    ],
     bootstrap: [AppComponent],
     entryComponents: [ViewTokenModalComponent]
 })

@@ -3,35 +3,40 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {AuthGuard} from './core/guards/auth.guard';
 import {AdminGuard} from './core/guards/admin.guard';
+import {DashboardModule} from "./dashboard/dashboard.module";
+import {UsersModule} from "./users/users.module";
+import {DoctorsModule} from "./doctors/doctors.module";
+import {AccountModule} from "./account/account.module";
+import {AboutModule} from "./about/about.module";
 
 const appRoutes: Routes = [
     {
         path: 'auth',
-        loadChildren: './auth/auth.module#AuthModule'
+        loadChildren: () => import('./auth/auth.module').then(x => x.AuthModule)
     },
     {
         path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule',
+        loadChildren: () => import('./dashboard/dashboard.module').then(x => DashboardModule),
         canActivate: [AuthGuard]
     },
     {
         path: 'users',
-        loadChildren: './users/users.module#UsersModule',
+        loadChildren: () => import('./users/users.module').then(x => UsersModule),
         canActivate: [AdminGuard]
     },
     {
         path: 'doctors',
-        loadChildren: './doctors/doctors.module#DoctorsModule',
+        loadChildren: () => import('./doctors/doctors.module').then(x => DoctorsModule),
         canActivate: [AuthGuard]
     },
     {
         path: 'account',
-        loadChildren: './account/account.module#AccountModule',
+        loadChildren: () => import('./account/account.module').then(x => AccountModule),
         canActivate: [AuthGuard]
     },
     {
         path: 'about',
-        loadChildren: './about/about.module#AboutModule',
+        loadChildren: () => import('./about/about.module').then(x => AboutModule),
         canActivate: [AuthGuard]
     },
     {
