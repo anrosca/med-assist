@@ -2,12 +2,14 @@ package inc.evil.medassist.appointment.web;
 
 import inc.evil.medassist.appointment.facade.AppointmentFacade;
 import inc.evil.medassist.appointment.web.validation.ValidAppointmentSequence;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -43,5 +45,17 @@ public class AppointmentController {
                 .toUri();
         return ResponseEntity.created(location)
                 .build();
+    }
+
+    @GetMapping(params = "doctorId")
+    public List<AppointmentResponse> findDoctorAppointments(@RequestParam String doctorId) {
+        return appointmentFacade.findAppointmentsByDoctorId(doctorId);
+    }
+
+    @GetMapping(params = {"doctorId", "startDate", "endDate"})
+    public List<AppointmentResponse> findDoctorAppointmentsInTimeRange(@RequestParam String doctorId,
+                                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam LocalDate startDate,
+                                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam LocalDate endDate) {
+        return appointmentFacade.findAppointmentsByDoctorIdInTimeRange(doctorId, startDate, endDate);
     }
 }

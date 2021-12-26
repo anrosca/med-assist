@@ -24,4 +24,13 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
                     and (:startTime < a.endTime and :endTime > a.startTime)
     """)
     Optional<Appointment> findConflictingAppointment(@Param("doctorId") String doctorId, @Param("date") LocalDate date, LocalTime startTime, LocalTime endTime);
+
+    @Query("select a from Appointment a join fetch a.doctor join fetch a.patient where a.doctor.id = :doctorId")
+    List<Appointment> findByDoctorId(@Param("doctorId") String id);
+
+    @Query("""
+                select a from Appointment a join fetch a.doctor join fetch a.patient where a.doctor.id = :doctorId
+                    and (a.appointmentDate >= :startDate and a.appointmentDate <= :endDate)
+    """)
+    List<Appointment> findByDoctorIdAndTimeRange(@Param("doctorId") String id, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }
