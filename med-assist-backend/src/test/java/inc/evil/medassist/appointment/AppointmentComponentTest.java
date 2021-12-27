@@ -114,6 +114,189 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
     @Test
     @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToUpdateAppointments() {
+        String payload = """
+                {
+                   "appointmentDate": "2021-12-13",
+                   "startTime": "10:00",
+                   "endTime": "11:30",
+                   "operation": "Cleaning",
+                   "details": "Regular patient"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-13");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("11:30");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Cleaning");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.details")).isEqualTo("Regular patient");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Vasile");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Usaci");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.firstName")).isEqualTo("Jim");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.lastName")).isEqualTo("Morrison");
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToUpdateAppointmentStartTime() {
+        String payload = """
+                {
+                   "startTime": "10:00"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-12");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("18:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Выдача каппы");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Vasile");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Usaci");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.firstName")).isEqualTo("Jim");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.lastName")).isEqualTo("Morrison");
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToUpdateAppointmentEndTime() {
+        String payload = """
+                {
+                   "endTime": "19:00:00"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-12");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("17:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("19:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Выдача каппы");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Vasile");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Usaci");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.firstName")).isEqualTo("Jim");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.lastName")).isEqualTo("Morrison");
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToAssignAppointmentsToNewDoctor() {
+        String payload = """
+                {
+                   "appointmentDate": "2021-12-13",
+                   "startTime": "10:00",
+                   "endTime": "11:30",
+                   "operation": "Cleaning",
+                   "details": "Regular patient",
+                   "doctorId": "620e11c0-7d59-45be-85cc-0dc146532e78"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-13");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("11:30");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Cleaning");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.details")).isEqualTo("Regular patient");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Sponge");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Bob");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.firstName")).isEqualTo("Jim");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.lastName")).isEqualTo("Morrison");
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToAssignAppointmentsToNewPatient() {
+        String payload = """
+                {
+                   "appointmentDate": "2021-12-13",
+                   "startTime": "10:00",
+                   "endTime": "11:30",
+                   "operation": "Cleaning",
+                   "details": "Regular patient",
+                   "patientId": "fc4ec567-ec9c-C2d3-c45b-c26c141c40cc"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-13");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("11:30");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Cleaning");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.details")).isEqualTo("Regular patient");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.firstName")).isEqualTo("Ray");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.patient.lastName")).isEqualTo("Charles");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Vasile");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Usaci");
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void whenUpdatingAppointment_andNewDoctorIdDoesNotExist_shouldReturnErrorResponse() {
+        String payload = """
+                {
+                   "appointmentDate": "2021-12-13",
+                   "startTime": "10:00",
+                   "endTime": "11:30",
+                   "operation": "Cleaning",
+                   "details": "Regular patient",
+                   "doctorId": "unknown"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.path")).isEqualTo("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.messages[0]")).isEqualTo("Doctor with id equal to [unknown] could not be found!");
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void whenUpdatingAppointment_andNewPatientIdDoesNotExist_shouldReturnErrorResponse() {
+        String payload = """
+                {
+                   "appointmentDate": "2021-12-13",
+                   "startTime": "10:00",
+                   "endTime": "11:30",
+                   "operation": "Cleaning",
+                   "details": "Regular patient",
+                   "patientId": "unknown"
+                 }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        String jsonResponse = response.getBody();
+        assertThat(JsonPath.<String>read(jsonResponse, "$.path")).isEqualTo("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.messages[0]")).isEqualTo("Patient with id equal to [unknown] could not be found!");
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
     public void whenNewAppointmentConflictsWithAnExistingOne_shouldReturnErrorResponse() {
         String payload = """
                 {

@@ -49,19 +49,31 @@ class AppointmentServiceImpl implements AppointmentService {
     @Override
     @Transactional
     public Appointment create(Appointment appointmentToCreate) {
+        checkForConflicts(appointmentToCreate);
+        return appointmentRepository.save(appointmentToCreate);
+    }
+
+    private void checkForConflicts(Appointment appointmentToCreate) {
         LocalDate appointmentDate = appointmentToCreate.getAppointmentDate();
         LocalTime startTime = appointmentToCreate.getStartTime();
         LocalTime endTime = appointmentToCreate.getEndTime();
         String doctorId = appointmentToCreate.getDoctor().getId();
         Doctor doctor = doctorRepository.findByIdAndLock(doctorId);
         Optional<Appointment> conflictingAppointment =
-                appointmentRepository.findConflictingAppointment(doctorId, appointmentDate, startTime, endTime);
+                appointmentRepository.findConflictingAppointment(doctorId, appointmentDate, startTime, endTime, appointmentToCreate.getId());
         conflictingAppointment.ifPresent(overlappingAppointment -> {
             throw new ConflictingAppointmentsException("Doctor " + doctor.getFirstName() + " " + doctor.getLastName() +
                     " has already an appointment, starting from " + overlappingAppointment.getStartTime() +
                     " till " + overlappingAppointment.getEndTime());
         });
-        return appointmentRepository.save(appointmentToCreate);
+    }
+
+    @Override
+    @Transactional
+    public Appointment update(String id, Appointment newAppointment) {
+        checkForConflicts(newAppointment);
+        appointmentRepository.save(newAppointment);
+        return newAppointment;
     }
 
     @Override

@@ -4,7 +4,6 @@ import inc.evil.medassist.common.validation.OnCreate;
 import inc.evil.medassist.doctor.model.Doctor;
 import inc.evil.medassist.doctor.model.Specialty;
 import inc.evil.medassist.user.model.Authority;
-import inc.evil.medassist.user.model.User;
 import inc.evil.medassist.user.model.UserAuthority;
 import lombok.Data;
 

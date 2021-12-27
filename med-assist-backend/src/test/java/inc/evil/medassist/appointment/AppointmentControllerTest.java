@@ -21,6 +21,8 @@ import java.util.Set;
 
 import static inc.evil.medassist.common.ResponseBodyMatchers.responseBody;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -80,6 +82,67 @@ public class AppointmentControllerTest extends AbstractRestTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field endTime with value 08:45 should be after startTime, with value 09:45")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
+    }
+
+    @Test
+    public void whenUpdatingAppointment_AndEndTimeIsBeforeStartTime_shouldReturnErrorResponse() throws Exception {
+        String payload = """
+                {
+                   "startTime": "09:45",
+                   "endTime": "08:45"
+                 }
+                """;
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/appointments/244e4567-ef9c-12d3-a45b-52661417400a").content(payload).contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field endTime with value 08:45 should be after startTime, with value 09:45")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments/244e4567-ef9c-12d3-a45b-52661417400a")));
+    }
+
+    @Test
+    public void shouldBeAbleToUpdateAppointments() throws Exception {
+        AppointmentResponse expectedAppointment = AppointmentResponse.builder()
+                        .id("ba4e4567-bf9c-bad3-b45b-5266141740aa")
+                        .appointmentDate("2021-12-12")
+                        .startTime("09:00:00")
+                        .endTime("10:45:00")
+                        .operation("Выдача каппы")
+                        .doctor(DoctorResponse.builder()
+                                .id("fa4e4567-af9c-aad3-a45b-5266141740aa")
+                                .specialty("specialty")
+                                .firstName("Andrei")
+                                .lastName("Usaci")
+                                .build())
+                        .patient(PatientResponse.builder()
+                                .id("f44e4567-ef9c-12d3-a45b-52661417400a")
+                                .phoneNumber("+37352014789")
+                                .birthDate("1994-12-12")
+                                .firstName("Nadya")
+                                .lastName("Usaci")
+                                .build())
+                        .build();
+        when(appointmentFacade.update(eq("ba4e4567-bf9c-bad3-b45b-5266141740aa"), any())).thenReturn(expectedAppointment);
+        String payload = """
+                {
+                   "startTime": "10:45"
+                 }
+                """;
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/appointments/ba4e4567-bf9c-bad3-b45b-5266141740aa").content(payload).contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.appointmentDate", equalTo("2021-12-12")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.startTime", equalTo("09:00:00")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.endTime", equalTo("10:45:00")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.operation", equalTo("Выдача каппы")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.patient.id", equalTo("f44e4567-ef9c-12d3-a45b-52661417400a")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.patient.phoneNumber", equalTo("+37352014789")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.patient.firstName", equalTo("Nadya")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.patient.lastName", equalTo("Usaci")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.patient.birthDate", equalTo("1994-12-12")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.doctor.id", equalTo("fa4e4567-af9c-aad3-a45b-5266141740aa")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.doctor.specialty", equalTo("specialty")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.doctor.firstName", equalTo("Andrei")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.doctor.lastName", equalTo("Usaci")));
     }
 
     @Test

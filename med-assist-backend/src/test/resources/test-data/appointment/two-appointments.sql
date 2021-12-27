@@ -33,5 +33,13 @@ INSERT INTO doctors (specialty, telephone_number, id)
 VALUES ('ORTHODONTIST', '37369666667', '620e11c0-7d59-45be-85cc-0dc146532e78');
 
 insert into appointments(id, operation, doctor_id, patient_id, appointment_date, start_time, end_time, created_at, updated_at)
+values ('ca3e4567-e89b-12d3-b457-5267141750aa', 'Выдача каппы', '620e11c0-7d59-45be-85cc-0dc146532e78',
+        'fc4ec567-ec9c-C2d3-c45b-c26c141c40cc', '2021-12-12', '10:00', '18:00', '2021-12-12 17:33:20.998582', '2021-12-12 17:33:20.998582');
+
+insert into appointments(id, operation, doctor_id, patient_id, appointment_date, start_time, end_time, created_at, updated_at)
 values ('aa3e4567-e89b-12d3-b457-5267141750aa', 'Выдача каппы', 'f23e4567-e89b-12d3-a456-426614174000',
         'f44e4567-ef9c-12d3-a45b-52661417400a', '2021-12-12', '17:00', '18:00', '2021-12-12 17:33:20.998582', '2021-12-12 17:33:20.998582');
+
+insert into appointments(id, operation, doctor_id, patient_id, appointment_date, start_time, end_time, created_at, updated_at)
+values ('ba3e4567-e89b-12d3-b457-5267141750ab', 'Cleaning', 'f23e4567-e89b-12d3-a456-426614174000',
+        'f44e4567-ef9c-12d3-a45b-52661417400a', '2021-12-12', '16:00', '17:00', '2021-12-12 16:00:20.118581', '2021-12-12 16:00:20.118581');
