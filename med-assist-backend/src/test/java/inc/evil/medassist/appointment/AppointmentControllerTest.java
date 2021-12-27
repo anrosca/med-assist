@@ -29,9 +29,8 @@ public class AppointmentControllerTest extends AbstractRestTest {
         List<AppointmentResponse> expectedAppointments = List.of(
                 AppointmentResponse.builder()
                         .id("ba4e4567-bf9c-bad3-b45b-5266141740aa")
-                        .appointmentDate("2021-12-12")
-                        .startTime("17:00:00")
-                        .endTime("17:45:00")
+                        .startDate("2021-12-12T17:00")
+                        .endDate("2021-12-1217:45")
                         .operation("Выдача каппы")
                         .doctor(DoctorResponse.builder()
                                 .id("fa4e4567-af9c-aad3-a45b-5266141740aa")
@@ -61,9 +60,8 @@ public class AppointmentControllerTest extends AbstractRestTest {
                 {
                    "doctorId": "123e4567-e89b-12d3-a456-426614174000",
                    "patientId": "244e4567-ef9c-12d3-a45b-52661417400a",
-                   "appointmentDate": "2021-12-12",
-                   "startTime": "09:45",
-                   "endTime": "08:45",
+                   "startDate": "2021-12-12T09:45",
+                   "endDate": "2021-12-12T08:45",
                    "operation": "Inspection",
                    "details": "Patient will make an appointment"
                  }
@@ -71,7 +69,7 @@ public class AppointmentControllerTest extends AbstractRestTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/appointments").content(payload).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field endTime with value 08:45 should be after startTime, with value 09:45")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field endDate with value 2021-12-12T08:45 should be after startDate, with value 2021-12-12T09:45")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
     }
 
@@ -80,9 +78,8 @@ public class AppointmentControllerTest extends AbstractRestTest {
         String payload = """
                 {
                    "patientId": "244e4567-ef9c-12d3-a45b-52661417400a",
-                   "appointmentDate": "2021-12-12",
-                   "startTime": "09:45",
-                   "endTime": "10:45",
+                   "startDate": "2021-12-12T09:45",
+                   "endDate": "2021-12-12T10:45",
                    "operation": "Inspection",
                    "details": "Patient will make an appointment"
                  }
@@ -95,13 +92,12 @@ public class AppointmentControllerTest extends AbstractRestTest {
     }
 
     @Test
-    public void whenAppointmentPatientIdIsEmpty_shouldReturnErrorResponse() throws Exception {
+    public void whenAppointmentPatientIdIsAndPatientRequestIsEmpty_shouldReturnErrorResponse() throws Exception {
         String payload = """
                 {
                    "doctorId": "123e4567-e89b-12d3-a456-426614174000",
-                   "appointmentDate": "2021-12-12",
-                   "startTime": "09:45",
-                   "endTime": "10:45",
+                   "startDate": "2021-12-12T09:45",
+                   "endDate": "2021-12-12T10:45",
                    "operation": "Inspection",
                    "details": "Patient will make an appointment"
                  }
@@ -109,18 +105,17 @@ public class AppointmentControllerTest extends AbstractRestTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/appointments").content(payload).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'patientId' must not be blank but value was 'null'")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'patientRequest' at least should not be null but value was 'null'")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
     }
 
     @Test
-    public void whenAppointmentDateIsEmpty_shouldReturnErrorResponse() throws Exception {
+    public void whenAppointmentStartDateIsNull_shouldReturnErrorResponse() throws Exception {
         String payload = """
                 {
                    "doctorId": "123e4567-e89b-12d3-a456-426614174000",
                    "patientId": "244e4567-ef9c-12d3-a45b-52661417400a",
-                   "startTime": "09:45",
-                   "endTime": "10:45",
+                   "endDate": "2021-12-12T10:45",
                    "operation": "Inspection",
                    "details": "Patient will make an appointment"
                  }
@@ -128,18 +123,17 @@ public class AppointmentControllerTest extends AbstractRestTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/appointments").content(payload).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'appointmentDate' must not be null but value was 'null'")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'startDate' must not be null but value was 'null'")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
     }
 
     @Test
-    public void whenAppointmentStartTimeIsNull_shouldReturnErrorResponse() throws Exception {
+    public void whenAppointmentEndDateIsNull_shouldReturnErrorResponse() throws Exception {
         String payload = """
                 {
                    "doctorId": "123e4567-e89b-12d3-a456-426614174000",
                    "patientId": "244e4567-ef9c-12d3-a45b-52661417400a",
-                   "appointmentDate": "2021-12-12",
-                   "endTime": "10:45",
+                   "startDate": "2021-12-12T09:45",
                    "operation": "Inspection",
                    "details": "Patient will make an appointment"
                  }
@@ -147,26 +141,7 @@ public class AppointmentControllerTest extends AbstractRestTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/appointments").content(payload).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'startTime' must not be null but value was 'null'")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
-    }
-
-    @Test
-    public void whenAppointmentEndTimeIsNull_shouldReturnErrorResponse() throws Exception {
-        String payload = """
-                {
-                   "doctorId": "123e4567-e89b-12d3-a456-426614174000",
-                   "patientId": "244e4567-ef9c-12d3-a45b-52661417400a",
-                   "appointmentDate": "2021-12-12",
-                   "startTime": "10:45",
-                   "operation": "Inspection",
-                   "details": "Patient will make an appointment"
-                 }
-                """;
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/appointments").content(payload).contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'endTime' must not be null but value was 'null'")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0]", equalTo("Field 'endDate' must not be null but value was 'null'")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
     }
 }

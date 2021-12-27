@@ -12,6 +12,8 @@ import {environment} from '../environments/environment';
 import {ViewTokenModalComponent} from './account/profile-details/view-token-modal/view-token-modal.component';
 import {AccountModule} from './account/account.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -21,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        FontAwesomeModule,
         CoreModule,
         SharedModule,
         CustomMaterialModule.forRoot(),

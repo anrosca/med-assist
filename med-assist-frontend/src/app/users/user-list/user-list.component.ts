@@ -49,7 +49,7 @@ export class UserListComponent implements OnInit {
                     this.dataSource.paginator = this.paginator;
                 },
                 error => {
-                    const resMessage = error.message || error.error.message || error.toString();
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
                     this.notificationService.openSnackBar(resMessage);
                 });
 

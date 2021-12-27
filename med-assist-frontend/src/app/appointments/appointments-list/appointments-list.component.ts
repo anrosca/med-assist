@@ -6,14 +6,15 @@ import {MatPaginator} from "@angular/material/paginator";
 import {DoctorService} from "../../core/services/doctor.service";
 import {NotificationService} from "../../core/services/notification.service";
 import {MatSort} from "@angular/material/sort";
+import {AppointmentService} from "../../core/services/appointment.service";
 
 @Component({
-  selector: 'app-doctor-list',
-  templateUrl: './doctor-list.component.html',
-  styleUrls: ['./doctor-list.component.css']
+  selector: 'app-appointments-list',
+  templateUrl: './appointments-list.component.html',
+  styleUrls: ['./appointments-list.component.css']
 })
-export class DoctorListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'email', 'authorities', 'mobile', 'specialty', 'enabled'];
+export class AppointmentsListComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'startDate', 'endDate', 'operation', 'doctor', 'patient', 'details'];
   dataSource;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -22,7 +23,7 @@ export class DoctorListComponent implements OnInit {
   constructor(
       private logger: NGXLogger,
       private notificationService: NotificationService,
-      private doctorService: DoctorService,
+      private appointmentService: AppointmentService,
       private titleService: Title
   ) {
   }
@@ -39,10 +40,10 @@ export class DoctorListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.titleService.setTitle('med-assist-client - Doctors');
-    this.doctorService.getAllDoctors()
-        .subscribe(doctors  => {
-              this.dataSource = new MatTableDataSource(doctors);
+    this.titleService.setTitle('med-assist-client - Appointments');
+    this.appointmentService.getAllAppointments()
+        .subscribe(appointments  => {
+              this.dataSource = new MatTableDataSource(appointments);
               this.dataSource.sort = this.sort;
               this.dataSource.paginator = this.paginator;
             },

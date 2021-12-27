@@ -2,6 +2,8 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import '../node_modules/flatpickr/dist/flatpickr.min.css';
+
 
 body {
   margin: 0;

@@ -1,0 +1,60 @@
+<div style="margin-top: 10px;" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+
+        <mat-card>
+            <mat-card-content>
+                <h2>Appointments</h2>
+                <mat-form-field appearance="standard">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+                        <td mat-cell *matCellDef="let appointment"> {{appointment.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="startDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> start date </th>
+                        <td mat-cell *matCellDef="let appointment"> {{appointment.startDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="endDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> end date </th>
+                        <td mat-cell *matCellDef="let appointment"> {{appointment.endDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="operation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> operation </th>
+                        <td mat-cell *matCellDef="let appointment"> {{appointment.operation}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="doctor">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> doctor </th>
+                        <td mat-cell *matCellDef="let appointment"> {{appointment.doctor.firstName + ' ' + appointment.doctor.lastName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="patient">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> patient </th>
+                        <td mat-cell *matCellDef="let appointment"> {{appointment.patient.firstName + ' ' + appointment.patient.lastName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="details">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> details </th>
+                        <td mat-cell *matCellDef="let appointment"> {{appointment.details}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of appointments"></mat-paginator>
+
+            </mat-card-content>
+        </mat-card>
+
+
+    </div>
+</div>

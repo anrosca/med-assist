@@ -2,13 +2,14 @@ package inc.evil.medassist.appointment.web;
 
 import inc.evil.medassist.appointment.web.validation.ValidAppointmentSequence;
 import inc.evil.medassist.appointment.web.validation.ValidAppointmentTime;
+import inc.evil.medassist.common.validation.AtLeastOneNotNull;
+import inc.evil.medassist.patient.web.CreatePatientRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -16,22 +17,24 @@ import java.time.LocalTime;
         groups = ValidAppointmentSequence.Extended.class,
         message = "{create.appointment.end-time.before.start-time}"
 )
+@AtLeastOneNotNull(fields = {"patientId", "patientRequest"})
 public class CreateAppointmentRequest {
-    @NotNull
-    private LocalDate appointmentDate;
 
     @NotNull
-    private LocalTime startTime;
+    private LocalDateTime startDate;
 
     @NotNull
-    private LocalTime endTime;
+    private LocalDateTime endDate;
 
     private String operation;
 
     @NotBlank
     private String doctorId;
 
-    @NotBlank
+    private boolean existingPatient;
+
+    private CreatePatientRequest patientRequest;
+
     private String patientId;
 
     private String details;

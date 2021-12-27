@@ -17,12 +17,9 @@ export class UserService {
     }
 
     getAllUsers() {
-        return this.http.get<PagedUserViewResponse>(this.usersUrl)
+        return this.http.get(this.usersUrl)
             .pipe(map(response => (response as unknown as User[])));
     }
 
 }
 
-export interface PagedUserViewResponse {
-    _embedded: any;
-}

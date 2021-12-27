@@ -67,8 +67,8 @@ Authorization: {{authKey}}
 
 {
 
-  "firstName" : "Vasile",
-  "lastName" : "Usaci",
+  "firstName" : "Bilbo",
+  "lastName" : "Beggins",
   "phoneNumber": "37369666666",
   "birthDate": "1995-11-15"
 }
@@ -96,12 +96,16 @@ Content-Type: application/json
 Authorization: {{authKey}}
 
 {
-  "patientId": "505eeca9-cb8f-4420-bf28-1bc7b313acbb",
-  "doctorId": "aa80a68a-7a6f-43be-a88b-e88cc467cbf6",
-  "appointmentDate" : "2021-12-15",
-  "startTime" : "17:00:00",
-  "endTime" : "18:00:00",
-  "operation": "Cleaning",
+  "patientRequest": {
+    "firstName" : "Bob",
+    "lastName" : "Nikolson",
+    "phoneNumber": "37369666633",
+    "birthDate": "1996-11-15"
+  },
+  "doctorId": "83d5eaa7-53a3-48d0-a0ce-13683752180e",
+  "startDate" : "2021-12-26T12:00:00",
+  "endDate" : "2021-12-26T14:30:00",
+  "operation": "Operation teeth 6th",
   "details": "New patient"
 }
 

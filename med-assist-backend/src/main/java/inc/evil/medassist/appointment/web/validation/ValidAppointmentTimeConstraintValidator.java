@@ -9,8 +9,8 @@ import java.time.LocalTime;
 public class ValidAppointmentTimeConstraintValidator implements ConstraintValidator<ValidAppointmentTime, CreateAppointmentRequest> {
     @Override
     public boolean isValid(CreateAppointmentRequest request, ConstraintValidatorContext context) {
-        LocalTime startTime = request.getStartTime();
-        LocalTime endTime = request.getEndTime();
+        LocalTime startTime = request.getStartDate().toLocalTime();
+        LocalTime endTime = request.getEndDate().toLocalTime();
         return startTime.isBefore(endTime);
     }
 }
