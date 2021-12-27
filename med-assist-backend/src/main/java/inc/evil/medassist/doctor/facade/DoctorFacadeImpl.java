@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class DoctorFacadeImpl implements DoctorFacade {
-
     private final DoctorService doctorService;
 
     @Override

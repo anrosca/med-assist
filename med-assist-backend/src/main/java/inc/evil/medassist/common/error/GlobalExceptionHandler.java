@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<ErrorResponse> onNotFoundException(NotFoundException e, HttpServletRequest request) {
-		log.warn("Patient not found", e);
+		log.warn("Entity not found: {}", e.getMessage());
 		var errorMessages = Set.of(e.getMessage());
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
 			HttpServletRequest request) {
 		String message = "Parameter: '" + e.getParameterName() + "' of type " + e.getParameterType() +
 				" is required but is missing";
-		log.error("Exception while handling request: " + message, e);
+		log.warn("Exception while handling request: {}", message);
 		var errorMessages = Set.of(message);
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> onMethodArgumentNotValidException(MethodArgumentNotValidException e,
 			HttpServletRequest request) {
-		log.error("Exception while handling request.", e);
+		log.warn("Exception while handling request: {}", e.getMessage());
 		BindingResult bindingResult = e.getBindingResult();
 		Set<String> errorMessages = new HashSet<>();
 		for (ObjectError error : bindingResult.getAllErrors()) {
@@ -114,7 +114,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<ErrorResponse> onConstraintViolationException(ConstraintViolationException e,
 			HttpServletRequest request) {
-		log.error("Exception while handling request.", e);
+		log.warn("Exception while handling request. Validation failed: {}", e.getMessage());
 		Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
 		Set<String> errorMessages = new HashSet<>();
 		for (ConstraintViolation<?> violation : constraintViolations) {
@@ -136,8 +136,8 @@ public class GlobalExceptionHandler {
 			HttpServletRequest request) {
 		MethodParameter parameter = e.getParameter();
 		String message = "Parameter: '" + parameter.getParameterName() + "' is not valid. " +
-				"Value '" + e.getValue() + "' could not be bound to type: '" + parameter.getParameterType() + "'";
-		log.error("Exception while handling request: " + message, e);
+				"Value '" + e.getValue() + "' could not be bound to type: '" + parameter.getParameterType().getSimpleName().toLowerCase(Locale.ROOT) + "'";
+		log.warn("Exception while handling request: {}", message);
 		var errorMessages = Set.of(message);
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
