@@ -44,13 +44,6 @@ class AppointmentFacadeImpl implements AppointmentFacade {
     }
 
     @Override
-    public AppointmentResponse create(UpsertAppointmentRequest request) {
-        Appointment appointmentToCreate = toAppointment(request);
-        Appointment createdAppointment = appointmentService.create(appointmentToCreate);
-        return AppointmentResponse.from(createdAppointment);
-    }
-
-    @Override
     public List<AppointmentResponse> findAppointmentsByDoctorId(String doctorId) {
         return appointmentService.findByDoctorId(doctorId)
                 .stream()
@@ -73,37 +66,31 @@ class AppointmentFacadeImpl implements AppointmentFacade {
         return AppointmentResponse.from(appointmentService.update(id, originalAppointment.mergeWith(newAppointment)));
     }
 
-    private Appointment toAppointment(UpsertAppointmentRequest request) {
-        return Appointment.builder()
-                .appointmentDate(request.getAppointmentDate())
-                .startTime(request.getStartTime())
-                .endTime(request.getEndTime())
-                .operation(request.getOperation())
-                .doctor(request.getDoctorId() != null ? doctorService.findById(request.getDoctorId()) : null)
-                .patient(request.getPatientId() != null ? patientService.findById(request.getPatientId()) : null)
-                .details(request.getDetails())
-                .build();
-    }
-
     @Override
     @Transactional
-    public AppointmentResponse create(CreateAppointmentRequest request) {
+    public AppointmentResponse create(UpsertAppointmentRequest request) {
+        Appointment appointmentToCreate = toAppointment(request);
+        Appointment createdAppointment = appointmentService.create(appointmentToCreate);
+        return AppointmentResponse.from(createdAppointment);
+    }
+
+    private Appointment toAppointment(final UpsertAppointmentRequest request) {
         Appointment appointmentToCreate = Appointment.builder()
-                .appointmentDate(request.getStartDate().toLocalDate())
-                .startTime(request.getStartDate().toLocalTime())
-                .endTime(request.getEndDate().toLocalTime())
+                .appointmentDate(request.getStartDate() != null ? request.getStartDate().toLocalDate() : null)
+                .startTime(request.getStartDate() != null ? request.getStartDate().toLocalTime() : null)
+                .endTime(request.getEndDate() != null ? request.getEndDate().toLocalTime() : null)
                 .operation(request.getOperation())
-                .doctor(doctorService.findById(request.getDoctorId()))
+                .doctor(request.getDoctorId() != null ? doctorService.findById(request.getDoctorId()) : null)
                 .details(request.getDetails())
                 .build();
         if(request.isExistingPatient()){
-            appointmentToCreate.setPatient(patientService.findById(request.getPatientId()));
+            appointmentToCreate.setPatient(
+                    request.getPatientId() != null ? patientService.findById(request.getPatientId()) : null);
         } else {
             final Patient patient = patientService.create(request.getPatientRequest().toPatient());
             appointmentToCreate.setPatient(patient);
         }
-        Appointment createdAppointment = appointmentService.create(appointmentToCreate);
-        return AppointmentResponse.from(createdAppointment);
+        return appointmentToCreate;
     }
 
 }

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
         groups = ValidationSequence.After.class,
         message = "{create.appointment.end-time.before.start-time}"
 )
-@AtLeastOneNotNull(fields = {"patientId", "patientRequest"})
+@AtLeastOneNotNull(fields = {"patientId", "patientRequest"}, groups = OnCreate.class)
 public class UpsertAppointmentRequest {
 
     @NotNull(groups = OnCreate.class)
@@ -32,10 +32,9 @@ public class UpsertAppointmentRequest {
     @NotBlank(groups = OnCreate.class)
     private String doctorId;
 
-    @NotBlank(groups = OnCreate.class)
     private String patientId;
 
-    private boolean existingPatient;
+    private boolean existingPatient = true;
 
     private CreatePatientRequest patientRequest;
 

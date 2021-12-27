@@ -122,8 +122,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                        "phoneNumber": "37369666633",
                        "birthDate": "1996-11-15"
                        },
-                   "startDate": "2021-12-12T09:45",
                    "existingPatient": "false",
+                   "startDate": "2021-12-12T09:45",
                    "endDate": "2021-12-12T10:45",
                    "operation": "Inspection",
                    "details": "Patient will make an appointment"
@@ -142,9 +142,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     public void shouldBeAbleToUpdateAppointments() {
         String payload = """
                 {
-                   "appointmentDate": "2021-12-13",
-                   "startTime": "10:00",
-                   "endTime": "11:30",
+                   "startDate": "2021-12-13T10:00",
+                   "endDate": "2021-12-13T11:30",
                    "operation": "Cleaning",
                    "details": "Regular patient"
                  }
@@ -155,9 +154,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         String jsonResponse = response.getBody();
-        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-13");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("11:30");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startDate")).isEqualTo("2021-12-13T10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endDate")).isEqualTo("2021-12-13T11:30");
         assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Cleaning");
         assertThat(JsonPath.<String>read(jsonResponse, "$.details")).isEqualTo("Regular patient");
         assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Vasile");
@@ -171,7 +169,7 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     public void shouldBeAbleToUpdateAppointmentStartTime() {
         String payload = """
                 {
-                   "startTime": "10:00"
+                   "startDate": "2021-12-12T10:00"
                  }
                 """;
         RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
@@ -180,9 +178,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         String jsonResponse = response.getBody();
-        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-12");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("18:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startDate")).isEqualTo("2021-12-12T10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endDate")).isEqualTo("2021-12-12T18:00");
         assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Выдача каппы");
         assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Vasile");
         assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Usaci");
@@ -195,7 +192,7 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     public void shouldBeAbleToUpdateAppointmentEndTime() {
         String payload = """
                 {
-                   "endTime": "19:00:00"
+                   "endDate": "2021-12-12T19:00"
                  }
                 """;
         RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
@@ -204,9 +201,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         String jsonResponse = response.getBody();
-        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-12");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("17:00");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("19:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startDate")).isEqualTo("2021-12-12T17:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endDate")).isEqualTo("2021-12-12T19:00");
         assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Выдача каппы");
         assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Vasile");
         assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Usaci");
@@ -219,9 +215,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     public void shouldBeAbleToAssignAppointmentsToNewDoctor() {
         String payload = """
                 {
-                   "appointmentDate": "2021-12-13",
-                   "startTime": "10:00",
-                   "endTime": "11:30",
+                   "startDate": "2021-12-13T10:00",
+                   "endDate": "2021-12-13T11:30",
                    "operation": "Cleaning",
                    "details": "Regular patient",
                    "doctorId": "620e11c0-7d59-45be-85cc-0dc146532e78"
@@ -233,9 +228,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         String jsonResponse = response.getBody();
-        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-13");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("11:30");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startDate")).isEqualTo("2021-12-13T10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endDate")).isEqualTo("2021-12-13T11:30");
         assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Cleaning");
         assertThat(JsonPath.<String>read(jsonResponse, "$.details")).isEqualTo("Regular patient");
         assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.firstName")).isEqualTo("Sponge");
@@ -249,9 +243,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     public void shouldBeAbleToAssignAppointmentsToNewPatient() {
         String payload = """
                 {
-                   "appointmentDate": "2021-12-13",
-                   "startTime": "10:00",
-                   "endTime": "11:30",
+                   "startDate": "2021-12-13T10:00",
+                   "endDate": "2021-12-13T11:30",
                    "operation": "Cleaning",
                    "details": "Regular patient",
                    "patientId": "fc4ec567-ec9c-C2d3-c45b-c26c141c40cc"
@@ -263,9 +256,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         String jsonResponse = response.getBody();
-        assertThat(JsonPath.<String>read(jsonResponse, "$.appointmentDate")).isEqualTo("2021-12-13");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.startTime")).isEqualTo("10:00");
-        assertThat(JsonPath.<String>read(jsonResponse, "$.endTime")).isEqualTo("11:30");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.startDate")).isEqualTo("2021-12-13T10:00");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.endDate")).isEqualTo("2021-12-13T11:30");
         assertThat(JsonPath.<String>read(jsonResponse, "$.operation")).isEqualTo("Cleaning");
         assertThat(JsonPath.<String>read(jsonResponse, "$.details")).isEqualTo("Regular patient");
         assertThat(JsonPath.<String>read(jsonResponse, "$.patient.firstName")).isEqualTo("Ray");
@@ -279,9 +271,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     public void whenUpdatingAppointment_andNewDoctorIdDoesNotExist_shouldReturnErrorResponse() {
         String payload = """
                 {
-                   "appointmentDate": "2021-12-13",
-                   "startTime": "10:00",
-                   "endTime": "11:30",
+                   "startDate": "2021-12-12T10:00",
+                   "endDate": "2021-12-12T11:30",
                    "operation": "Cleaning",
                    "details": "Regular patient",
                    "doctorId": "unknown"
@@ -302,9 +293,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
     public void whenUpdatingAppointment_andNewPatientIdDoesNotExist_shouldReturnErrorResponse() {
         String payload = """
                 {
-                   "appointmentDate": "2021-12-13",
-                   "startTime": "10:00",
-                   "endTime": "11:30",
+                   "startDate": "2021-12-12T10:00",
+                   "endDate": "2021-12-12T11:30",
                    "operation": "Cleaning",
                    "details": "Regular patient",
                    "patientId": "unknown"
@@ -388,9 +378,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
         AppointmentResponse[] expectedAppointments = {
                 AppointmentResponse.builder()
                         .id("aa3e4567-e89b-12d3-b457-5267141750aa")
-                        .appointmentDate("2021-12-12")
-                        .startTime("17:00")
-                        .endTime("18:00")
+                        .startDate("2021-12-12T17:00")
+                        .endDate("2021-12-12T18:00")
                         .operation("Выдача каппы")
                         .doctor(DoctorResponse.builder()
                                 .id("f23e4567-e89b-12d3-a456-426614174000")
@@ -426,9 +415,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
         AppointmentResponse[] expectedAppointments = {
                 AppointmentResponse.builder()
                         .id("aa3e4567-e89b-12d3-b457-5267141750aa")
-                        .appointmentDate("2021-12-12")
-                        .startTime("17:00")
-                        .endTime("18:00")
+                        .startDate("2021-12-12T17:00")
+                        .endDate("2021-12-12T18:00")
                         .operation("Выдача каппы")
                         .doctor(DoctorResponse.builder()
                                 .id("f23e4567-e89b-12d3-a456-426614174000")

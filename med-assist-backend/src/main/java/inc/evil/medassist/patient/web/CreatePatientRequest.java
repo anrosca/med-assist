@@ -2,12 +2,14 @@ package inc.evil.medassist.patient.web;
 
 import inc.evil.medassist.patient.model.Patient;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 public class CreatePatientRequest {
     @NotBlank
     private String firstName;
