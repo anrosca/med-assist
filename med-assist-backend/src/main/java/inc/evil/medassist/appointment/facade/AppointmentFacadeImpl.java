@@ -75,22 +75,23 @@ class AppointmentFacadeImpl implements AppointmentFacade {
     }
 
     private Appointment toAppointment(final UpsertAppointmentRequest request) {
-        Appointment appointmentToCreate = Appointment.builder()
+        return Appointment.builder()
                 .appointmentDate(request.getStartDate() != null ? request.getStartDate().toLocalDate() : null)
                 .startTime(request.getStartDate() != null ? request.getStartDate().toLocalTime() : null)
                 .endTime(request.getEndDate() != null ? request.getEndDate().toLocalTime() : null)
                 .operation(request.getOperation())
                 .doctor(request.getDoctorId() != null ? doctorService.findById(request.getDoctorId()) : null)
+                .patient(findOrCreatePatient(request))
                 .details(request.getDetails())
                 .build();
+    }
+
+    private Patient findOrCreatePatient(final UpsertAppointmentRequest request) {
         if(request.isExistingPatient()){
-            appointmentToCreate.setPatient(
-                    request.getPatientId() != null ? patientService.findById(request.getPatientId()) : null);
+            return request.getPatientId() != null ? patientService.findById(request.getPatientId()) : null;
         } else {
-            final Patient patient = patientService.create(request.getPatientRequest().toPatient());
-            appointmentToCreate.setPatient(patient);
+            return patientService.create(request.getPatientRequest().toPatient());
         }
-        return appointmentToCreate;
     }
 
 }
