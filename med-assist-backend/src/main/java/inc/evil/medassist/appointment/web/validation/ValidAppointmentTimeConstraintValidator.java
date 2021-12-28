@@ -4,15 +4,16 @@ import inc.evil.medassist.appointment.web.UpsertAppointmentRequest;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ValidAppointmentTimeConstraintValidator implements ConstraintValidator<ValidAppointmentTime, UpsertAppointmentRequest> {
     @Override
     public boolean isValid(UpsertAppointmentRequest request, ConstraintValidatorContext context) {
-        LocalTime startTime = request.getStartTime();
-        LocalTime endTime = request.getEndTime();
-        if (startTime == null || endTime == null)
+        final LocalDateTime startDate = request.getStartDate();
+        final LocalDateTime endDate = request.getEndDate();
+        if (startDate == null || endDate == null)
             return true;
-        return startTime.isBefore(endTime);
+        return startDate.toLocalTime().isBefore(endDate.toLocalTime());
     }
 }

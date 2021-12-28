@@ -1,7 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="center none" style="margin-top: 2%">
 
     <div fxFlex="95%">
-        <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+        <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate"
+                                        (viewDateChange)="closeOpenMonthViewDay()">
         </mwl-demo-utils-calendar-header>
 
         <mat-card>
@@ -14,28 +15,65 @@
                 <small style="margin: 5px">There are {{ day.events.length }} events on this day</small>
             </ng-template>
 
+            <button mat-raised-button color="primary" style="margin-bottom: 10px;" (click)="openCreateAppointmentDialog()">Create appointment</button>
+
             <div [ngSwitch]="view">
                 <mwl-calendar-month-view
-                        *ngSwitchCase="'month'"
+                        *ngSwitchCase="CalendarView.Month"
                         [viewDate]="viewDate"
                         [events]="events"
-                        [cellTemplate]="customCellTemplate"
+                        [refresh]="refresh"
+                        [activeDayIsOpen]="activeDayIsOpen"
+                        (dayClicked)="dayClicked($event.day)"
+                        (eventClicked)="handleEvent('Clicked', $event.event)"
+                        (eventTimesChanged)="eventTimesChanged($event)"
                 >
                 </mwl-calendar-month-view>
                 <mwl-calendar-week-view
-                        *ngSwitchCase="'week'"
+                        *ngSwitchCase="CalendarView.Week"
                         [viewDate]="viewDate"
                         [events]="events"
+                        [refresh]="refresh"
+                        (eventClicked)="handleEvent('Clicked', $event.event)"
+                        (eventTimesChanged)="eventTimesChanged($event)"
                 >
                 </mwl-calendar-week-view>
                 <mwl-calendar-day-view
-                        *ngSwitchCase="'day'"
+                        *ngSwitchCase="CalendarView.Day"
                         [viewDate]="viewDate"
                         [events]="events"
+                        [refresh]="refresh"
+                        (eventClicked)="handleEvent('Clicked', $event.event)"
+                        (eventTimesChanged)="eventTimesChanged($event)"
                 >
                 </mwl-calendar-day-view>
             </div>
         </mat-card>
-    </div>
+        <br>
+        <br>
 
+    </div>
 </div>
+<ng-template #modalContent let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Event action occurred</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div>
+            Action:
+            <pre>{{ modalData?.action }}</pre>
+        </div>
+        <div>
+            Event:
+            <pre>{{ modalData?.event | json }}</pre>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="close()">
+            OK
+        </button>
+    </div>
+</ng-template>

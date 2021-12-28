@@ -1,0 +1,123 @@
+<h1 mat-dialog-title>Create appointment</h1>
+<div mat-dialog-content style="height: auto; min-height: 520px">
+    <div class="row">
+        <mat-form-field class="full-width col-10" appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput [(ngModel)]="data.appointmentToCreate.title"/>
+        </mat-form-field>
+        <mat-form-field class="full-width col-2" appearance="fill">
+            <mat-label>Color</mat-label>
+            <input matInput type="color" [(ngModel)]="data.appointmentToCreate.color.primary"/>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Details</mat-label>
+        <textarea matInput matTextareaAutosize
+                  [(ngModel)]="data.appointmentToCreate.details"
+        ></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Doctor</mat-label>
+        <mat-select [(ngModel)]="data.appointmentToCreate.doctorId" name="food">
+            <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+                {{doctor.firstName + ' ' + doctor.lastName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Start date</mat-label>
+            <input
+                    matInput
+                    mwlFlatpickr
+                    [(ngModel)]="data.appointmentToCreate.start"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set"
+            />
+        </mat-form-field>
+
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>End date</mat-label>
+            <input
+                    matInput
+                    mwlFlatpickr
+                    [(ngModel)]="data.appointmentToCreate.end"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set"
+            />
+        </mat-form-field>
+    </div>
+
+    <section class="example-section">
+        <mat-radio-group  [(ngModel)]="data.appointmentToCreate.existingPatient">
+            <mat-radio-button [value]="true" style="margin-right: 5px">Existing Patient
+            </mat-radio-button>
+            <mat-radio-button [value]="false">New Patient
+            </mat-radio-button>
+        </mat-radio-group>
+    </section>
+
+    <div *ngIf="data.appointmentToCreate.existingPatient">
+        <div class="row">
+            <mat-form-field class="full-width col-sm" appearance="fill">
+                <mat-label>Patient</mat-label>
+                <mat-select [(ngModel)]="data.appointmentToCreate.patientId" name="food">
+                    <mat-option *ngFor="let patient of patients" [value]="patient.id">
+                        {{patient.firstName + ' ' + patient.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div *ngIf="!data.appointmentToCreate.existingPatient">
+        <div class="row">
+            <mat-form-field class="full-width col-sm" appearance="fill">
+                <mat-label>Patient's first name</mat-label>
+                <input matInput [(ngModel)]="data.appointmentToCreate.patientFirstName"/>
+            </mat-form-field>
+
+            <mat-form-field class="full-width col-sm" appearance="fill">
+                <mat-label>Patient's last name</mat-label>
+                <input matInput [(ngModel)]="data.appointmentToCreate.patientLastName"/>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field class="full-width col-sm" appearance="fill">
+                <mat-label>Patient's phone number</mat-label>
+                <input matInput [(ngModel)]="data.appointmentToCreate.patientPhoneNumber"/>
+            </mat-form-field>
+            <mat-form-field class="full-width col-sm" appearance="fill">
+                <mat-label>Patient's birth date</mat-label>
+                <input
+                        matInput
+                        mwlFlatpickr
+                        [(ngModel)]="data.appointmentToCreate.patientBirthDate"
+                        [altInput]="true"
+                        [convertModelValue]="true"
+                        [enableTime]="false"
+                        dateFormat="Y-m-d"
+                        altFormat="F j, Y"
+                        placeholder="Not set"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Close</button>
+        <button mat-button [mat-dialog-close]="data.appointmentToCreate" cdkFocusInitial>Submit</button>
+    </div>
+</div>

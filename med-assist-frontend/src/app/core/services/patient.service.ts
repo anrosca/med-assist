@@ -6,20 +6,21 @@ import { environment } from '../../../environments/environment';
 import { of, EMPTY } from 'rxjs';
 import {User} from '../model/user';
 import {Doctor} from "../model/doctor";
+import {Patient} from "../model/patient";
 
 @Injectable({
     providedIn: 'root'
 })
-export class DoctorService {
+export class PatientService {
 
-    private doctorsUrl = 'http://localhost:8080/api/v1/doctors';
+    private patientsUrl = 'http://localhost:8080/api/v1/patients';
     constructor(private http: HttpClient,
         @Inject('LOCALSTORAGE') private localStorage: Storage) {
     }
 
-    getAllDoctors() {
-        return this.http.get(this.doctorsUrl)
-            .pipe(map(response => (response as unknown as Doctor[])));
+    getAllPatients() {
+        return this.http.get(this.patientsUrl)
+            .pipe(map(response => (response as unknown as Patient[])));
     }
 
 }

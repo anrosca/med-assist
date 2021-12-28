@@ -15,9 +15,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AppointmentResponse {
     private String id;
-    private String appointmentDate;
-    private String startTime;
-    private String endTime;
+    private String startDate;
+    private String endDate;
     private String operation;
     private DoctorResponse doctor;
     private PatientResponse patient;
@@ -26,9 +25,8 @@ public class AppointmentResponse {
     public static AppointmentResponse from(Appointment appointment) {
         return AppointmentResponse.builder()
                 .id(appointment.getId())
-                .appointmentDate(appointment.getAppointmentDate().toString())
-                .startTime(appointment.getStartTime().toString())
-                .endTime(appointment.getEndTime().toString())
+                .startDate(appointment.getAppointmentDate().atTime(appointment.getStartTime()).toString())
+                .endDate(appointment.getAppointmentDate().atTime(appointment.getEndTime()).toString())
                 .operation(appointment.getOperation())
                 .doctor(makeDoctor(appointment.getDoctor()))
                 .patient(PatientResponse.from(appointment.getPatient()))

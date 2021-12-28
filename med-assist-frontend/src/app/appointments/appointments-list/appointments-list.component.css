@@ -1,0 +1,18 @@
+td, th {
+    padding: 5px;
+}
+th.mat-header-cell {
+    padding: 5px;
+}
+
+td.mat-cell, th.mat-header-cell {
+    padding: 5px;
+
+}
+
+
+table.mat-table {
+    table-layout: fixed;
+    width: 100%;
+    display: table;
+}

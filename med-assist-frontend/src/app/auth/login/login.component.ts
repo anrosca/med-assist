@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/']);
                 },
                 error => {
-                    const resMessage = error.message || error.error.message || error.toString();
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
                     this.notificationService.openSnackBar(resMessage);
                     this.loading = false;
                 }
