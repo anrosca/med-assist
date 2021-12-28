@@ -1,104 +1,72 @@
 package inc.evil.medassist.common.validation;
 
-import lombok.Data;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import javax.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.List;
+import java.util.Set;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
 public class AtLeastOneNotNullConstraintValidatorTest {
-    @Spy
-    private AtLeastOneNotNullConstraintValidator atLeastOneNotNullConstraintValidator;
+    private Validator validator;
 
-    @Mock
-    private ConstraintValidatorContext context;
-    @Mock
-    private ObjectToValidate object;
-    @Mock
-    private ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilder;
-    @Mock
-    private ConstraintValidatorContext.ConstraintViolationBuilder.NodeBuilderCustomizableContext noteBuilderDefineContext;
-    @Mock
-    private AtLeastOneNotNull atLeastOneNotNull;
-
-    @Before
+    @BeforeEach
     public void setUp() {
-        atLeastOneNotNullConstraintValidator = new AtLeastOneNotNullConstraintValidator();
-
-        object = new ObjectToValidate();
-
-        when(context.getDefaultConstraintMessageTemplate()).thenReturn("");
-        when(context.buildConstraintViolationWithTemplate("")).thenReturn(constraintViolationBuilder);
-        when(constraintViolationBuilder.addPropertyNode(anyString())).thenReturn(noteBuilderDefineContext);
-        when(noteBuilderDefineContext.addConstraintViolation()).thenReturn(context);
-    }
-
-    @Test
-    public void isValid_whenBothFieldsNull_isFalse() {
-        String[] fields = {"field1", "field2"};
-        when(atLeastOneNotNull.fields()).thenReturn(fields);
-        atLeastOneNotNullConstraintValidator.initialize(atLeastOneNotNull);
-        assertFalse(atLeastOneNotNullConstraintValidator.isValid(object, context));
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
 
     @Test
     public void isValid_whenOneFieldIsNotNull_isTrue() {
-        String[] fields = {"field1", "field2"};
-        object.setField1("field1");
-        when(atLeastOneNotNull.fields()).thenReturn(fields);
-        atLeastOneNotNullConstraintValidator.initialize(atLeastOneNotNull);
-        assertTrue(atLeastOneNotNullConstraintValidator.isValid(object, context));
+        ObjectToValidate object = new ObjectToValidate("field1", null);
+
+        Set<ConstraintViolation<ObjectToValidate>> actualViolations = validator.validate(object);
+
+        assertThat(actualViolations).isEmpty();
     }
 
     @Test
     public void isValid_whenOtherFieldIsNotNull_isTrue() {
-        String[] fields = {"field1", "field2"};
-        object.setField2("field2");
-        when(atLeastOneNotNull.fields()).thenReturn(fields);
-        atLeastOneNotNullConstraintValidator.initialize(atLeastOneNotNull);
-        assertTrue(atLeastOneNotNullConstraintValidator.isValid(object, context));
+        ObjectToValidate object = new ObjectToValidate(null, "field2");
+
+        Set<ConstraintViolation<ObjectToValidate>> actualViolations = validator.validate(object);
+
+        assertThat(actualViolations).isEmpty();
     }
 
     @Test
     public void isValid_whenBothFieldsNotNull_isTrue() {
-        String[] fields = {"field1", "field2"};
-        object.setField2("field2");
-        object.setField1("field1");
-        when(atLeastOneNotNull.fields()).thenReturn(fields);
-        atLeastOneNotNullConstraintValidator.initialize(atLeastOneNotNull);
-        assertTrue(atLeastOneNotNullConstraintValidator.isValid(object, context));
+        ObjectToValidate object = new ObjectToValidate("field1", "field2");
+
+        Set<ConstraintViolation<ObjectToValidate>> actualViolations = validator.validate(object);
+
+        assertThat(actualViolations).isEmpty();
     }
 
     @Test
     public void isValid_whenBothFieldsNull_addsConstraintViolations() {
-        String[] fields = {"field1", "field2"};
-        when(atLeastOneNotNull.fields()).thenReturn(fields);
-        atLeastOneNotNullConstraintValidator.initialize(atLeastOneNotNull);
-        atLeastOneNotNullConstraintValidator.isValid(object, context);
-        verify(constraintViolationBuilder).addPropertyNode("field1");
-        verify(constraintViolationBuilder).addPropertyNode("field2");
+        ObjectToValidate object = new ObjectToValidate(null, null);
+
+        Set<ConstraintViolation<ObjectToValidate>> violations = validator.validate(object);
+
+        List<Violation> actualViolations = violations.stream()
+                .map(v -> new Violation(v.getMessage(), v.getPropertyPath().toString()))
+                .toList();
+        Violation[] expectedViolations = {
+                new Violation("at least should not be null", "field1"),
+                new Violation("at least should not be null", "field2")
+        };
+        assertThat(actualViolations).containsExactlyInAnyOrder(expectedViolations);
     }
 
-    @Data
-    class ObjectToValidate {
-        private String field1;
-        private String field2;
-    }
+    record Violation(String message, String path) {}
+
+    @AtLeastOneNotNull(fields = {"field1", "field2"})
+    record ObjectToValidate(String field1, String field2) { }
 }
+
