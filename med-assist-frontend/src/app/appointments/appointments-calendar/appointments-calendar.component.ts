@@ -3,6 +3,7 @@ import {NotificationService} from 'src/app/core/services/notification.service';
 import {Title} from '@angular/platform-browser';
 import {NGXLogger} from 'ngx-logger';
 import {AuthenticationService} from 'src/app/core/services/auth.service';
+
 import {
     CalendarEvent,
     CalendarEventAction,
@@ -28,9 +29,9 @@ import {faCoffee} from '@fortawesome/free-solid-svg-icons';
 import {CustomEventTitleFormatter} from "../../shared/calendar/custom-event-title-formatter.provider";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DoctorService} from "../../core/services/doctor.service";
-import {Doctor} from "../../core/model/doctor";
-import {Patient} from "../../core/model/patient";
-import {PatientService} from "../../core/services/patient.service";
+import {CreateAppointmentDialog} from "../create-appointment/create-appointment-dialog";
+import {ViewAppointmentDialog} from "../view-appointment/view-appointment-dialog";
+import {ConfirmDialog, ConfirmDialogModel} from "../../shared/confirm-dialog/confirm-dialog.component";
 
 const colors: any = {
     red: {
@@ -53,8 +54,8 @@ const colors: any = {
 
 @Component({
     selector: 'app-dashboard-home',
-    templateUrl: './dashboard-home.component.html',
-    styleUrls: ['./dashboard-home.component.css'],
+    templateUrl: './appointments-calendar.component.html',
+    styleUrls: ['./appointments-calendar.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
@@ -63,7 +64,7 @@ const colors: any = {
         },
     ],
 })
-export class DashboardHomeComponent implements OnInit, AfterViewInit {
+export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
     @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
 
     currentUser: any;
@@ -127,8 +128,7 @@ export class DashboardHomeComponent implements OnInit, AfterViewInit {
                                     label: '<i class="fa fa-trash"></i> ',
                                     a11yLabel: 'Delete',
                                     onClick: ({event}: { event: CalendarEvent }): void => {
-                                        this.events = this.events.filter((iEvent) => iEvent !== event);
-                                        this.handleEvent('Deleted', event);
+                                        this.deleteAppointment(event);
                                     },
                                 },
                             ]
@@ -197,9 +197,6 @@ export class DashboardHomeComponent implements OnInit, AfterViewInit {
         ];
     }
 
-    deleteEvent(eventToDelete: CalendarEvent) {
-        this.events = this.events.filter((event) => event !== eventToDelete);
-    }
 
     setView(view: CalendarView) {
         this.view = view;
@@ -241,7 +238,7 @@ export class DashboardHomeComponent implements OnInit, AfterViewInit {
     openCreateAppointmentDialog(): void {
         const dialogRef = this.dialog.open(CreateAppointmentDialog, {
             width: '700px',
-            data: {appointmentToCreate: this.appointmentToCreate},
+            data: {appointment: this.appointmentToCreate}
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -258,38 +255,35 @@ export class DashboardHomeComponent implements OnInit, AfterViewInit {
             })
         });
     }
-}
 
-@Component({
-    selector: 'create-appointment-dialog',
-    templateUrl: 'create-appointment-dialog.html',
-})
-export class CreateAppointmentDialog implements AfterViewInit {
-    doctors: Doctor[] = [];
-    patients: Patient[] = [];
 
-    constructor(
-        public dialogRef: MatDialogRef<CreateAppointmentDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: CreateAppointmentDialogData,
-        private doctorService: DoctorService,
-        private patientService: PatientService,
-    ) {
+    deleteAppointment(eventToDelete: CalendarEvent) {
+        const dialogRef = this.dialog.open(ConfirmDialog, {
+            data: {title: 'Delete appointment', message: 'Are you sure you want to delete  appointment?'}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.appointmentService.deleteAppointment(eventToDelete.meta.id).subscribe(() => {
+                    this.events = this.events.filter((event) => event !== eventToDelete);
+                    this.refresh.next();
+                }, error => {
+                    console.log(error)
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                })
+            }
+        });
+
     }
 
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
+    viewAppointment(event: CalendarEvent): void {
+        const dialogRef = this.dialog.open(ViewAppointmentDialog, {
+            width: '700px',
+            data: {appointment: event}
+        });
 
-    ngAfterViewInit(): void {
-        this.doctorService.getAllDoctors().subscribe(doctors => {
-            this.doctors = doctors;
-        })
-        this.patientService.getAllPatients().subscribe(patients => {
-            this.patients = patients;
-        })
+        dialogRef.afterClosed().subscribe(() => {
+        });
     }
 }
 
-export interface CreateAppointmentDialogData {
-    appointmentToCreate: any;
-}

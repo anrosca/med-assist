@@ -11,7 +11,7 @@ import {LoggerModule} from 'ngx-logger';
 import {environment} from '../environments/environment';
 import {ViewTokenModalComponent} from './account/profile-details/view-token-modal/view-token-modal.component';
 import {AccountModule} from './account/account.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {MatIconModule} from "@angular/material/icon";
 
@@ -36,8 +36,7 @@ import {MatIconModule} from "@angular/material/icon";
         }),
         NgbModule
     ],
-    exports: [
-    ],
+    exports: [],
     bootstrap: [AppComponent],
     entryComponents: [ViewTokenModalComponent]
 })

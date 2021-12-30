@@ -3,7 +3,6 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {AuthGuard} from './core/guards/auth.guard';
 import {AdminGuard} from './core/guards/admin.guard';
-import {DashboardModule} from "./dashboard/dashboard.module";
 import {UsersModule} from "./users/users.module";
 import {DoctorsModule} from "./doctors/doctors.module";
 import {AccountModule} from "./account/account.module";
@@ -16,8 +15,8 @@ const appRoutes: Routes = [
         loadChildren: () => import('./auth/auth.module').then(x => x.AuthModule)
     },
     {
-        path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(x => DashboardModule),
+        path: 'appointments',
+        loadChildren: () => import('./appointments/appointments.module').then(x => AppointmentsModule),
         canActivate: [AuthGuard]
     },
     {
@@ -28,11 +27,6 @@ const appRoutes: Routes = [
     {
         path: 'doctors',
         loadChildren: () => import('./doctors/doctors.module').then(x => DoctorsModule),
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'appointments',
-        loadChildren: () => import('./appointments/appointments.module').then(x => AppointmentsModule),
         canActivate: [AuthGuard]
     },
     {
@@ -47,7 +41,7 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'dashboard',
+        redirectTo: 'appointments/calendar',
         pathMatch: 'full'
     }
 ];

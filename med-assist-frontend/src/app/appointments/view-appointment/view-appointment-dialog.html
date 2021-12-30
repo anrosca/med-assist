@@ -1,0 +1,70 @@
+<h1 mat-dialog-title>View appointment</h1>
+<div style="margin-top: 10px; margin-bottom: 10px;">
+    <div class="row">
+        <mat-form-field class="full-width col-10" appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput readonly [value]="data.appointment.title"/>
+        </mat-form-field>
+        <mat-form-field class="full-width col-2" appearance="fill">
+            <mat-label>Color</mat-label>
+            <input matInput readonly type="color" [value]="data.appointment.color.primary"/>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Details</mat-label>
+        <textarea matInput readonly matTextareaAutosize
+                  [value]="data.appointment.meta.details"
+        ></textarea>
+    </mat-form-field>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Doctor</mat-label>
+            <input matInput readonly
+                   [value]="data.appointment.meta.doctor.firstName + ' ' + data.appointment.meta.doctor.lastName"/>
+        </mat-form-field>
+
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Specialty</mat-label>
+            <input matInput readonly [value]="data.appointment.meta.doctor.specialty"/>
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Start date</mat-label>
+            <input matInput readonly [value]="data.appointment.start"/>
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>End date</mat-label>
+            <input matInput readonly [value]="data.appointment.end"/>
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Patient</mat-label>
+            <input matInput readonly
+                   [value]="data.appointment.meta.patient.firstName + ' ' + data.appointment.meta.patient.lastName "/>
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Patient's phone number</mat-label>
+            <input matInput readonly [value]="data.appointment.meta.patient.phoneNumber"/>
+        </mat-form-field>
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Patient's birth date</mat-label>
+            <input matInput readonly [value]="data.appointment.meta.patient.birthDate"/>
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Close</button>
+    </div>
+</div>

@@ -61,11 +61,18 @@
       <mat-nav-list>
         <h3 mat-subheader>Home</h3>
 
-        <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/appointments/calendar']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
           </mat-icon>
-          <p mat-line> Dashboard </p>
+          <p mat-line> Calendar </p>
+        </a>
+
+        <a mat-list-item [routerLink]="['/appointments/list']" >
+          <mat-icon mat-list-icon>
+            calendar_today
+          </mat-icon>
+          <p mat-line> Appointments </p>
         </a>
 
         <a mat-list-item [routerLink]="['/users']" >
@@ -80,13 +87,6 @@
             local_hospital
           </mat-icon>
           <p mat-line> Doctors </p>
-        </a>
-
-        <a mat-list-item [routerLink]="['/appointments']" >
-          <mat-icon mat-list-icon>
-            calendar_today
-          </mat-icon>
-          <p mat-line> Appointments </p>
         </a>
 
         <a mat-list-item [routerLink]="['/account/profile']">

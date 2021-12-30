@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NGXLogger} from "ngx-logger";
 import {Title} from "@angular/platform-browser";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
@@ -20,7 +19,6 @@ export class DoctorListComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(
-      private logger: NGXLogger,
       private notificationService: NotificationService,
       private doctorService: DoctorService,
       private titleService: Title

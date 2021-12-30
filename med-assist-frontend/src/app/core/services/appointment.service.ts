@@ -24,6 +24,10 @@ export class AppointmentService {
             .pipe(map(response => (response as unknown as Appointment[])));
     }
 
+    deleteAppointment(appointmentId: string){
+        return this.http.delete(this.appointmentsUrl + '/' + appointmentId);
+    }
+
     createAppointment(appointment: any) {
         return this.http.post(this.appointmentsUrl, {
             "patientRequest" : {
