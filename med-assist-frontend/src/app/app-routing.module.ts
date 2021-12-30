@@ -8,6 +8,7 @@ import {DoctorsModule} from "./doctors/doctors.module";
 import {AccountModule} from "./account/account.module";
 import {AboutModule} from "./about/about.module";
 import {AppointmentsModule} from "./appointments/appointments.module";
+import {PatientsModule} from "./patients/patients.module";
 
 const appRoutes: Routes = [
     {
@@ -27,6 +28,11 @@ const appRoutes: Routes = [
     {
         path: 'doctors',
         loadChildren: () => import('./doctors/doctors.module').then(x => DoctorsModule),
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'patients',
+        loadChildren: () => import('./patients/patients.module').then(x => PatientsModule),
         canActivate: [AuthGuard]
     },
     {

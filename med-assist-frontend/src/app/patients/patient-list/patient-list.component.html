@@ -1,0 +1,58 @@
+<div style="margin-top: 10px;" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+
+        <mat-card>
+            <mat-card-content>
+                <h2>Patients</h2>
+
+                <mat-form-field appearance="standard">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+                        <td mat-cell *matCellDef="let patient"> {{patient.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="firstName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> first name </th>
+                        <td mat-cell *matCellDef="let patient"> {{patient.firstName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> last name </th>
+                        <td mat-cell *matCellDef="let patient"> {{patient.lastName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="phoneNumber">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> mobile </th>
+                        <td mat-cell *matCellDef="let patient"> {{patient.phoneNumber}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="birthDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> birth date </th>
+                        <td mat-cell *matCellDef="let patient"> {{patient.birthDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let patient" class="action-link">
+                            <button mat-button (click)="viewPatient(patient)" ><i class="material-icons">pageview</i></button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+            </mat-card-content>
+        </mat-card>
+
+
+    </div>
+</div>
