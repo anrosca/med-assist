@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CustomMaterialModule } from '../custom-material/custom-material.module';
 import { LimitToPipe } from './pipes/limit-to.pipe';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ConfirmDialog } from './confirm-dialog/confirm-dialog.component';
 import { ContentPlaceholderAnimationComponent } from './content-placeholder-animation/content-placeholder-animation.component';
 import { LocalDatePipe } from './pipes/local-date.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
@@ -20,7 +20,7 @@ import { LayoutComponent } from './layout/layout.component';
     FlexLayoutModule,
   ],
   declarations: [
-    ConfirmDialogComponent,
+    ConfirmDialog,
     ContentPlaceholderAnimationComponent,
     LimitToPipe,
     LocalDatePipe,
@@ -33,13 +33,13 @@ import { LayoutComponent } from './layout/layout.component';
     FlexLayoutModule,
     CustomMaterialModule,
     LimitToPipe,
-    ConfirmDialogComponent,
+    ConfirmDialog,
     ContentPlaceholderAnimationComponent,
     LocalDatePipe,
     YesNoPipe
   ],
   entryComponents: [
-    ConfirmDialogComponent
+    ConfirmDialog
   ]
 })
 export class SharedModule { }

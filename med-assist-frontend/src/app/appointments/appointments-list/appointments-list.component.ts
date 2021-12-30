@@ -53,4 +53,6 @@ export class AppointmentsListComponent implements OnInit {
             });
 
   }
+
+
 }
