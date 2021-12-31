@@ -1,0 +1,70 @@
+<div style="margin-top: 10px;" fxLayout="row" fxLayoutAlign="center none">
+
+    <div fxFlex="95%">
+
+
+        <h2>Patient - {{data.patient.firstName + ' ' + data.patient.lastName}}</h2>
+
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+
+            <div fxFlex></div>
+
+            <div fxFlex="100%" fxFlex.sm="95%" fxFlex.xs="950%">
+
+
+                <mat-tab-group>
+                    <mat-tab label="Details">
+                        <mat-card style="border: 2px solid rgba(55,55,55, 0.5); margin-top: 10px;">
+                            <mat-card-content>
+                                <div class="row">
+                                    <mat-form-field class="full-width col-sm" appearance="fill">
+                                        <mat-label>Patient's first name</mat-label>
+                                        <input matInput readonly
+                                               [value]="data.patient.firstName"/>
+                                    </mat-form-field>
+                                    <mat-form-field class="full-width col-sm" appearance="fill">
+                                        <mat-label>Patient's last name</mat-label>
+                                        <input matInput readonly
+                                               [value]="data.patient.lastName"/>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field class="full-width col-sm" appearance="fill">
+                                        <mat-label>Patient's phone number</mat-label>
+                                        <input matInput readonly [value]="data.patient.phoneNumber"/>
+                                    </mat-form-field>
+                                    <mat-form-field class="full-width col-sm" appearance="fill">
+                                        <mat-label>Patient's birth date</mat-label>
+                                        <input matInput readonly [value]="data.patient.birthDate"/>
+                                    </mat-form-field>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+
+                    </mat-tab>
+                    <mat-tab label="History">
+                        nanana
+                    </mat-tab>
+                    <mat-tab label="Dental map">
+                        <mat-card style="border: 2px solid rgba(55,55,55, 0.5); margin-top: 10px;">
+                            <mat-card-content>
+                                <app-dental-chart></app-dental-chart>
+                            </mat-card-content>
+                        </mat-card>
+                    </mat-tab>
+                    <mat-tab label="Files">
+                        nanana
+                    </mat-tab>
+                    <mat-tab label="Money">
+                        nanana
+                    </mat-tab>
+                </mat-tab-group>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

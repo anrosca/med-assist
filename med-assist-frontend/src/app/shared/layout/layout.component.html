@@ -63,14 +63,14 @@
 
         <a mat-list-item [routerLink]="['/appointments/calendar']" routerLinkActive="active">
           <mat-icon mat-list-icon>
-            dashboard
+            calendar_today
           </mat-icon>
           <p mat-line> Calendar </p>
         </a>
 
         <a mat-list-item [routerLink]="['/appointments/list']" >
           <mat-icon mat-list-icon>
-            calendar_today
+            event
           </mat-icon>
           <p mat-line> Appointments </p>
         </a>
@@ -84,9 +84,16 @@
 
         <a mat-list-item [routerLink]="['/doctors']" >
           <mat-icon mat-list-icon>
-            local_hospital
+            health_and_safety
           </mat-icon>
           <p mat-line> Doctors </p>
+        </a>
+
+        <a mat-list-item [routerLink]="['/patients']" >
+          <mat-icon mat-list-icon>
+            face
+          </mat-icon>
+          <p mat-line> Patients </p>
         </a>
 
         <a mat-list-item [routerLink]="['/account/profile']">
