@@ -15,11 +15,13 @@ Content-Type: application/json
 
 {
   "username": "square-pants",
-  "email" : "sponge-bob@gmail.com",
-  "firstName" : "Sponge",
-  "lastName" : "Bob",
+  "email": "sponge-bob@gmail.com",
+  "firstName": "Sponge",
+  "lastName": "Bob",
   "password": "123456",
-  "authorities" : ["POWER_USER"]
+  "authorities": [
+    "POWER_USER"
+  ]
 }
 
 
@@ -49,7 +51,7 @@ Content-Type: application/json
 Authorization: {{authKey}}
 
 {
-  "email" : "bdylan@rocknrollcafe.com"
+  "email": "bdylan@rocknrollcafe.com"
 }
 
 ###
@@ -66,11 +68,22 @@ Content-Type: application/json
 Authorization: {{authKey}}
 
 {
-
-  "firstName" : "Bilbo",
-  "lastName" : "Beggins",
+  "firstName": "Bilbo",
+  "lastName": "Beggins",
   "phoneNumber": "37369666666",
   "birthDate": "1995-11-15"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/patients
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+  "firstName": "Bob",
+  "lastName": "Nikolson",
+  "phoneNumber": "37369666666",
+  "birthDate": "1995-11-20"
 }
 
 
@@ -81,13 +94,15 @@ Authorization: {{authKey}}
 
 {
   "username": "vusaci",
-  "email" : "vusaci@gmail.com",
-  "firstName" : "Vasile",
-  "lastName" : "Usaci",
+  "email": "vusaci@gmail.com",
+  "firstName": "Vasile",
+  "lastName": "Usaci",
   "password": "123456",
   "telephoneNumber": "37369666666",
   "specialty": "ORTHODONTIST",
-  "authorities" : ["DOCTOR"]
+  "authorities": [
+    "DOCTOR"
+  ]
 }
 
 ### Send POST request with json body
@@ -97,18 +112,80 @@ Authorization: {{authKey}}
 
 {
   "patientRequest": {
-    "firstName" : "Bob",
-    "lastName" : "Nikolson",
+    "firstName": "Bob",
+    "lastName": "Nikolson",
     "phoneNumber": "37369666633",
     "birthDate": "1996-11-15"
   },
   "doctorId": "83d5eaa7-53a3-48d0-a0ce-13683752180e",
-  "startDate" : "2021-12-26T12:00:00",
-  "endDate" : "2021-12-26T14:30:00",
+  "startDate": "2021-12-26T12:00:00",
+  "endDate": "2021-12-26T14:30:00",
   "operation": "Operation teeth 6th",
   "details": "New patient"
 }
 
 ###
 GET http://localhost:8080/api/v1/appointments
+Authorization: {{authKey}}
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/treatments
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+  "description": "General teeth cleaning",
+  "price": 200.00,
+  "doctorId": "0d5dae35-1a51-4577-a877-1e69a2a59e92",
+  "patientId": "2d1ac315-a8d7-49f1-82e6-f4e57cb6f62f"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/treatments
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+  "description": "Veneers",
+  "price": 2000.00,
+  "doctorId": "0d5dae35-1a51-4577-a877-1e69a2a59e92",
+  "patientId": "2d1ac315-a8d7-49f1-82e6-f4e57cb6f62f",
+  "teethIds": ["d0009324-7bd5-4b2e-b044-b2db9bc3880e", "d391202d-e4a2-4012-8840-039afec18986"]
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/v1/treatments
+Content-Type: application/json
+Authorization: {{authKey}}
+
+{
+  "description": "Extraction",
+  "price": 750.00,
+  "doctorId": "0d5dae35-1a51-4577-a877-1e69a2a59e92",
+  "patientId": "2d1ac315-a8d7-49f1-82e6-f4e57cb6f62f",
+  "teethIds": ["13a99d0e-00ab-488d-8cc0-e8e11f3dd80c"]
+}
+
+###
+GET http://localhost:8080/api/v1/treatments
+Authorization: {{authKey}}
+
+###
+GET http://localhost:8080/api/v1/treatments?doctorId=0d5dae35-1a51-4577-a877-1e69a2a59e92
+Authorization: {{authKey}}
+
+###
+GET http://localhost:8080/api/v1/treatments?patientId=2d1ac315-a8d7-49f1-82e6-f4e57cb6f62f
+Authorization: {{authKey}}
+
+###
+GET http://localhost:8080/api/v1/treatments?toothId=d0009324-7bd5-4b2e-b044-b2db9bc3880e
+Authorization: {{authKey}}
+
+###
+GET http://localhost:8080/api/v1/teeth/d0009324-7bd5-4b2e-b044-b2db9bc3880e
+Authorization: {{authKey}}
+
+###
+GET http://localhost:8080/api/v1/teeth?patientId=2d1ac315-a8d7-49f1-82e6-f4e57cb6f62f
 Authorization: {{authKey}}

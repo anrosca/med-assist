@@ -4,6 +4,7 @@ import inc.evil.medassist.common.exception.NotFoundException;
 
 import inc.evil.medassist.doctor.model.Doctor;
 import inc.evil.medassist.doctor.repository.DoctorRepository;
+import inc.evil.medassist.treatment.service.TreatmentService;
 import inc.evil.medassist.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
+    private final TreatmentService treatmentService;
     private final PasswordEncoder passwordEncoder;
 
     @Override

@@ -47,6 +47,10 @@ export class UserListComponent implements OnInit {
                     this.dataSource = new MatTableDataSource(users);
                     this.dataSource.sort = this.sort;
                     this.dataSource.paginator = this.paginator;
+                    this.dataSource.filterPredicate = (data: any, filter) => {
+                        const dataStr = JSON.stringify(data).toLowerCase();
+                        return dataStr.indexOf(filter) != -1;
+                    }
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();

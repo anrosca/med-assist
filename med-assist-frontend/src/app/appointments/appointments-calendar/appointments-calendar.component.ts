@@ -237,7 +237,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
 
     openCreateAppointmentDialog(): void {
         const dialogRef = this.dialog.open(CreateAppointmentDialog, {
-            width: '700px',
+            width: 'auto',
             data: {appointment: this.appointmentToCreate}
         });
 
@@ -258,8 +258,9 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
 
 
     deleteAppointment(eventToDelete: CalendarEvent) {
+        let patient = eventToDelete.meta.patient;
         const dialogRef = this.dialog.open(ConfirmDialog, {
-            data: {title: 'Delete appointment', message: 'Are you sure you want to delete  appointment?'}
+            data: {title: 'Delete appointment', message: 'Are you sure you want to delete ' + patient.firstName + ' ' + patient.lastName + '\'s appointment?'}
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -273,12 +274,11 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                 })
             }
         });
-
     }
 
     viewAppointment(event: CalendarEvent): void {
         const dialogRef = this.dialog.open(ViewAppointmentDialog, {
-            width: '700px',
+            width: 'auto',
             data: {appointment: event}
         });
 

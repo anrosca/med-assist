@@ -43,4 +43,17 @@ public class DoctorResponse {
                 .enabled(doctor.isEnabled())
                 .build();
     }
+
+    public static DoctorResponse simpleForm(Doctor doctor) {
+        return DoctorResponse.builder()
+                .id(doctor.getId())
+                .email(doctor.getEmail())
+                .firstName(doctor.getFirstName())
+                .lastName(doctor.getLastName())
+                .username(doctor.getUsername())
+                .specialty(doctor.getSpecialty().name())
+                .telephoneNumber(doctor.getTelephoneNumber())
+                .enabled(doctor.isEnabled())
+                .build();
+    }
 }
