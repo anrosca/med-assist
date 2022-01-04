@@ -8,22 +8,21 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.LockModeType;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, String> {
-    @Query("select d From Doctor d where d.username = lower(:username)")
-    Optional<Doctor> findByUsername(@Param("username") String username);
+    @Query("select d From Doctor d where d.username = lower(:username) and d.enabled = true")
+    Optional<Doctor> findEnabledByUsername(@Param("username") String username);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select d from Doctor d where d.id = :id")
-    Doctor findByIdAndLock(@Param("id") String id);
+    @Query("select d from Doctor d where d.id = :id and d.enabled = true")
+    Doctor findEnabledByIdAndLock(@Param("id") String id);
 
-    @Query("select d from Doctor d join fetch d.authorities where d.id = :id")
-    Optional<Doctor> findByIdWithAuthorities(@Param("id") String id);
+    @Query("select d from Doctor d join fetch d.authorities where d.id = :id and d.enabled = true")
+    Optional<Doctor> findEnabledByIdWithAuthorities(@Param("id") String id);
 
-    @Query("select d from Doctor d join fetch d.authorities")
-    List<Doctor> findAllWithAuthorities();
+    @Query("select d from Doctor d join fetch d.authorities where d.enabled = true")
+    List<Doctor> findAllEnabledWithAuthorities();
 }

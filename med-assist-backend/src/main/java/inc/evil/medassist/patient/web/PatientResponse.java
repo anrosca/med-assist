@@ -1,9 +1,11 @@
 package inc.evil.medassist.patient.web;
 
 import inc.evil.medassist.patient.model.Patient;
+import inc.evil.medassist.teeth.web.ToothResponse;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder

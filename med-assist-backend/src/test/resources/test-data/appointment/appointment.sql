@@ -1,5 +1,8 @@
 --Clean up
 
+truncate treatment_tooth cascade ;
+truncate teeth cascade;
+truncate treatments cascade ;
 delete from appointments;
 delete from patients;
 truncate users cascade;

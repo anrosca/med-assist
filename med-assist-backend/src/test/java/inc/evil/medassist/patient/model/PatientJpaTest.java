@@ -20,6 +20,7 @@ public class PatientJpaTest extends AbstractEqualityCheckTest<Patient> {
                 .phoneNumber("+37369985214")
                 .createdAt(LocalDateTime.of(2021, 12, 13, 17, 0))
                 .updatedAt(LocalDateTime.of(2021, 12, 13, 17, 0))
+                .isDeleted(false)
                 .build();
 
         assertEqualityConsistency(Patient.class, patient);

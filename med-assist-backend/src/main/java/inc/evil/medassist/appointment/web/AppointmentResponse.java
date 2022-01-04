@@ -28,22 +28,9 @@ public class AppointmentResponse {
                 .startDate(appointment.getAppointmentDate().atTime(appointment.getStartTime()).toString())
                 .endDate(appointment.getAppointmentDate().atTime(appointment.getEndTime()).toString())
                 .operation(appointment.getOperation())
-                .doctor(makeDoctor(appointment.getDoctor()))
+                .doctor(DoctorResponse.simpleForm(appointment.getDoctor()))
                 .patient(PatientResponse.from(appointment.getPatient()))
                 .details(appointment.getDetails())
-                .build();
-    }
-
-    private static DoctorResponse makeDoctor(Doctor doctor) {
-        return DoctorResponse.builder()
-                .id(doctor.getId())
-                .email(doctor.getEmail())
-                .firstName(doctor.getFirstName())
-                .lastName(doctor.getLastName())
-                .username(doctor.getUsername())
-                .specialty(doctor.getSpecialty().name())
-                .telephoneNumber(doctor.getTelephoneNumber())
-                .enabled(doctor.isEnabled())
                 .build();
     }
 }

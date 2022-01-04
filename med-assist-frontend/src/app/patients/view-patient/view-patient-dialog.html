@@ -42,13 +42,58 @@
                         </mat-card>
 
                     </mat-tab>
-                    <mat-tab label="History">
-                        nanana
+                    <mat-tab label="Treatments">
+                        <mat-card>
+                            <mat-card-content>
+                                <h2>Treatments</h2>
+
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Filter</mat-label>
+                                    <input matInput (keyup)="applyTreatmentsFilter($event)" placeholder="Ex. Mia" #input>
+                                </mat-form-field>
+
+                                <button mat-raised-button color="primary" style="margin-bottom: 10px; float: right;" (click)="openAddTreatmentDialog()">Add treatment</button>
+
+                                <table mat-table [dataSource]="treatmentsDataSource" matSort>
+
+                                    <ng-container matColumnDef="description">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> description </th>
+                                        <td mat-cell *matCellDef="let treatment"> {{treatment.description}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="doctor">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> doctor </th>
+                                        <td mat-cell *matCellDef="let treatment"> {{treatment.doctor.firstName + ' ' + treatment.doctor.lastName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="teeth">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> teeth </th>
+                                        <td mat-cell *matCellDef="let treatment"> {{treatment.teeth | teethPrinter}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="price">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> price </th>
+                                        <td mat-cell *matCellDef="let treatment"> {{treatment.price}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="createdAt">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> date </th>
+                                        <td mat-cell *matCellDef="let treatment"> {{treatment.createdAt}} </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="treatmentsDisplayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: treatmentsDisplayedColumns;"></tr>
+                                </table>
+
+                                <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+                            </mat-card-content>
+                        </mat-card>
                     </mat-tab>
                     <mat-tab label="Dental map">
                         <mat-card style="border: 2px solid rgba(55,55,55, 0.5); margin-top: 10px;">
                             <mat-card-content>
-                                <app-dental-chart></app-dental-chart>
+                                <app-dental-chart [patient]="data.patient"></app-dental-chart>
                             </mat-card-content>
                         </mat-card>
                     </mat-tab>

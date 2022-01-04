@@ -40,7 +40,8 @@ create table patients
     first_name varchar(255),
     last_name varchar(255),
     birth_date date not null,
-    phone_number varchar(20) not null
+    phone_number varchar(20) not null,
+    is_deleted bool not null default false
 );
 
 create table doctors
@@ -73,3 +74,42 @@ create table appointments
 create index doctor_id_fk_index on appointments (doctor_id);
 create index start_time_index on appointments(start_time);
 create index end_time_index on appointments(end_time);
+
+create table teeth
+(
+    id varchar(255) not null
+        constraint teeth_pkey
+            primary key,
+    created_at timestamp not null,
+    updated_at timestamp not null,
+    extracted boolean not null,
+    name varchar(255),
+    patient_id varchar(255)
+        constraint patient_fk references patients
+);
+
+create table treatments
+(
+    id varchar(255) not null
+        constraint treatments_pkey
+            primary key,
+    created_at timestamp not null,
+    updated_at timestamp not null,
+    description varchar(255),
+    price double precision,
+    doctor_id varchar(255) not null
+        constraint doctor_fk references doctors,
+    patient_id varchar(255) not null
+        constraint patient_fk references patients
+);
+
+create table treatment_tooth
+(
+    treatment_id varchar(255) not null
+        constraint treatment_fk references treatments,
+    tooth_id varchar(255) not null
+        constraint teeth_fk references teeth,
+    constraint treatment_tooth_pkey
+        primary key (treatment_id, tooth_id)
+);
+

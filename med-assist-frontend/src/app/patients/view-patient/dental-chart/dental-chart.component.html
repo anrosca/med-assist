@@ -4,53 +4,213 @@
 
         <table>
             <tr>
-                <td><button class="teeth" mat-button><img src="assets/teeth/1.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/2.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/3.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/4.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/5.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/6.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/7.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/8.png" alt="teeth"></button></td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL8.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL8'" (click)="viewTooth(dentalChart.UL8)"><img
+                            src="assets/teeth/lu-t-8.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL7.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL7'" (click)="viewTooth(dentalChart.UL7)"><img
+                            src="assets/teeth/lu-t-7.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL6.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL6'" (click)="viewTooth(dentalChart.UL6)"><img
+                            src="assets/teeth/lu-t-6.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL5.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL5'" (click)="viewTooth(dentalChart.UL5)"><img
+                            src="assets/teeth/lu-t-5.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL4.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL4'" (click)="viewTooth(dentalChart.UL4)"><img
+                            src="assets/teeth/lu-t-4.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL3.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL3'" (click)="viewTooth(dentalChart.UL3)"><img
+                            src="assets/teeth/lu-t-3.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL2.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL2'" (click)="viewTooth(dentalChart.UL2)"><img
+                            src="assets/teeth/lu-t-2.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UL1.number}}" matBadgeSize="small" matBadgePosition="below after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UL1'" (click)="viewTooth(dentalChart.UL1)"><img
+                            src="assets/teeth/lu-t-1.png" alt="teeth"></button>
+                </td>
             </tr>
             <mat-divider></mat-divider>
             <tr>
-                <td><button class="teeth" mat-button><img src="assets/teeth/32.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/31.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/30.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/29.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/28.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/27.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/26.png" alt="teeth"></button></td>
-                <td align="right"><button class="teeth" mat-button><img src="assets/teeth/25.png" alt="teeth"></button></td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL8.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL8'" (click)="viewTooth(dentalChart.LL8)"><img
+                            src="assets/teeth/ll-t-8.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL7.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL7'" (click)="viewTooth(dentalChart.LL7)"><img
+                            src="assets/teeth/ll-t-7.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL6.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL6'" (click)="viewTooth(dentalChart.LL6)"><img
+                            src="assets/teeth/ll-t-6.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL5.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL5'" (click)="viewTooth(dentalChart.LL5)"><img
+                            src="assets/teeth/ll-t-5.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL4.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL4'" (click)="viewTooth(dentalChart.LL4)"><img
+                            src="assets/teeth/ll-t-4.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL3.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL3'" (click)="viewTooth(dentalChart.LL3)"><img
+                            src="assets/teeth/ll-t-3.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL2.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL2'" (click)="viewTooth(dentalChart.LL2)"><img
+                            src="assets/teeth/ll-t-2.png" alt="teeth"></button>
+                </td>
+                <td align="right" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LL1.number}}" matBadgeSize="small" matBadgePosition="after" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LL1'" (click)="viewTooth(dentalChart.LL1)"><img
+                            src="assets/teeth/ll-t-1.png" alt="teeth"></button>
+                </td>
             </tr>
         </table>
     </div>
-
+    <mat-divider [vertical]="true"></mat-divider>
     <div fxFlex="50%" fxFlex.sm="95%" fxFlex.xs="950%">
         <table>
             <tr>
-                <td><button class="teeth" mat-button><img src="assets/teeth/9.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/10.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/11.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/12.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/13.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/14.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/15.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/16.png" alt="teeth"></button></td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR1.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR1'" (click)="viewTooth(dentalChart.UR1)"><img
+                            src="assets/teeth/ru-t-1.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR2.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR2'" (click)="viewTooth(dentalChart.UR2)"><img
+                            src="assets/teeth/ru-t-2.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR3.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR3'" (click)="viewTooth(dentalChart.UR3)"><img
+                            src="assets/teeth/ru-t-3.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR4.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR4'" (click)="viewTooth(dentalChart.UR4)"><img
+                            src="assets/teeth/ru-t-4.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR5.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR5'" (click)="viewTooth(dentalChart.UR5)"><img
+                            src="assets/teeth/ru-t-5.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR6.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR6'" (click)="viewTooth(dentalChart.UR6)"><img
+                            src="assets/teeth/ru-t-6.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR7.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR7'" (click)="viewTooth(dentalChart.UR7)"><img
+                            src="assets/teeth/ru-t-7.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-bottom">
+                    <button class="teeth" matBadge="{{dentalChart.UR8.number}}" matBadgeSize="small" matBadgePosition="below before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'UR8'" (click)="viewTooth(dentalChart.UR8)"><img
+                            src="assets/teeth/ru-t-8.png" alt="teeth"></button>
+                </td>
             </tr>
-            <mat-divider></mat-divider>
             <tr>
-                <td><button class="teeth" mat-button><img src="assets/teeth/24.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/23.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/22.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/21.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/20.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/19.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/18.png" alt="teeth"></button></td>
-                <td><button class="teeth" mat-button><img src="assets/teeth/17.png" alt="teeth"></button></td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR1.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR1'" (click)="viewTooth(dentalChart.LR1)"><img
+                            src="assets/teeth/rl-t-1.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR2.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR2'" (click)="viewTooth(dentalChart.LR2)"><img
+                            src="assets/teeth/rl-t-2.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR3.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR3'" (click)="viewTooth(dentalChart.LR3)"><img
+                            src="assets/teeth/rl-t-3.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR4.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR4'" (click)="viewTooth(dentalChart.LR4)"><img
+                            src="assets/teeth/rl-t-4.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR5.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR5'" (click)="viewTooth(dentalChart.LR5)"><img
+                            src="assets/teeth/rl-t-5.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR6.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR6'" (click)="viewTooth(dentalChart.LR6)"><img
+                            src="assets/teeth/rl-t-6.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR7.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR7'" (click)="viewTooth(dentalChart.LR7)"><img
+                            src="assets/teeth/rl-t-7.png" alt="teeth"></button>
+                </td>
+                <td align="left" class="align-top">
+                    <button class="teeth" matBadge="{{dentalChart.LR8.number}}" matBadgeSize="small" matBadgePosition="before" matBadgeColor="accent" mat-button color="accent" [class.mat-raised-button]="currentTooth.code === 'LR8'" (click)="viewTooth(dentalChart.LR8)"><img
+                            src="assets/teeth/rl-t-8.png" alt="teeth"></button>
+                </td>
             </tr>
         </table>
     </div>
 
 </div>
+
+
+<div class="row">
+    <mat-form-field class="full-width col-sm" appearance="fill">
+        <mat-label>Tooth name</mat-label>
+        <input matInput readonly
+               [value]="currentTooth.scientificName"/>
+    </mat-form-field>
+    <mat-form-field class="full-width col-sm" appearance="fill">
+        <mat-label>Tooth code</mat-label>
+        <input matInput readonly
+               [value]="currentTooth.code"/>
+    </mat-form-field>
+    <mat-form-field class="full-width col-sm" appearance="fill">
+        <mat-label>Tooth is extracted</mat-label>
+        <input matInput readonly [value]="currentTooth.extracted"/>
+    </mat-form-field>
+</div>
+
+<mat-card>
+    <mat-card-content>
+        <h2>Treatments</h2>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" style="margin-bottom: 10px; float: right;" (click)="openAddTreatmentDialog()">Add treatment</button>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> description </th>
+                <td mat-cell *matCellDef="let treatment"> {{treatment.description}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="doctor">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> doctor </th>
+                <td mat-cell *matCellDef="let treatment"> {{treatment.doctor.firstName + ' ' + treatment.doctor.lastName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="teeth">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> teeth </th>
+                <td mat-cell *matCellDef="let treatment"> {{treatment.teeth | teethPrinter}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> price </th>
+                <td mat-cell *matCellDef="let treatment"> {{treatment.price}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> date </th>
+                <td mat-cell *matCellDef="let treatment"> {{treatment.createdAt}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>Create treatment</h1>
+<div style="margin-top: 10px; margin-bottom: 10px;">
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput matTextareaAutosize
+                  [(ngModel)]="data.treatment.description"
+        ></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Doctor</mat-label>
+        <mat-select [(ngModel)]="data.treatment.doctorId" name="food">
+            <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+                {{doctor.firstName + ' ' + doctor.lastName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Patient</mat-label>
+        <input matInput readonly
+               [value]="data.patient.firstName + ' ' + data.patient.lastName"/>
+    </mat-form-field>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Tooth name</mat-label>
+            <input matInput readonly
+                   [value]="data.tooth.scientificName"/>
+        </mat-form-field>
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Tooth code</mat-label>
+            <input matInput readonly
+                   [value]="data.tooth.code"/>
+        </mat-form-field>
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Tooth is extracted</mat-label>
+            <input matInput readonly [value]="data.tooth.extracted"/>
+        </mat-form-field>
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" [(ngModel)]="data.treatment.price"/>
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Close</button>
+        <button mat-button [mat-dialog-close]="data.treatment" cdkFocusInitial>Submit</button>
+    </div>
+</div>
