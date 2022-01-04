@@ -30,6 +30,7 @@ export class AppointmentService {
 
     createAppointment(appointment: any) {
         return this.http.post(this.appointmentsUrl, {
+            "color": appointment.color,
             "patientRequest" : {
                 "firstName" : appointment.patientFirstName,
                 "lastName" : appointment.patientLastName,

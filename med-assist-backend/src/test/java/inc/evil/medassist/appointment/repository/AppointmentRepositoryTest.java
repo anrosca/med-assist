@@ -1,6 +1,7 @@
 package inc.evil.medassist.appointment.repository;
 
 import inc.evil.medassist.appointment.model.Appointment;
+import inc.evil.medassist.appointment.model.AppointmentColor;
 import inc.evil.medassist.common.AbstractIntegrationTest;
 import inc.evil.medassist.doctor.model.Doctor;
 import inc.evil.medassist.patient.model.Patient;
@@ -46,6 +47,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 
@@ -73,6 +75,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 
@@ -100,6 +103,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 
@@ -127,6 +131,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 
@@ -155,6 +160,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 
@@ -252,6 +258,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 
@@ -278,6 +285,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 
@@ -304,6 +312,7 @@ public class AppointmentRepositoryTest extends AbstractIntegrationTest {
                         .operation("Выдача каппы")
                         .createdAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
                         .updatedAt(LocalDateTime.parse("2021-12-12T17:33:20.998582"))
+                        .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                         .build()
         );
 

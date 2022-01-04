@@ -37,6 +37,8 @@ public class Appointment extends AbstractEntity {
 
     private String details;
 
+    private AppointmentColor color;
+
     public Appointment mergeWith(Appointment newAppointment) {
         return Appointment.builder()
                 .id(getId())
@@ -49,6 +51,7 @@ public class Appointment extends AbstractEntity {
                 .operation(newAppointment.getOperation() != null ? newAppointment.getOperation() : operation)
                 .doctor(newAppointment.getDoctor() != null ? newAppointment.getDoctor() : doctor)
                 .patient(newAppointment.getPatient() != null ? newAppointment.getPatient() : patient)
+                .color(newAppointment.getColor() != null ? newAppointment.getColor() : color)
                 .build();
     }
 }

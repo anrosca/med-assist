@@ -109,7 +109,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                             title: appointment.operation,
                             start: new Date(appointment.startDate),
                             end: new Date(appointment.endDate),
-                            color: colors.blue,
+                            color: appointment.color,
                             meta: {
                                 id: appointment.id,
                                 details: appointment.details,

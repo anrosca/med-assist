@@ -5,6 +5,7 @@ import inc.evil.medassist.appointment.facade.AppointmentFacade;
 import inc.evil.medassist.appointment.web.AppointmentResponse;
 import inc.evil.medassist.common.AbstractRestTest;
 import inc.evil.medassist.common.ResponseBodyMatchers;
+import inc.evil.medassist.common.error.ErrorResponse;
 import inc.evil.medassist.doctor.model.Specialty;
 import inc.evil.medassist.doctor.web.DoctorResponse;
 import inc.evil.medassist.patient.web.PatientResponse;
@@ -230,6 +231,32 @@ public class AppointmentControllerTest extends AbstractRestTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path", equalTo("/api/v1/appointments")));
     }
 
+    @Test
+    public void whenAppointmentColorsAreNull_shouldReturnErrorResponse() throws Exception {
+        String payload = """
+                {
+                   "doctorId": "123e4567-e89b-12d3-a456-426614174000",
+                   "patientId": "244e4567-ef9c-12d3-a45b-52661417400a",
+                   "startDate": "2021-12-12T09:45",
+                   "endDate": "2021-12-12T10:45",
+                   "operation": "Inspection",
+                   "details": "Patient will make an appointment",
+                   "color": {}
+                 }
+                """;
+        ErrorResponse expectedErrorResponse = ErrorResponse.builder()
+                .path("/api/v1/appointments")
+                .messages(Set.of(
+                        "Field 'color.primary' must not be null but value was 'null'",
+                        "Field 'color.secondary' must not be null but value was 'null'"
+                ))
+                .build();
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/appointments").content(payload).contentType(
+                        MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(ResponseBodyMatchers.responseBody().containsObjectAsJson(expectedErrorResponse, ErrorResponse.class));
+    }
 
     @Test
     public void findDoctorAppointments_returnResponse() throws Exception {
