@@ -67,6 +67,8 @@ create table appointments
     details          varchar(255),
     created_at timestamp not null,
     updated_at timestamp not null,
+    primary_color varchar(10) not null,
+    secondary_color varchar(10) not null,
     constraint doctor_fk foreign key (doctor_id) references doctors (id),
     constraint patient_fk foreign key (patient_id) references patients (id)
 );

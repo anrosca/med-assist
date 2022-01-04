@@ -2,6 +2,7 @@ package inc.evil.medassist.appointment;
 
 import com.jayway.jsonpath.JsonPath;
 import inc.evil.medassist.appointment.web.AppointmentResponse;
+import inc.evil.medassist.appointment.web.Color;
 import inc.evil.medassist.common.AbstractWebIntegrationTest;
 import inc.evil.medassist.common.component.ComponentTest;
 import inc.evil.medassist.doctor.model.Specialty;
@@ -45,6 +46,7 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                                          .birthDate("1994-12-13")
                                          .phoneNumber("+37369952147")
                                          .build())
+                        .color(new Color("#ff1f1f", "#D1E8FF"))
                         .build()
         };
         RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/appointments/", HttpMethod.GET);
@@ -80,6 +82,7 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                                  .birthDate("1994-12-13")
                                  .phoneNumber("+37369952147")
                                  .build())
+                .color(new Color("#ff1f1f", "#D1E8FF"))
                 .build();
         RequestEntity<Void> request = makeAuthenticatedRequestFor(
                 "/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.GET);
@@ -100,7 +103,11 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                    "existingPatient": "true",
                    "endDate": "2021-12-12T10:45",
                    "operation": "Inspection",
-                   "details": "Patient will make an appointment"
+                   "details": "Patient will make an appointment",
+                   "color": {
+                        "primary": "#ff1f1f",
+                        "secondary": "#D1E8FF"
+                   }
                  }
                 """;
         RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/", HttpMethod.POST, payload);
@@ -126,7 +133,11 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                    "startDate": "2021-12-12T09:45",
                    "endDate": "2021-12-12T10:45",
                    "operation": "Inspection",
-                   "details": "Patient will make an appointment"
+                   "details": "Patient will make an appointment",
+                   "color": {
+                        "primary": "#ff1f1f",
+                        "secondary": "#D1E8FF"
+                   }
                  }
                 """;
         RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/", HttpMethod.POST, payload);
@@ -145,7 +156,11 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                    "startDate": "2021-12-13T10:00",
                    "endDate": "2021-12-13T11:30",
                    "operation": "Cleaning",
-                   "details": "Regular patient"
+                   "details": "Regular patient",
+                   "color": {
+                        "primary": "#ffffff",
+                        "secondary": "#EAEAEA"
+                   }
                  }
                 """;
         RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/aa3e4567-e89b-12d3-b457-5267141750aa", HttpMethod.PUT, payload);
@@ -162,6 +177,8 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
         assertThat(JsonPath.<String>read(jsonResponse, "$.doctor.lastName")).isEqualTo("Usaci");
         assertThat(JsonPath.<String>read(jsonResponse, "$.patient.firstName")).isEqualTo("Jim");
         assertThat(JsonPath.<String>read(jsonResponse, "$.patient.lastName")).isEqualTo("Morrison");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.color.primary")).isEqualTo("#ffffff");
+        assertThat(JsonPath.<String>read(jsonResponse, "$.color.secondary")).isEqualTo("#EAEAEA");
     }
 
     @Test
@@ -321,7 +338,11 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                    "startDate": "2021-12-12T17:00",
                    "endDate": "2021-12-12T17:30",
                    "operation": "Inspection",
-                   "details": "Patient will make an appointment"
+                   "details": "Patient will make an appointment",
+                   "color": {
+                        "primary": "#ff1f1f",
+                        "secondary": "#D1E8FF"
+                   }
                  }
                 """;
         RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/appointments/", HttpMethod.POST, payload);
@@ -399,6 +420,7 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                                 .birthDate("1994-12-13")
                                 .phoneNumber("+37369952147")
                                 .build())
+                        .color(new Color("#ff1f1f", "#D1E8FF"))
                         .build()
         };
         RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/appointments?doctorId=f23e4567-e89b-12d3-a456-426614174000", HttpMethod.GET);
@@ -436,6 +458,7 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
                                 .birthDate("1994-12-13")
                                 .phoneNumber("+37369952147")
                                 .build())
+                        .color(new Color("#ff1f1f", "#D1E8FF"))
                         .build()
         };
         RequestEntity<Void> request =

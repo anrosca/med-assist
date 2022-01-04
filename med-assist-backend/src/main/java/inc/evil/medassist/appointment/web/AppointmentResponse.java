@@ -5,9 +5,6 @@ import inc.evil.medassist.doctor.model.Doctor;
 import inc.evil.medassist.doctor.web.DoctorResponse;
 import inc.evil.medassist.patient.web.PatientResponse;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -21,6 +18,7 @@ public class AppointmentResponse {
     private DoctorResponse doctor;
     private PatientResponse patient;
     private String details;
+    private Color color;
 
     public static AppointmentResponse from(Appointment appointment) {
         return AppointmentResponse.builder()
@@ -31,6 +29,7 @@ public class AppointmentResponse {
                 .doctor(DoctorResponse.simpleForm(appointment.getDoctor()))
                 .patient(PatientResponse.from(appointment.getPatient()))
                 .details(appointment.getDetails())
+                .color(Color.from(appointment.getColor()))
                 .build();
     }
 }

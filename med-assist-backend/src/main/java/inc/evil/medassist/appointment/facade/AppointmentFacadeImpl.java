@@ -83,6 +83,7 @@ class AppointmentFacadeImpl implements AppointmentFacade {
                 .doctor(request.getDoctorId() != null ? doctorService.findById(request.getDoctorId()) : null)
                 .patient(findOrCreatePatient(request))
                 .details(request.getDetails())
+                .color(request.getColor() != null ? request.getColor().toAppointmentColor() : null)
                 .build();
     }
 

@@ -27,6 +27,7 @@ public class AppointmentJpaTest extends AbstractEqualityCheckTest<Appointment> {
                 .operation("Cleaning")
                 .doctor(entityManager.find(Doctor.class, "15297b89-045a-4daa-998f-5995fd44da3e"))
                 .patient(entityManager.find(Patient.class, "123e4567-e89b-12d3-a456-426614174000"))
+                .color(new AppointmentColor("#ff1f1f", "#D1E8FF"))
                 .build();
 
         assertEqualityConsistency(Appointment.class, appointment);
