@@ -27,14 +27,14 @@ class PatientServiceImpl implements PatientService {
     @Transactional(readOnly = true)
     public List<Patient> findAll() {
         log.debug("Finding all patients");
-        return patientRepository.findAll();
+        return patientRepository.findAllNonDeleted();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Patient findById(String id) {
         log.debug("Finding patient with id: '{}'", id);
-        return patientRepository.findById(id)
+        return patientRepository.findByIdNonDeleted(id)
                 .orElseThrow(() -> new NotFoundException(Patient.class, "id", id));
     }
 
@@ -43,7 +43,7 @@ class PatientServiceImpl implements PatientService {
     public void deleteById(String id) {
         Patient patientToDelete = findById(id);
         log.debug("Deleting patient with id: '{}'", id);
-        patientRepository.delete(patientToDelete);
+        patientToDelete.setDeleted(true);
     }
 
     @Override

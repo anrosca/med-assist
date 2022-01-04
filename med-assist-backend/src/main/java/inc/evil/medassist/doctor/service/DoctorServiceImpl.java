@@ -5,7 +5,6 @@ import inc.evil.medassist.common.exception.NotFoundException;
 import inc.evil.medassist.doctor.model.Doctor;
 import inc.evil.medassist.doctor.repository.DoctorRepository;
 import inc.evil.medassist.treatment.service.TreatmentService;
-import inc.evil.medassist.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.ValidationException;
-import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 class DoctorServiceImpl implements DoctorService {
@@ -27,13 +26,13 @@ class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional(readOnly = true)
     public List<Doctor> findAll() {
-        return doctorRepository.findAllWithAuthorities();
+        return doctorRepository.findAllEnabledWithAuthorities();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Doctor findById(String id) {
-        return doctorRepository.findByIdWithAuthorities(id)
+        return doctorRepository.findEnabledByIdWithAuthorities(id)
                 .orElseThrow(() -> new NotFoundException(Doctor.class, "id", id));
     }
 
@@ -41,13 +40,14 @@ class DoctorServiceImpl implements DoctorService {
     @Transactional
     public void deleteById(String id) {
         Doctor doctorToDelete = findById(id);
-        doctorRepository.delete(doctorToDelete);
+        doctorToDelete.setEnabled(false);
+        log.debug("Deleting doctor with id: '{}'", id);
     }
 
     @Override
     @Transactional
     public Doctor update(final String id, final Doctor newDoctorState) {
-        Doctor user = doctorRepository.findByIdWithAuthorities(id).orElseThrow(() -> new NotFoundException(Doctor.class, "id", id));
+        Doctor user = doctorRepository.findEnabledByIdWithAuthorities(id).orElseThrow(() -> new NotFoundException(Doctor.class, "id", id));
         if (newDoctorState.getFirstName() != null)
             user.setFirstName(newDoctorState.getFirstName());
         if (newDoctorState.getLastName() != null)
@@ -72,7 +72,7 @@ class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional
     public Doctor create(Doctor doctorToCreate) {
-        if (doctorRepository.findByUsername(doctorToCreate.getUsername()).isPresent()) {
+        if (doctorRepository.findEnabledByUsername(doctorToCreate.getUsername()).isPresent()) {
             throw new ValidationException("Username exists!");
         }
         doctorToCreate.setPassword(passwordEncoder.encode(doctorToCreate.getPassword()));

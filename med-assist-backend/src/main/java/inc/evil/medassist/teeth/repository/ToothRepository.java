@@ -1,7 +1,6 @@
 package inc.evil.medassist.teeth.repository;
 
 import inc.evil.medassist.teeth.model.Tooth;
-import inc.evil.medassist.treatment.model.Treatment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

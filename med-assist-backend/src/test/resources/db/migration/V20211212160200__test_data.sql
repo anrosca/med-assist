@@ -19,6 +19,16 @@ values ('123e4567-e89b-12d3-a456-426614174000', 'Jim', 'Morrison', '1994-12-13',
 INSERT INTO doctors (specialty, telephone_number, id)
 VALUES ('ORTHODONTIST', '37369666666', '15297b89-045a-4daa-998f-5995fd44da3e');
 
+--disabled doctor
+INSERT INTO users (id, created_at, updated_at, email_address, enabled, first_name, last_name, password, username)
+VALUES ('22297b89-222a-4daa-222f-5995fd44da3e', '2020-12-12 22:10:30.931873', '2021-12-12 22:10:28.931873',
+        'john@gmail.com', false, 'John', 'Dorian', '$2a$10$GTAQ9YOgXaK1XgePCq998OqGU8UTWk5SNAVkuHXcOstE7YAUOijVi', 'jd');
+insert into user_authorities (id, created_at, updated_at, authority, user_id)
+values ('222a9641-88a8-4fc5-8858-cccb71deaacc', '2021-12-12 17:33:21.011111',
+        '2020-11-12 11:33:11.011111', 'POWER_USER', '22297b89-222a-4daa-222f-5995fd44da3e');
+INSERT INTO doctors (specialty, telephone_number, id)
+VALUES ('ORTHODONTIST', '37369661661', '22297b89-222a-4daa-222f-5995fd44da3e');
+
 INSERT INTO teeth (id, created_at, updated_at, extracted, name, patient_id) VALUES ('56a2b905-1e3e-41bf-a115-8c3de1e83760', '2022-01-02 18:57:54.562174', '2022-01-02 18:57:54.562174', false, 'UR1', '123e4567-e89b-12d3-a456-426614174000');
 INSERT INTO teeth (id, created_at, updated_at, extracted, name, patient_id) VALUES ('dad1aa00-0de2-4c49-b36b-6e12c7e0c691', '2022-01-02 18:57:54.564174', '2022-01-02 18:57:54.564174', false, 'UR2', '123e4567-e89b-12d3-a456-426614174000');
 INSERT INTO teeth (id, created_at, updated_at, extracted, name, patient_id) VALUES ('96aac20d-8809-4756-8e7c-6916b608b15f', '2022-01-02 18:57:54.565174', '2022-01-02 18:57:54.565174', false, 'UR3', '123e4567-e89b-12d3-a456-426614174000');

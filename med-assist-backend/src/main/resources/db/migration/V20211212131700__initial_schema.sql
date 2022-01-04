@@ -40,7 +40,8 @@ create table patients
     first_name varchar(255),
     last_name varchar(255),
     birth_date date not null,
-    phone_number varchar(20) not null
+    phone_number varchar(20) not null,
+    is_deleted bool not null default false
 );
 
 create table doctors

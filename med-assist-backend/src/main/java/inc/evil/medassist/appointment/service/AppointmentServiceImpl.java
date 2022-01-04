@@ -58,7 +58,7 @@ class AppointmentServiceImpl implements AppointmentService {
         LocalTime startTime = appointmentToCreate.getStartTime();
         LocalTime endTime = appointmentToCreate.getEndTime();
         String doctorId = appointmentToCreate.getDoctor().getId();
-        Doctor doctor = doctorRepository.findByIdAndLock(doctorId);
+        Doctor doctor = doctorRepository.findEnabledByIdAndLock(doctorId);
         Optional<Appointment> conflictingAppointment =
                 appointmentRepository.findConflictingAppointment(doctorId, appointmentDate, startTime, endTime, appointmentToCreate.getId());
         conflictingAppointment.ifPresent(overlappingAppointment -> {
