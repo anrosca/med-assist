@@ -26,6 +26,10 @@ export class TreatmentService {
             .pipe(map(response => (response as unknown as Treatment[])));
     }
 
+    getAllTreatments() {
+        return this.http.get(this.treatmentUrl)
+            .pipe(map(response => (response as unknown as Treatment[])));
+    }
 
     createTreatment(treatment: any) {
         return this.http.post(this.treatmentUrl, treatment)

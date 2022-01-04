@@ -26,14 +26,14 @@ export class ViewPatientDialog implements OnInit {
     treatmentsDisplayedColumns: string[] = ['description', 'doctor', 'teeth', 'price', 'createdAt'];
     treatmentsDataSource;
     @ViewChild(MatSort, {static: true}) treatmentsSort: MatSort;
-    @ViewChild(MatPaginator, {static: true}) treatmetnsPaginator: MatPaginator;
+    @ViewChild(MatPaginator, {static: true}) treatmentsPaginator: MatPaginator;
 
     ngOnInit(): void {
         this.treatmentService.getTreatmentsByPatientId(this.data.patient.id)
             .subscribe(treatments => {
                     this.treatmentsDataSource = new MatTableDataSource(treatments);
                     this.treatmentsDataSource.sort = this.treatmentsSort;
-                    this.treatmentsDataSource.paginator = this.treatmetnsPaginator;
+                    this.treatmentsDataSource.paginator = this.treatmentsPaginator;
                     this.treatmentsDataSource.filterPredicate = (data: any, filter) => {
                         const dataStr = JSON.stringify(data).toLowerCase();
                         return dataStr.indexOf(filter) != -1;

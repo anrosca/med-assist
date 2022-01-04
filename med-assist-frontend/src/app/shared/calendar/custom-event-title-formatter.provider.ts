@@ -12,16 +12,16 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
 
     month(event: CalendarEvent): string {
         return `<b>${formatDate(event.start, 'h:mm a', this.locale)}</b> 
-${event.title} - ${event.meta.patient.firstName} ${event.meta.patient.lastName} - ${event.meta.details}`;
+${event.title} [ Patient: ${event.meta.patient.firstName} ${event.meta.patient.lastName}, Doctor: ${event.meta.doctor.firstName} ${event.meta.doctor.lastName} ]`;
     }
 
     week(event: CalendarEvent): string {
         return `<b>${formatDate(event.start, 'h:mm a', this.locale)}</b> 
-${event.title} - ${event.meta.patient.firstName} ${event.meta.patient.lastName} - ${event.meta.details}`;
+${event.title} [ Patient: ${event.meta.patient.firstName} ${event.meta.patient.lastName}, Doctor: ${event.meta.doctor.firstName} ${event.meta.doctor.lastName} ]`;
     }
 
     day(event: CalendarEvent): string {
         return `<b>${formatDate(event.start, 'h:mm a', this.locale)}</b> 
-${event.title} - ${event.meta.patient.firstName} ${event.meta.patient.lastName} - ${event.meta.details}`;
+${event.title} [ Patient: ${event.meta.patient.firstName} ${event.meta.patient.lastName}, Doctor: ${event.meta.doctor.firstName} ${event.meta.doctor.lastName} ]`;
     }
 }

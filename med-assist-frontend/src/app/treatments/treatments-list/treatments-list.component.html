@@ -1,0 +1,56 @@
+<div style="margin-top: 10px;" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+
+        <mat-card>
+            <mat-card-content>
+                <h2>Treatments</h2>
+
+                <mat-form-field appearance="standard">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyTreatmentsFilter($event)" placeholder="Ex. Mia" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="patient">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> patient</th>
+                        <td mat-cell
+                            *matCellDef="let treatment"> {{treatment.patient.firstName + ' ' + treatment.patient.lastName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> description</th>
+                        <td mat-cell *matCellDef="let treatment"> {{treatment.description}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="doctor">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> doctor</th>
+                        <td mat-cell
+                            *matCellDef="let treatment"> {{treatment.doctor.firstName + ' ' + treatment.doctor.lastName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="teeth">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> teeth</th>
+                        <td mat-cell *matCellDef="let treatment"> {{treatment.teeth | teethPrinter}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> price</th>
+                        <td mat-cell *matCellDef="let treatment"> {{treatment.price}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdAt">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> date</th>
+                        <td mat-cell *matCellDef="let treatment"> {{treatment.createdAt}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

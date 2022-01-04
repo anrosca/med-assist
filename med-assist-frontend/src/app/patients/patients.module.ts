@@ -17,6 +17,9 @@ import { AddTreatmentDialog } from './view-patient/add-treatment-dialog/add-trea
         PatientsRoutingModule,
         MatSortModule
     ],
+    exports: [
+        TeethPrinter
+    ],
     declarations: [PatientListComponent, ViewPatientDialog, DentalChartComponent, TeethPrinter, AddToothTreatmentDialog, AddTreatmentDialog]
 })
 export class PatientsModule {
