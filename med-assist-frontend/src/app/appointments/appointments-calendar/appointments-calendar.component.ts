@@ -107,8 +107,8 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                     appointments.forEach(appointment => {
                         var calendarEvent = {
                             title: appointment.operation,
-                            start: new Date(appointment.startDate),
-                            end: new Date(appointment.endDate),
+                            start: AppointmentsCalendarComponent.toUtcDate(appointment.startDate),
+                            end: AppointmentsCalendarComponent.toUtcDate(appointment.endDate),
                             color: appointment.color,
                             meta: {
                                 id: appointment.id,
@@ -141,6 +141,12 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
                     this.notificationService.openSnackBar(resMessage);
                 });
+    }
+
+    private static toUtcDate(dateString) {
+        const now = new Date();
+        const millisecondsPerMinute = 60000;
+        return new Date(new Date(dateString).getTime() - now.getTimezoneOffset() * millisecondsPerMinute)
     }
 
     dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
