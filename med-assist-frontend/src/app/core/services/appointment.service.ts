@@ -1,13 +1,7 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { of, EMPTY } from 'rxjs';
-import {User} from '../model/user';
-import {Doctor} from "../model/doctor";
-import {CalendarEvent} from "angular-calendar";
-import {Appointment} from "../model/appointment";
+import {Inject, Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {Appointment} from '../model/appointment';
 
 @Injectable({
     providedIn: 'root'

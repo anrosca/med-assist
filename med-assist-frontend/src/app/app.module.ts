@@ -12,8 +12,8 @@ import {environment} from '../environments/environment';
 import {ViewTokenModalComponent} from './account/profile-details/view-token-modal/view-token-modal.component';
 import {AccountModule} from './account/account.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {MatIconModule} from "@angular/material/icon";
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NgApexchartsModule} from 'ng-apexcharts';
 
 
 @NgModule({
@@ -29,6 +29,7 @@ import {MatIconModule} from "@angular/material/icon";
         CustomMaterialModule.forRoot(),
         AppRoutingModule,
         AccountModule,
+        NgApexchartsModule,
         LoggerModule.forRoot({
             serverLoggingUrl: `http://my-api/logs`,
             level: environment.logLevel,

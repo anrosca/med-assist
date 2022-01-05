@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { CalendarModule } from 'angular-calendar';
-import { CalendarHeaderComponent } from './calendar-header.component';
-import {CustomMaterialModule} from "../custom-material/custom-material.module";
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {CalendarModule} from 'angular-calendar';
+import {CalendarHeaderComponent} from './calendar-header.component';
+import {CustomMaterialModule} from '../custom-material/custom-material.module';
 
 @NgModule({
     imports: [CommonModule, FormsModule, CalendarModule, CustomMaterialModule],
-  declarations: [CalendarHeaderComponent],
-  exports: [CalendarHeaderComponent],
+    declarations: [CalendarHeaderComponent],
+    exports: [CalendarHeaderComponent],
 })
-export class DemoUtilsModule {}
+export class DemoUtilsModule {
+}

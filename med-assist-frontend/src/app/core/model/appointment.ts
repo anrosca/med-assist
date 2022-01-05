@@ -1,6 +1,6 @@
-import {Doctor} from "./doctor";
-import {Patient} from "./patient";
-import {Color} from "./color";
+import {Doctor} from './doctor';
+import {Patient} from './patient';
+import {Color} from './color';
 
 export interface Appointment {
     id: string;

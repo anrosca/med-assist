@@ -1,6 +1,6 @@
-import {Doctor} from "./doctor";
-import {Patient} from "./patient";
-import {Tooth} from "./tooth";
+import {Doctor} from './doctor';
+import {Patient} from './patient';
+import {Tooth} from './tooth';
 
 export interface Treatment {
     id: string;

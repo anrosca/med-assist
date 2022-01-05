@@ -2,9 +2,9 @@ import {Injectable, Inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 
-import {delay, of} from 'rxjs';
 import {User} from '../model/user';
-import {map} from "rxjs/operators";
+import {of} from 'rxjs';
+import {delay, map} from 'rxjs/operators';
 
 
 @Injectable({

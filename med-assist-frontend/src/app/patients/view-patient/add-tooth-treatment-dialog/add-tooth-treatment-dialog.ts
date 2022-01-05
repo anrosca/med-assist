@@ -1,11 +1,10 @@
-import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
-import {Doctor} from "../../../core/model/doctor";
-import {Patient} from "../../../core/model/patient";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {DoctorService} from "../../../core/services/doctor.service";
-import {PatientService} from "../../../core/services/patient.service";
-import {Tooth} from "../../../core/model/tooth";
-import {Treatment} from "../../../core/model/treatment";
+import {AfterViewInit, Component, Inject} from '@angular/core';
+import {Doctor} from '../../../core/model/doctor';
+import {Patient} from '../../../core/model/patient';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {DoctorService} from '../../../core/services/doctor.service';
+import {PatientService} from '../../../core/services/patient.service';
+import {Tooth} from '../../../core/model/tooth';
 
 @Component({
   selector: 'app-add-treatment-dialog',
@@ -31,10 +30,10 @@ export class AddToothTreatmentDialog implements AfterViewInit {
   ngAfterViewInit(): void {
     this.doctorService.getAllDoctors().subscribe(doctors => {
       this.doctors = doctors;
-    })
+    });
     this.patientService.getAllPatients().subscribe(patients => {
       this.patients = patients;
-    })
+    });
   }
 }
 

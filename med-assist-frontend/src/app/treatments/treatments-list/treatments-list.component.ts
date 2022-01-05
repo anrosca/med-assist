@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from "@angular/material/sort";
-import {MatPaginator} from "@angular/material/paginator";
-import {TreatmentService} from "../../core/services/treatment.service";
-import {NotificationService} from "../../core/services/notification.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {Title} from "@angular/platform-browser";
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {TreatmentService} from '../../core/services/treatment.service';
+import {NotificationService} from '../../core/services/notification.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-treatments-list',
@@ -28,14 +28,14 @@ export class TreatmentsListComponent implements OnInit {
 
         this.treatmentService.getAllTreatments()
             .subscribe(treatments => {
-                console.log(treatments)
+                console.log(treatments);
                     this.dataSource = new MatTableDataSource(treatments);
                     this.dataSource.sort = this.sort;
                     this.dataSource.paginator = this.paginator;
                     this.dataSource.filterPredicate = (data: any, filter) => {
                         const dataStr = JSON.stringify(data).toLowerCase();
                         return dataStr.indexOf(filter) != -1;
-                    }
+                    };
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();

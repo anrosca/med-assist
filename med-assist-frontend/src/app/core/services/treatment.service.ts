@@ -1,11 +1,7 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { of, EMPTY } from 'rxjs';
-import {User} from '../model/user';
-import {Treatment} from "../model/treatment";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {Treatment} from '../model/treatment';
 
 @Injectable({
     providedIn: 'root'

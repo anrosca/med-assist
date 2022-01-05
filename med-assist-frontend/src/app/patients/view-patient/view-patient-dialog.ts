@@ -1,13 +1,11 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {TreatmentService} from "../../core/services/treatment.service";
-import {NotificationService} from "../../core/services/notification.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatSort} from "@angular/material/sort";
-import {MatPaginator} from "@angular/material/paginator";
-import {CreateAppointmentDialog} from "../../appointments/create-appointment/create-appointment-dialog";
-import {AddToothTreatmentDialog} from "./add-tooth-treatment-dialog/add-tooth-treatment-dialog";
-import {AddTreatmentDialog} from "./add-treatment-dialog/add-treatment-dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {TreatmentService} from '../../core/services/treatment.service';
+import {NotificationService} from '../../core/services/notification.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {AddTreatmentDialog} from './add-treatment-dialog/add-treatment-dialog';
 
 @Component({
     selector: 'app-view-patient',
@@ -37,7 +35,7 @@ export class ViewPatientDialog implements OnInit {
                     this.treatmentsDataSource.filterPredicate = (data: any, filter) => {
                         const dataStr = JSON.stringify(data).toLowerCase();
                         return dataStr.indexOf(filter) != -1;
-                    }
+                    };
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
@@ -62,7 +60,7 @@ export class ViewPatientDialog implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
-            console.log(result)
+            console.log(result);
 
             this.treatmentService.createTreatment({
                 doctorId: result.doctorId,
@@ -73,10 +71,10 @@ export class ViewPatientDialog implements OnInit {
             }).subscribe(() => {
                 this.ngOnInit();
             }, error => {
-                console.log(error)
+                console.log(error);
                 const resMessage = error.error.messages || error.message || error.error.message || error.toString();
                 this.notificationService.openSnackBar(resMessage);
-            })
+            });
         });
     }
 }

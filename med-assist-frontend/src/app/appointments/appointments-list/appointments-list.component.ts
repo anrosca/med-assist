@@ -1,12 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NGXLogger} from "ngx-logger";
-import {Title} from "@angular/platform-browser";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {DoctorService} from "../../core/services/doctor.service";
-import {NotificationService} from "../../core/services/notification.service";
-import {MatSort} from "@angular/material/sort";
-import {AppointmentService} from "../../core/services/appointment.service";
+import {NGXLogger} from 'ngx-logger';
+import {Title} from '@angular/platform-browser';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {NotificationService} from '../../core/services/notification.service';
+import {MatSort} from '@angular/material/sort';
+import {AppointmentService} from '../../core/services/appointment.service';
 
 @Component({
     selector: 'app-appointments-list',
@@ -49,7 +48,7 @@ export class AppointmentsListComponent implements OnInit {
                     this.dataSource.filterPredicate = (data: any, filter) => {
                         const dataStr = JSON.stringify(data).toLowerCase();
                         return dataStr.indexOf(filter) != -1;
-                    }
+                    };
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();

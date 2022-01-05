@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {LayoutComponent} from '../shared/layout/layout.component';
-import {DoctorListComponent} from "./doctor-list/doctor-list.component";
+import {DoctorListComponent} from './doctor-list/doctor-list.component';
 
 const routes: Routes = [
     {

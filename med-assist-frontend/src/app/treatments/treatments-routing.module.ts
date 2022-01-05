@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {LayoutComponent} from '../shared/layout/layout.component';
-import {TreatmentsListComponent} from "./treatments-list/treatments-list.component";
+import {TreatmentsListComponent} from './treatments-list/treatments-list.component';
 
 const routes: Routes = [
     {

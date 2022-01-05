@@ -6,7 +6,7 @@ import {NGXLogger} from 'ngx-logger';
 import {MatTableDataSource} from '@angular/material/table';
 import {UserService} from '../../core/services/user.service';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from "@angular/material/sort";
+import {MatSort} from '@angular/material/sort';
 
 @Component({
     selector: 'app-user-list',
