@@ -6,6 +6,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {AddTreatmentDialog} from './add-treatment-dialog/add-treatment-dialog';
+import {FileRecord} from '../../core/model/file-record';
+import {FileRecordService} from '../../core/services/file-record.service';
 
 @Component({
     selector: 'app-view-patient',
@@ -18,6 +20,7 @@ export class ViewPatientDialog implements OnInit {
                 @Inject(MAT_DIALOG_DATA) public data: ViewPatientDialogData,
                 private treatmentService: TreatmentService,
                 private notificationService: NotificationService,
+                private fileRecordService: FileRecordService,
                 public dialog: MatDialog) {
     }
 
@@ -27,18 +30,55 @@ export class ViewPatientDialog implements OnInit {
     @ViewChild(MatPaginator, {static: true}) treatmentsPaginator: MatPaginator;
 
     files: File[] = [];
+    fileRecords: FileRecord[] = [];
 
-    onSelect(event) {
-        console.log(event);
-        this.files.push(...event.addedFiles);
+    onUpload(event) {
+        event.addedFiles.forEach(f => {
+            this.fileRecordService.upload(f, this.data.patient.id)
+                .subscribe(() => {
+                        this.initFiles();
+                    },
+                    error => {
+                        const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                        this.notificationService.openSnackBar(resMessage);
+                    });
+        });
     }
 
-    onRemove(event) {
-        console.log(event);
-        this.files.splice(this.files.indexOf(event), 1);
+    onRemove(file: FileRecord) {
+        this.fileRecordService.deleteById(file.id)
+            .subscribe(() => {
+                    this.initFiles();
+                },
+                error => {
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+    }
+
+    download(file: FileRecord) {
+        this.fileRecordService.download(file.url)
+            .subscribe(data => this.downloadFile(data, file),
+                error => {
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+        console.log(file);
+    }
+
+    downloadFile(data: Blob, file: FileRecord) {
+        const blob = new Blob([data], {type: file.type});
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+        const anchor = document.createElement('a');
+        anchor.download = file.name;
+        anchor.href = url;
+        anchor.click();
     }
 
     ngOnInit(): void {
+        this.initFiles();
+
         this.treatmentService.getTreatmentsByPatientId(this.data.patient.id)
             .subscribe(treatments => {
                     this.treatmentsDataSource = new MatTableDataSource(treatments);
@@ -48,6 +88,17 @@ export class ViewPatientDialog implements OnInit {
                         const dataStr = JSON.stringify(data).toLowerCase();
                         return dataStr.indexOf(filter) != -1;
                     };
+                },
+                error => {
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+    }
+
+    private initFiles() {
+        this.fileRecordService.getByPatientId(this.data.patient.id)
+            .subscribe(fileRecords => {
+                    this.fileRecords = fileRecords;
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
@@ -90,9 +141,6 @@ export class ViewPatientDialog implements OnInit {
         });
     }
 
-    download(f: File) {
-        console.log(f);
-    }
 }
 
 export interface ViewPatientDialogData {
