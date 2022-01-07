@@ -115,3 +115,19 @@ create table treatment_tooth
         primary key (treatment_id, tooth_id)
 );
 
+create table file_records
+(
+    id varchar(255) not null
+        constraint file_records_pkey
+            primary key,
+    created_at timestamp not null,
+    updated_at timestamp not null,
+    data oid,
+    name varchar(255),
+    type varchar(255),
+    patient_id varchar(255) not null constraint patinet_fk references patients
+);
+
+
+
+

@@ -150,8 +150,7 @@ export class DentalChartComponent implements OnInit {
 @Pipe({name: 'teethPrinter'})
 export class TeethPrinter implements PipeTransform {
     transform(input: Tooth[]): any {
-        console.log(input);
-        return input.map(value => value.code);
+        return input.map(value => ' ' + value.code);
     }
 }
 
