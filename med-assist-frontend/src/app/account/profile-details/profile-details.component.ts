@@ -4,32 +4,33 @@ import {ViewTokenModalComponent} from './view-token-modal/view-token-modal.compo
 import {MatDialog} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-profile-details',
-  templateUrl: './profile-details.component.html',
-  styleUrls: ['./profile-details.component.css']
+    selector: 'app-profile-details',
+    templateUrl: './profile-details.component.html',
+    styleUrls: ['./profile-details.component.css']
 })
 export class ProfileDetailsComponent implements OnInit {
 
-  fullName: string;
-  email: string;
-  alias: string;
-  roles: string;
-  token: string;
+    fullName: string;
+    email: string;
+    alias: string;
+    roles: string;
+    token: string;
 
-  constructor(private authService: AuthenticationService, public dialog: MatDialog) { }
+    constructor(private authService: AuthenticationService, public dialog: MatDialog) {
+    }
 
-  ngOnInit() {
-    this.fullName = this.authService.getCurrentUser().fullName;
-    this.email = this.authService.getCurrentUser().email;
-    this.roles = this.authService.getCurrentUser().roles;
-    this.token = this.authService.getCurrentUser().token;
-  }
+    ngOnInit() {
+        this.fullName = this.authService.getCurrentUser().fullName;
+        this.email = this.authService.getCurrentUser().email;
+        this.roles = this.authService.getCurrentUser().roles;
+        this.token = this.authService.getCurrentUser().token;
+    }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(ViewTokenModalComponent);
+    openDialog() {
+        const dialogRef = this.dialog.open(ViewTokenModalComponent, {width: '300px'});
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 }
