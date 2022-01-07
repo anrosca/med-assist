@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static inc.evil.medassist.teeth.model.ToothName.*;
@@ -28,6 +30,22 @@ class PatientServiceImpl implements PatientService {
     public List<Patient> findAll() {
         log.debug("Finding all patients");
         return patientRepository.findAllNonDeleted();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Long> countAgeCategories() {
+        final Map<String, Long> map = new TreeMap<>();
+        patientRepository.countAgeCategories().forEach(e -> map.put(e.getCategory(), e.getCount()));
+        return map;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Long> countPatientsCreatedPerMonth() {
+        final Map<String, Long> map = new TreeMap<>();
+        patientRepository.countPatientsCreatedPerMonth().forEach(e -> map.put(e.getMonth(), e.getCount()));
+        return map;
     }
 
     @Override

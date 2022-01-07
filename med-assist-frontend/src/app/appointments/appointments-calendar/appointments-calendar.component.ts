@@ -241,8 +241,6 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            console.log(result);
 
             this.appointmentService.createAppointment(result).subscribe(() => {
                 this.ngAfterViewInit();

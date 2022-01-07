@@ -18,4 +18,14 @@ export class PatientService {
             .pipe(map(response => (response as unknown as Patient[])));
     }
 
+    countAgeCategories() {
+        return this.http.get(this.patientsUrl + '/count/per-age-category')
+            .pipe(map(response => response as unknown as Map<string, number>));
+    }
+
+    countPatientsCreatedPerMonth() {
+        return this.http.get(this.patientsUrl + '/count/per-month')
+            .pipe(map(response => response as unknown as Map<string, number>));
+    }
+
 }

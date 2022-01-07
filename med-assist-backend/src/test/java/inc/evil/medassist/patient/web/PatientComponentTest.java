@@ -3,17 +3,45 @@ package inc.evil.medassist.patient.web;
 import com.jayway.jsonpath.JsonPath;
 import inc.evil.medassist.common.AbstractWebIntegrationTest;
 import inc.evil.medassist.common.component.ComponentTest;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ComponentTest
 public class PatientComponentTest extends AbstractWebIntegrationTest {
+
+
+    @Test
+    @Sql("/test-data/patients/patients.sql")
+    public void shouldBeAbleToCountPatientsPerAgeCategory() {
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/patients/count/per-age-category", HttpMethod.GET);
+
+        ResponseEntity<Map<String, Long>> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        AssertionsForClassTypes.assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        AssertionsForClassTypes.assertThat(response.getBody()).isEqualTo(Map.of("25-64", 1L));
+    }
+
+    @Test
+    @Sql("/test-data/patients/patients.sql")
+    public void shouldBeAbleToCountPatientsPerMonth() {
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/patients/count/per-month", HttpMethod.GET);
+
+        ResponseEntity<Map<String, Long>> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        AssertionsForClassTypes.assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        AssertionsForClassTypes.assertThat(response.getBody()).isEqualTo(Map.of("Dec-2021", 1L));
+    }
+
     @Test
     @Sql("/test-data/patients/patients.sql")
     public void shouldBeAbleToFindAllPatients() {

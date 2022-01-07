@@ -43,7 +43,7 @@ export class AddTreatmentDialog implements OnInit {
         });
         this.teethService.getPatientTeeth(this.data.patient.id)
             .subscribe(teeth => {
-                    let mappedTeeth = teeth as unknown as Tooth[];
+                    const mappedTeeth = teeth as unknown as Tooth[];
                     this.dentalChart = {
                         UR1: mappedTeeth.filter((tooth) => tooth.code === 'UR1')[0],
                         UR2: mappedTeeth.filter((tooth) => tooth.code === 'UR2')[0],

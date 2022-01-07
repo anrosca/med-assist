@@ -6,8 +6,8 @@ import {DoctorService} from '../../core/services/doctor.service';
 import {PatientService} from '../../core/services/patient.service';
 
 @Component({
-    selector: 'create-appointment-dialog',
-    templateUrl: '../create-appointment/create-appointment-dialog.html',
+    selector: 'app-create-appointment-dialog',
+    templateUrl: 'create-appointment-dialog.html',
     styleUrls: ['create-appointment-dialog.css']
 })
 export class CreateAppointmentDialog implements AfterViewInit {

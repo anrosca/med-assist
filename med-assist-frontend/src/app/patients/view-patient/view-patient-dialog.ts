@@ -26,6 +26,18 @@ export class ViewPatientDialog implements OnInit {
     @ViewChild(MatSort, {static: true}) treatmentsSort: MatSort;
     @ViewChild(MatPaginator, {static: true}) treatmentsPaginator: MatPaginator;
 
+    files: File[] = [];
+
+    onSelect(event) {
+        console.log(event);
+        this.files.push(...event.addedFiles);
+    }
+
+    onRemove(event) {
+        console.log(event);
+        this.files.splice(this.files.indexOf(event), 1);
+    }
+
     ngOnInit(): void {
         this.treatmentService.getTreatmentsByPatientId(this.data.patient.id)
             .subscribe(treatments => {
@@ -76,6 +88,10 @@ export class ViewPatientDialog implements OnInit {
                 this.notificationService.openSnackBar(resMessage);
             });
         });
+    }
+
+    download(f: File) {
+        console.log(f);
     }
 }
 

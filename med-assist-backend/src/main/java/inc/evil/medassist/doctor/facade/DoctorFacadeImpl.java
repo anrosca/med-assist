@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -17,6 +18,11 @@ public class DoctorFacadeImpl implements DoctorFacade {
     @Override
     public List<DoctorResponse> findAll() {
         return doctorService.findAll().stream().map(DoctorResponse::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, Long> countSpecialties() {
+        return doctorService.countSpecialties();
     }
 
     @Override

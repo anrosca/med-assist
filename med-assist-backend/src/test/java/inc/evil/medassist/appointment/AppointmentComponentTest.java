@@ -10,11 +10,15 @@ import inc.evil.medassist.doctor.web.DoctorResponse;
 import inc.evil.medassist.patient.web.PatientResponse;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -91,6 +95,39 @@ public class AppointmentComponentTest extends AbstractWebIntegrationTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getBody()).isEqualTo(expectedAppointment);
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToCountAppointments() {
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/appointments/count", HttpMethod.GET);
+
+        ResponseEntity<Long> response = restTemplate.exchange(request, Long.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getBody()).isEqualTo(1);
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToCountAppointmentsPerMonth() {
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/appointments/count/per-month", HttpMethod.GET);
+
+        ResponseEntity<Map<String, Long>> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getBody()).isEqualTo(Map.of("Dec-2021", 1L));
+    }
+
+    @Test
+    @Sql("/test-data/appointment/appointment.sql")
+    public void shouldBeAbleToCountAppointmentsOperations() {
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/appointments/count/operations", HttpMethod.GET);
+
+        ResponseEntity<Map<String, Long>> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getBody()).isEqualTo(Map.of("выдача каппы", 1L));
     }
 
     @Test

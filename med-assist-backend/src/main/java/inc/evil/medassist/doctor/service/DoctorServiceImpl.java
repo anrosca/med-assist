@@ -14,6 +14,8 @@ import org.springframework.util.CollectionUtils;
 
 import javax.validation.ValidationException;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Slf4j
 @Service
@@ -28,6 +30,15 @@ class DoctorServiceImpl implements DoctorService {
     public List<Doctor> findAll() {
         return doctorRepository.findAllEnabledWithAuthorities();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Long> countSpecialties() {
+        Map<String, Long> map = new TreeMap<>();
+        doctorRepository.countSpecialties().forEach(e -> map.put(e.getSpecialty(), e.getCount()));
+        return map;
+    }
+
 
     @Override
     @Transactional(readOnly = true)

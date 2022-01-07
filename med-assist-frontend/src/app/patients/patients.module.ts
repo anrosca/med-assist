@@ -9,13 +9,17 @@ import {DentalChartComponent, TeethPrinter} from './view-patient/dental-chart/de
 import {MatSortModule} from '@angular/material/sort';
 import {AddToothTreatmentDialog} from './view-patient/add-tooth-treatment-dialog/add-tooth-treatment-dialog';
 import {AddTreatmentDialog} from './view-patient/add-treatment-dialog/add-treatment-dialog';
+import {NgxDropzoneModule} from "ngx-dropzone";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
         PatientsRoutingModule,
-        MatSortModule
+        MatSortModule,
+        NgxDropzoneModule,
+        MatGridListModule
     ],
     exports: [
         TeethPrinter

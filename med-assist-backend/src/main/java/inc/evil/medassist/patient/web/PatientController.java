@@ -10,6 +10,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/patients")
@@ -23,6 +24,16 @@ public class PatientController {
     @GetMapping
     public List<PatientResponse> findAll() {
         return patientFacade.findAll();
+    }
+
+    @GetMapping("/count/per-age-category")
+    public Map<String, Long> countAgeCategories() {
+        return patientFacade.countAgeCategories();
+    }
+
+    @GetMapping("/count/per-month")
+    public Map<String, Long> countPatientsCreatedPerMonth() {
+        return patientFacade.countPatientsCreatedPerMonth();
     }
 
     @GetMapping("{id}")

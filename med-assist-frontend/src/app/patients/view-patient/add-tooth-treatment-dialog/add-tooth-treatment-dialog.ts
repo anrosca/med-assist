@@ -24,7 +24,12 @@ export class AddToothTreatmentDialog implements AfterViewInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ data: 'closed' });
+  }
+
+
+  onSubmit(): void {
+    this.dialogRef.close({ data: this.data.treatment });
   }
 
   ngAfterViewInit(): void {

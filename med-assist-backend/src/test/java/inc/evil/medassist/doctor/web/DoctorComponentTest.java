@@ -3,18 +3,33 @@ package inc.evil.medassist.doctor.web;
 import com.jayway.jsonpath.JsonPath;
 import inc.evil.medassist.common.AbstractWebIntegrationTest;
 import inc.evil.medassist.common.component.ComponentTest;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
 
+import java.util.Map;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ComponentTest
 public class DoctorComponentTest extends AbstractWebIntegrationTest {
+
+    @Test
+    public void shouldBeAbleToCountDoctorsPerSpecialty() {
+        RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/doctors/count/per-specialty", HttpMethod.GET);
+
+        ResponseEntity<Map<String, Long>> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        AssertionsForClassTypes.assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        AssertionsForClassTypes.assertThat(response.getBody()).isEqualTo(Map.of("ORTHODONTIST", 2L));
+    }
+
     @Test
     public void shouldBeAbleToCreateDoctors() {
         String payload = """

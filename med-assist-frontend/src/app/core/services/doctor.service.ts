@@ -18,4 +18,9 @@ export class DoctorService {
             .pipe(map(response => (response as unknown as Doctor[])));
     }
 
+    countSpecialties() {
+        return this.http.get(this.doctorsUrl + '/count/per-specialty')
+            .pipe(map(response => (response as unknown as Map<string, number>)));
+    }
+
 }

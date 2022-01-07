@@ -20,7 +20,6 @@ export class AppointmentsListComponent implements OnInit {
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
     constructor(
-        private logger: NGXLogger,
         private notificationService: NotificationService,
         private appointmentService: AppointmentService,
         private titleService: Title

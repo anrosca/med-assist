@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 @Service
 @Slf4j
@@ -29,6 +31,28 @@ class AppointmentServiceImpl implements AppointmentService {
     @Transactional(readOnly = true)
     public List<Appointment> findAll() {
         return appointmentRepository.findAppointmentsWithDoctorsAndPatients();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countAll() {
+        return appointmentRepository.count();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Long> countOperations() {
+        Map<String, Long> map = new TreeMap<>();
+        appointmentRepository.countOperations().forEach(e -> map.put(e.getOperation(), e.getCount()));
+        return map;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Long> countAppointmentsPerMonth() {
+        Map<String, Long> map = new TreeMap<>();
+        appointmentRepository.countAppointmentsPerMonth().forEach(e -> map.put(e.getMonth(), e.getCount()));
+        return map;
     }
 
     @Override
