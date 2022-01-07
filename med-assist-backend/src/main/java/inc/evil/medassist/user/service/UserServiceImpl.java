@@ -78,7 +78,7 @@ class UserServiceImpl implements UserService {
                     .forEach(user::addAuthority);
         }
         if (newUserState.getPassword() != null)
-            user.setPassword(newUserState.getPassword());
+            user.setPassword(passwordEncoder.encode(newUserState.getPassword()));
         return user;
     }
 }

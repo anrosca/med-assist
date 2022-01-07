@@ -65,7 +65,7 @@ class DoctorServiceImpl implements DoctorService {
             newDoctorState.getAuthorities().forEach(user::addAuthority);
         }
         if (newDoctorState.getPassword() != null)
-            user.setPassword(newDoctorState.getPassword());
+            user.setPassword(passwordEncoder.encode(newDoctorState.getPassword()));
         return user;
     }
 

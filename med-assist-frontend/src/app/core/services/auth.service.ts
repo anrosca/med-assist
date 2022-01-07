@@ -5,6 +5,7 @@ import * as jwt_decode from 'jwt-decode';
 import {delay, of} from 'rxjs';
 import {User} from '../model/user';
 import {map} from "rxjs/operators";
+import {UserService} from './user.service';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class AuthenticationService {
     private authUrl = 'http://localhost:8080/api/v1/auth';
 
     constructor(private http: HttpClient,
-                @Inject('LOCALSTORAGE') private localStorage: Storage) {
+                @Inject('LOCALSTORAGE') private localStorage: Storage, private userService: UserService) {
     }
 
     login(username: string, password: string) {
@@ -55,7 +56,7 @@ export class AuthenticationService {
     }
 
     changePassword(username: string, currentPwd: string, newPwd: string) {
-        return of(true).pipe(delay(1000));
+        return this.userService.changePassword(this.getCurrentUser().id, newPwd).pipe(delay(1000));
     }
 
     passwordReset(username: string, token: string, password: string, confirmPassword: string): any {
