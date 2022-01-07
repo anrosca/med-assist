@@ -5,11 +5,18 @@ import inc.evil.medassist.appointment.web.UpsertAppointmentRequest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface AppointmentFacade {
     List<AppointmentResponse> findAll();
 
     AppointmentResponse findById(String id);
+
+    Long countAll();
+
+    Map<String, Long> countOperations();
+
+    Map<String, Long> countAppointmentsPerMonth();
 
     void deleteById(String id);
 

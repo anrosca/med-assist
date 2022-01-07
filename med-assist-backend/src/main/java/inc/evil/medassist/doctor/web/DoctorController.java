@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import javax.annotation.security.RolesAllowed;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/doctors")
@@ -23,6 +24,11 @@ public class DoctorController {
     @GetMapping
     public List<DoctorResponse> findAll() {
         return doctorFacade.findAll();
+    }
+
+    @GetMapping("/count/per-specialty")
+    public Map<String, Long> countSpecialties() {
+        return doctorFacade.countSpecialties();
     }
 
     @GetMapping("{id}")

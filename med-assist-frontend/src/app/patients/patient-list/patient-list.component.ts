@@ -1,14 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Title} from "@angular/platform-browser";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {NotificationService} from "../../core/services/notification.service";
-import {MatSort} from "@angular/material/sort";
-import {PatientService} from "../../core/services/patient.service";
-import {CalendarEvent} from "angular-calendar";
-import {ViewAppointmentDialog} from "../../appointments/view-appointment/view-appointment-dialog";
-import {MatDialog} from "@angular/material/dialog";
-import {ViewPatientDialog} from "../view-patient/view-patient-dialog";
+import {Title} from '@angular/platform-browser';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {NotificationService} from '../../core/services/notification.service';
+import {MatSort} from '@angular/material/sort';
+import {PatientService} from '../../core/services/patient.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ViewPatientDialog} from '../view-patient/view-patient-dialog';
 
 @Component({
     selector: 'app-patient-list',
@@ -50,7 +48,7 @@ export class PatientListComponent implements OnInit {
                     this.dataSource.filterPredicate = (data: any, filter) => {
                         const dataStr = JSON.stringify(data).toLowerCase();
                         return dataStr.indexOf(filter) != -1;
-                    }
+                    };
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();

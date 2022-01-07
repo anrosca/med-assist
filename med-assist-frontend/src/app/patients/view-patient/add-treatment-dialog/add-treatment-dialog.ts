@@ -1,14 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Tooth} from "../../../core/model/tooth";
-import {TeethService} from "../../../core/services/teeth.service";
-import {NotificationService} from "../../../core/services/notification.service";
-import {Patient} from "../../../core/model/patient";
-import {DentalChart} from "../../../core/model/dental-chart";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {CreateToothTreatmentData} from "../add-tooth-treatment-dialog/add-tooth-treatment-dialog";
-import {DoctorService} from "../../../core/services/doctor.service";
-import {PatientService} from "../../../core/services/patient.service";
-import {Doctor} from "../../../core/model/doctor";
+import {Tooth} from '../../../core/model/tooth';
+import {TeethService} from '../../../core/services/teeth.service';
+import {NotificationService} from '../../../core/services/notification.service';
+import {Patient} from '../../../core/model/patient';
+import {DentalChart} from '../../../core/model/dental-chart';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {DoctorService} from '../../../core/services/doctor.service';
+import {PatientService} from '../../../core/services/patient.service';
+import {Doctor} from '../../../core/model/doctor';
 
 @Component({
     selector: 'app-add-treatment-dialog',
@@ -38,13 +37,13 @@ export class AddTreatmentDialog implements OnInit {
     ngOnInit(): void {
         this.doctorService.getAllDoctors().subscribe(doctors => {
             this.doctors = doctors;
-        })
+        });
         this.patientService.getAllPatients().subscribe(patients => {
             this.patients = patients;
-        })
+        });
         this.teethService.getPatientTeeth(this.data.patient.id)
             .subscribe(teeth => {
-                    var mappedTeeth = teeth as unknown as Tooth[];
+                    const mappedTeeth = teeth as unknown as Tooth[];
                     this.dentalChart = {
                         UR1: mappedTeeth.filter((tooth) => tooth.code === 'UR1')[0],
                         UR2: mappedTeeth.filter((tooth) => tooth.code === 'UR2')[0],
@@ -78,7 +77,7 @@ export class AddTreatmentDialog implements OnInit {
                         LR6: mappedTeeth.filter((tooth) => tooth.code === 'LR6')[0],
                         LR7: mappedTeeth.filter((tooth) => tooth.code === 'LR7')[0],
                         LR8: mappedTeeth.filter((tooth) => tooth.code === 'LR8')[0]
-                    }
+                    };
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
@@ -87,12 +86,12 @@ export class AddTreatmentDialog implements OnInit {
     }
 
     selectTooth(tooth: Tooth) {
-        console.log(this.teethIds)
+        console.log(this.teethIds);
         tooth.isSelected = !tooth.isSelected;
         if (tooth.isSelected) {
             this.teethIds.push(tooth.id);
         } else {
-            this.teethIds = this.teethIds.filter(id => id !== tooth.id)
+            this.teethIds = this.teethIds.filter(id => id !== tooth.id);
         }
         this.data.treatment.teethIds = this.teethIds;
     }

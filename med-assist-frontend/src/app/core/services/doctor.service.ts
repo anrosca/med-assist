@@ -1,11 +1,7 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { of, EMPTY } from 'rxjs';
-import {User} from '../model/user';
-import {Doctor} from "../model/doctor";
+import {Inject, Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {Doctor} from '../model/doctor';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +16,11 @@ export class DoctorService {
     getAllDoctors() {
         return this.http.get(this.doctorsUrl)
             .pipe(map(response => (response as unknown as Doctor[])));
+    }
+
+    countSpecialties() {
+        return this.http.get(this.doctorsUrl + '/count/per-specialty')
+            .pipe(map(response => (response as unknown as Map<string, number>)));
     }
 
 }

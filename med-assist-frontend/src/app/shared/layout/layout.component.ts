@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
+import {Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit} from '@angular/core';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {Subscription} from 'rxjs';
 
-import { AuthenticationService } from '../../core/services/auth.service';
-import { SpinnerService } from '../../core/services/spinner.service';
-import { AuthGuard } from 'src/app/core/guards/auth.guard';
-import {TimerObservable} from "rxjs-compat/observable/TimerObservable";
+import {AuthenticationService} from '../../core/services/auth.service';
+import {SpinnerService} from '../../core/services/spinner.service';
+import {AuthGuard} from 'src/app/core/guards/auth.guard';
+import {TimerObservable} from 'rxjs-compat/observable/TimerObservable';
 
 @Component({
     selector: 'app-layout',
@@ -23,10 +23,10 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private autoLogoutSubscription: Subscription;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
-        private media: MediaMatcher,
-        public spinnerService: SpinnerService,
-        private authService: AuthenticationService,
-        private authGuard: AuthGuard) {
+                private media: MediaMatcher,
+                public spinnerService: SpinnerService,
+                private authService: AuthenticationService,
+                private authGuard: AuthGuard) {
 
         this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();

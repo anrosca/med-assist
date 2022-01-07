@@ -7,6 +7,7 @@ import inc.evil.medassist.patient.web.PatientResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class PatientFacadeImpl implements PatientFacade {
@@ -22,6 +23,16 @@ public class PatientFacadeImpl implements PatientFacade {
                 .stream()
                 .map(PatientResponse::from)
                 .toList();
+    }
+
+    @Override
+    public Map<String, Long> countAgeCategories() {
+        return patientService.countAgeCategories();
+    }
+
+    @Override
+    public Map<String, Long> countPatientsCreatedPerMonth() {
+        return patientService.countPatientsCreatedPerMonth();
     }
 
     @Override

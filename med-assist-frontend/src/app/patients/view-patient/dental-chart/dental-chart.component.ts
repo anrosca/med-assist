@@ -1,16 +1,16 @@
 import {Component, Input, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
-import {Patient} from "../../../core/model/patient";
-import {TeethService} from "../../../core/services/teeth.service";
-import {NotificationService} from "../../../core/services/notification.service";
-import {Tooth} from "../../../core/model/tooth";
-import {DentalChart} from "../../../core/model/dental-chart";
-import {MatSort} from "@angular/material/sort";
-import {MatPaginator} from "@angular/material/paginator";
-import {Treatment} from "../../../core/model/treatment";
-import {TreatmentService} from "../../../core/services/treatment.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {AddToothTreatmentDialog} from "../add-tooth-treatment-dialog/add-tooth-treatment-dialog";
-import {MatDialog} from "@angular/material/dialog";
+import {Patient} from '../../../core/model/patient';
+import {TeethService} from '../../../core/services/teeth.service';
+import {NotificationService} from '../../../core/services/notification.service';
+import {Tooth} from '../../../core/model/tooth';
+import {DentalChart} from '../../../core/model/dental-chart';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {Treatment} from '../../../core/model/treatment';
+import {TreatmentService} from '../../../core/services/treatment.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {AddToothTreatmentDialog} from '../add-tooth-treatment-dialog/add-tooth-treatment-dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-dental-chart',
@@ -55,7 +55,7 @@ export class DentalChartComponent implements OnInit {
                     this.dataSource.filterPredicate = (data: any, filter) => {
                         const dataStr = JSON.stringify(data).toLowerCase();
                         return dataStr.indexOf(filter) != -1;
-                    }
+                    };
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
@@ -77,7 +77,7 @@ export class DentalChartComponent implements OnInit {
     ngOnInit(): void {
         this.teethService.getPatientTeeth(this.patient.id)
             .subscribe(teeth => {
-                    var mappedTeeth = teeth as unknown as Tooth[];
+                    const mappedTeeth = teeth as unknown as Tooth[];
                     this.dentalChart = {
                         UR1: mappedTeeth.filter((tooth) => tooth.code === 'UR1')[0],
                         UR2: mappedTeeth.filter((tooth) => tooth.code === 'UR2')[0],
@@ -111,7 +111,7 @@ export class DentalChartComponent implements OnInit {
                         LR6: mappedTeeth.filter((tooth) => tooth.code === 'LR6')[0],
                         LR7: mappedTeeth.filter((tooth) => tooth.code === 'LR7')[0],
                         LR8: mappedTeeth.filter((tooth) => tooth.code === 'LR8')[0]
-                    }
+                    };
                     this.currentTooth = this.dentalChart.UL1;
                 },
                 error => {
@@ -128,7 +128,7 @@ export class DentalChartComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
-            console.log(result)
+            console.log(result);
 
             this.treatmentService.createTreatment({
                 doctorId: result.doctorId,
@@ -139,10 +139,10 @@ export class DentalChartComponent implements OnInit {
             }).subscribe(() => {
                 this.viewTooth(this.currentTooth);
             }, error => {
-                console.log(error)
+                console.log(error);
                 const resMessage = error.error.messages || error.message || error.error.message || error.toString();
                 this.notificationService.openSnackBar(resMessage);
-            })
+            });
         });
     }
 }
@@ -150,7 +150,7 @@ export class DentalChartComponent implements OnInit {
 @Pipe({name: 'teethPrinter'})
 export class TeethPrinter implements PipeTransform {
     transform(input: Tooth[]): any {
-        console.log(input)
+        console.log(input);
         return input.map(value => value.code);
     }
 }

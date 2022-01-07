@@ -1,0 +1,152 @@
+<div style="margin-top: 10px;" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <mat-card-content>
+                <mat-tab-group (selectedTabChange)="tabChanged()">
+                    <mat-tab label="General">
+                        <mat-card style="border: 2px solid rgba(55,55,55, 0.5); margin-top: 10px;">
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <mat-card>
+                                            <mat-card-title>Patients</mat-card-title>
+                                            <mat-card-content>
+                                                <div id="chartPatients" class="chart">
+                                                    <apx-chart
+                                                            [series]="patientsChartOptions?.series"
+                                                            [dataLabels]="patientsChartOptions?.dataLabels"
+                                                            [chart]="patientsChartOptions?.chart"
+                                                            [labels]="patientsChartOptions?.labels"
+                                                            [responsive]="patientsChartOptions?.responsive"
+                                                            [legend]="patientsChartOptions?.legend"
+                                                            [colors]="patientsChartOptions?.colors"
+                                                            [plotOptions]="patientsChartOptions?.plotOptions"
+
+                                                    ></apx-chart>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-sm">
+                                        <mat-card>
+                                            <mat-card-title>Doctors</mat-card-title>
+                                            <mat-card-content>
+                                                <div id="chartDoctors" class="chart">
+                                                    <apx-chart
+                                                            [series]="doctorsChartOptions?.series"
+                                                            [dataLabels]="doctorsChartOptions?.dataLabels"
+                                                            [chart]="doctorsChartOptions?.chart"
+                                                            [labels]="doctorsChartOptions?.labels"
+                                                            [responsive]="doctorsChartOptions?.responsive"
+                                                            [legend]="doctorsChartOptions?.legend"
+                                                            [colors]="doctorsChartOptions?.colors"
+                                                            [plotOptions]="doctorsChartOptions?.plotOptions"
+
+                                                    ></apx-chart>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-sm">
+                                        <mat-card>
+                                            <mat-card-title>Appointments</mat-card-title>
+                                            <mat-card-content>
+                                                <div id="chartAppointments" class="chart">
+                                                    <apx-chart
+                                                            [series]="appointmentsChartOptions?.series"
+                                                            [dataLabels]="appointmentsChartOptions?.dataLabels"
+                                                            [chart]="appointmentsChartOptions?.chart"
+                                                            [labels]="appointmentsChartOptions?.labels"
+                                                            [responsive]="appointmentsChartOptions?.responsive"
+                                                            [legend]="appointmentsChartOptions?.legend"
+                                                            [colors]="appointmentsChartOptions?.colors"
+                                                            [plotOptions]="appointmentsChartOptions?.plotOptions"
+
+                                                    ></apx-chart>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm">
+                                        <mat-card>
+                                            <mat-card-title>Operations</mat-card-title>
+                                            <mat-card-content>
+                                                <div id="operationsChart"
+                                                     style="margin-left: 30px; margin-right: 30px;">
+                                                    <apx-chart
+                                                            [series]="operationsChartOptions?.series"
+                                                            [chart]="operationsChartOptions?.chart"
+                                                            [dataLabels]="operationsChartOptions?.dataLabels"
+                                                            [plotOptions]="operationsChartOptions?.plotOptions"
+                                                            [title]="operationsChartOptions?.title"
+                                                            [legend]="operationsChartOptions?.legend"
+                                                    ></apx-chart>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </mat-tab>
+                    <mat-tab label="Appointments">
+                        <mat-card style="border: 2px solid rgba(55,55,55, 0.5); margin-top: 10px;">
+                            <mat-card-content>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm">
+                                        <mat-card>
+                                            <mat-card-title>Appointments</mat-card-title>
+                                            <mat-card-content>
+                                                <div id="appointmentsPerMonthChart"
+                                                     style="margin-left: 30px; margin-right: 30px;">
+                                                    <apx-chart
+                                                            [series]="appointmentsPerMonthChartOptions?.series"
+                                                            [chart]="appointmentsPerMonthChartOptions?.chart"
+                                                            [dataLabels]="appointmentsPerMonthChartOptions?.dataLabels"
+                                                            [title]="appointmentsPerMonthChartOptions?.title"
+                                                            [grid]="appointmentsPerMonthChartOptions?.grid"
+                                                            [stroke]="appointmentsPerMonthChartOptions?.stroke"
+                                                            [xaxis]="appointmentsPerMonthChartOptions?.xaxis"
+                                                    ></apx-chart>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </mat-tab>
+                    <mat-tab label="Patients">
+                        <mat-card style="border: 2px solid rgba(55,55,55, 0.5); margin-top: 10px;">
+                            <mat-card-content>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm">
+                                        <mat-card>
+                                            <mat-card-title>New Patients</mat-card-title>
+                                            <mat-card-content>
+                                                <div id="newPatientsPerMonthChart"
+                                                     style="margin-left: 30px; margin-right: 30px;">
+                                                    <apx-chart
+                                                            [series]="newPatientsPerMonthChartOptions?.series"
+                                                            [chart]="newPatientsPerMonthChartOptions?.chart"
+                                                            [dataLabels]="newPatientsPerMonthChartOptions?.dataLabels"
+                                                            [title]="newPatientsPerMonthChartOptions?.title"
+                                                            [grid]="newPatientsPerMonthChartOptions?.grid"
+                                                            [stroke]="newPatientsPerMonthChartOptions?.stroke"
+                                                            [xaxis]="newPatientsPerMonthChartOptions?.xaxis"
+                                                    ></apx-chart>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

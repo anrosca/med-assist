@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/appointments")
@@ -25,6 +26,21 @@ public class AppointmentController {
     @GetMapping
     public List<AppointmentResponse> findAll() {
         return appointmentFacade.findAll();
+    }
+
+    @GetMapping("/count")
+    public Long countAll() {
+        return appointmentFacade.countAll();
+    }
+
+    @GetMapping("/count/operations")
+    public Map<String, Long> countOperations() {
+        return appointmentFacade.countOperations();
+    }
+
+    @GetMapping("/count/per-month")
+    public Map<String, Long> countAppointmentsPerMonth() {
+        return appointmentFacade.countAppointmentsPerMonth();
     }
 
     @GetMapping("{id}")

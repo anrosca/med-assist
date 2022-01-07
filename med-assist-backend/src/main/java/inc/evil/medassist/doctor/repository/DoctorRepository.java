@@ -1,6 +1,7 @@
 package inc.evil.medassist.doctor.repository;
 
 import inc.evil.medassist.doctor.model.Doctor;
+import inc.evil.medassist.patient.repository.PatientRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +26,13 @@ public interface DoctorRepository extends JpaRepository<Doctor, String> {
 
     @Query("select d from Doctor d join fetch d.authorities where d.enabled = true")
     List<Doctor> findAllEnabledWithAuthorities();
+
+    @Query(nativeQuery = true, value = "select specialty, count(specialty) from doctors group by specialty")
+    List<SpecialtyCount> countSpecialties();
+
+    interface SpecialtyCount {
+        String getSpecialty();
+
+        Long getCount();
+    }
 }

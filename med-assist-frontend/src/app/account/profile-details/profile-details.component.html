@@ -1,25 +1,14 @@
 <div class="profile-card">
-  <img src="assets/user.png" [alt]="fullName">
 
-  <h2 class="title">
-    {{fullName}}
-  </h2>
-  <h3 class="title">
-    {{alias}}
-  </h3>
-
-  <h3 class="title">
-    {{email}}
-  </h3>
-
-  <h3 class="title">
-    Roles : {{roles}}
-  </h3>
-
-  <h3 class="title">
-    Token : <button mat-button (click)="openDialog()">View</button>
-  </h3>
-
+    <div class="wrapper">
+      <div class="profile">
+        <img src="assets/user.png" class="thumbnail">
+        <h3 class="name">{{fullName}}</h3>
+        <p class="title">{{email}}</p>
+        <p class="description">Roles : {{roles}}</p>
+        Token : <button mat-button (click)="openDialog()">View</button>
+      </div>
+    </div>
 
 </div>
 

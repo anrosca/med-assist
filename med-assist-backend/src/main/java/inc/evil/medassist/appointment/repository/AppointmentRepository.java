@@ -20,21 +20,41 @@ public interface AppointmentRepository extends JpaRepository<Appointment, String
     Optional<Appointment> findByIdWithDoctorsAndPatients(@Param("id") String id);
 
     @Query("""
-            select a from Appointment a where a.doctor.id = :doctorId and a.appointmentDate = :date
-                    and (:startTime < a.endTime and :endTime > a.startTime)
-                    and ((:appointmentId is not null and a.id <> :appointmentId) or :appointmentId is null)
-    """)
+                    select a from Appointment a where a.doctor.id = :doctorId and a.appointmentDate = :date
+                            and (:startTime < a.endTime and :endTime > a.startTime)
+                            and ((:appointmentId is not null and a.id <> :appointmentId) or :appointmentId is null)
+            """)
     Optional<Appointment> findConflictingAppointment(@Param("doctorId") String doctorId, @Param("date") LocalDate date,
-                                                     @Param("startTime") LocalTime startTime, @Param("endTime") LocalTime endTime,
+                                                     @Param("startTime") LocalTime startTime,
+                                                     @Param("endTime") LocalTime endTime,
                                                      @Param("appointmentId") String appointmentId);
 
     @Query("select a from Appointment a join fetch a.doctor join fetch a.patient where a.doctor.id = :doctorId")
     List<Appointment> findByDoctorId(@Param("doctorId") String id);
 
     @Query("""
-                select a from Appointment a join fetch a.doctor join fetch a.patient where a.doctor.id = :doctorId
-                    and (a.appointmentDate >= :startDate and a.appointmentDate <= :endDate)
-    """)
-    List<Appointment> findByDoctorIdAndTimeRange(@Param("doctorId") String id, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+                        select a from Appointment a join fetch a.doctor join fetch a.patient where a.doctor.id = :doctorId
+                            and (a.appointmentDate >= :startDate and a.appointmentDate <= :endDate)
+            """)
+    List<Appointment> findByDoctorIdAndTimeRange(@Param("doctorId") String id, @Param("startDate") LocalDate startDate,
+                                                 @Param("endDate") LocalDate endDate);
 
+    @Query(value = "select lower(operation) as operation, count(operation) from appointments group by lower(operation)", nativeQuery = true)
+    List<OperationsCount> countOperations();
+
+    @Query(value = "select to_char(created_at, 'Mon-YYYY') as month, count(id) from appointments group by to_char(created_at, 'Mon-YYYY')", nativeQuery = true)
+    List<AppointmentsPerMonthCount> countAppointmentsPerMonth();
+
+
+    interface AppointmentsPerMonthCount {
+        String getMonth();
+
+        Long getCount();
+    }
+
+    interface OperationsCount {
+        String getOperation();
+
+        Long getCount();
+    }
 }

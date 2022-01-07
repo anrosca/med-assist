@@ -96,6 +96,20 @@
           <p mat-line> Patients </p>
         </a>
 
+        <a mat-list-item [routerLink]="['/treatments']" >
+          <mat-icon mat-list-icon>
+            healing
+          </mat-icon>
+          <p mat-line> Treatments </p>
+        </a>
+
+        <a mat-list-item [routerLink]="['/statistics']" >
+          <mat-icon mat-list-icon>
+            bar_chart
+          </mat-icon>
+          <p mat-line> Statistics </p>
+        </a>
+
         <a mat-list-item [routerLink]="['/account/profile']">
           <mat-icon mat-list-icon>person</mat-icon>
           <p mat-line> Account </p>

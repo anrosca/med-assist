@@ -1,0 +1,9 @@
+.chart {
+    padding: 0;
+    max-width: 450px;
+    margin: 35px auto;
+}
+
+.apexcharts-legend text {
+    font-weight: 900;
+}

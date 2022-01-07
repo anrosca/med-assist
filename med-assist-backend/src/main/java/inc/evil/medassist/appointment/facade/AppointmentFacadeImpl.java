@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Component
 class AppointmentFacadeImpl implements AppointmentFacade {
@@ -36,6 +37,21 @@ class AppointmentFacadeImpl implements AppointmentFacade {
     @Override
     public AppointmentResponse findById(String id) {
         return AppointmentResponse.from(appointmentService.findById(id));
+    }
+
+    @Override
+    public Long countAll() {
+        return appointmentService.countAll();
+    }
+
+    @Override
+    public Map<String, Long> countOperations() {
+        return appointmentService.countOperations();
+    }
+
+    @Override
+    public Map<String, Long> countAppointmentsPerMonth() {
+        return appointmentService.countAppointmentsPerMonth();
     }
 
     @Override
