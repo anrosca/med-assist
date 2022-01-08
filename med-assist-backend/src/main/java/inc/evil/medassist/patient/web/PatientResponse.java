@@ -16,6 +16,7 @@ public class PatientResponse {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String source;
     private String birthDate;
 
     public static PatientResponse from(Patient patient) {
@@ -24,6 +25,7 @@ public class PatientResponse {
                 .firstName(patient.getFirstName())
                 .lastName(patient.getLastName())
                 .birthDate(patient.getBirthDate().toString())
+                .source(patient.getSource())
                 .phoneNumber(patient.getPhoneNumber())
                 .build();
     }

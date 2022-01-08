@@ -15,6 +15,9 @@ import {CreateAppointmentDialog} from './create-appointment/create-appointment-d
 import {ViewAppointmentDialog} from './view-appointment/view-appointment-dialog';
 import {AppointmentsListComponent} from './appointments-list/appointments-list.component';
 import {MatSortModule} from "@angular/material/sort";
+import { ContextMenuModule } from 'ngx-contextmenu';
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+
 
 @NgModule({
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
@@ -30,10 +33,14 @@ import {MatSortModule} from "@angular/material/sort";
             provide: DateAdapter,
             useFactory: adapterFactory,
         }),
+        ContextMenuModule.forRoot({
+            useBootstrap4: true,
+        }),
         DemoUtilsModule,
         NgbDropdownModule,
         MatRadioModule,
-        MatSortModule
+        MatSortModule,
+        NgxMatSelectSearchModule
     ],
     entryComponents: []
 })

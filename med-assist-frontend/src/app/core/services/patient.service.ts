@@ -28,4 +28,14 @@ export class PatientService {
             .pipe(map(response => response as unknown as Map<string, number>));
     }
 
+    createPatient(patient: any) {
+        return this.http.post(this.patientsUrl, {
+            'firstName': patient.firstName,
+            'lastName': patient.lastName,
+            'phoneNumber': patient.phoneNumber,
+            'birthDate': patient.birthDate,
+            'source': patient.source
+        });
+    }
+
 }

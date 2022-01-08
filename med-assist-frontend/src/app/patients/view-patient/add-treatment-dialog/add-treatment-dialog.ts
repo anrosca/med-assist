@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Tooth} from '../../../core/model/tooth';
 import {TeethService} from '../../../core/services/teeth.service';
 import {NotificationService} from '../../../core/services/notification.service';
@@ -8,19 +8,29 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DoctorService} from '../../../core/services/doctor.service';
 import {PatientService} from '../../../core/services/patient.service';
 import {Doctor} from '../../../core/model/doctor';
+import {ReplaySubject, Subject} from "rxjs";
+import {FormControl} from "@angular/forms";
+import {MatSelect} from "@angular/material/select";
+import {take, takeUntil} from "rxjs/operators";
 
 @Component({
     selector: 'app-add-treatment-dialog',
     templateUrl: './add-treatment-dialog.html',
     styleUrls: ['./add-treatment-dialog.css']
 })
-export class AddTreatmentDialog implements OnInit {
+export class AddTreatmentDialog implements OnInit, AfterViewInit {
 
     doctors: Doctor[] = [];
     patients: Patient[] = [];
 
     dentalChart: DentalChart;
     teethIds: string[] = [];
+
+    public filteredDoctors: ReplaySubject<Doctor[]> = new ReplaySubject<Doctor[]>(1);
+    doctorCtrl: FormControl = new FormControl();
+    doctorFilterCtrl: FormControl = new FormControl();
+    protected _onDestroy = new Subject<void>();
+    @ViewChild('doctorSingleSelect', {static: true}) doctorSingleSelect: MatSelect;
 
     constructor(private teethService: TeethService,
                 private doctorService: DoctorService,
@@ -34,10 +44,24 @@ export class AddTreatmentDialog implements OnInit {
         this.dialogRef.close();
     }
 
+    protected setInitialValue() {
+        this.filteredDoctors
+            .pipe(take(1), takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.doctorSingleSelect.compareWith = (a: Patient, b: Patient) => a && b && a.id === b.id;
+            });
+    }
+
     ngOnInit(): void {
         this.doctorService.getAllDoctors().subscribe(doctors => {
             this.doctors = doctors;
+            this.filteredDoctors.next(this.doctors.slice());
         });
+        this.doctorFilterCtrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterDoctors();
+            });
         this.patientService.getAllPatients().subscribe(patients => {
             this.patients = patients;
         });
@@ -94,6 +118,30 @@ export class AddTreatmentDialog implements OnInit {
             this.teethIds = this.teethIds.filter(id => id !== tooth.id);
         }
         this.data.treatment.teethIds = this.teethIds;
+    }
+
+    ngAfterViewInit(): void {
+        this.setInitialValue();
+    }
+
+    private filterDoctors() {
+        if (!this.doctors) {
+            return;
+        }
+        // get the search keyword
+        let search = this.doctorFilterCtrl.value;
+        console.log(search);
+        console.log('nanana');
+        if (!search) {
+            this.filteredDoctors.next(this.doctors.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+
+        this.filteredDoctors.next(
+            this.doctors.filter(doctor => (doctor.firstName + ' ' + doctor.lastName).toLowerCase().indexOf(search) > -1)
+        );
     }
 }
 

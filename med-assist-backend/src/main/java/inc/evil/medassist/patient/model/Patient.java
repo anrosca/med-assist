@@ -22,6 +22,7 @@ public class Patient extends AbstractEntity {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String source;
     private LocalDate birthDate;
 
     @Column(insertable = false)
