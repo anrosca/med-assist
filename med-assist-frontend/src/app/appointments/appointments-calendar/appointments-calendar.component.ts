@@ -256,19 +256,21 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
     openCreateAppointmentDialog(): void {
         const dialogRef = this.dialog.open(CreateAppointmentDialog, {
             width: 'auto',
+            disableClose: true,
             data: {appointment: this.appointmentToCreate}
         });
 
         dialogRef.afterClosed().subscribe(result => {
-
-            this.appointmentService.createAppointment(result).subscribe(() => {
-                this.ngAfterViewInit();
-                this.refresh.next();
-            }, error => {
-                console.log(error);
-                const resMessage = error.error.messages || error.message || error.error.message || error.toString();
-                this.notificationService.openSnackBar(resMessage);
-            });
+            if (result.status === 'Submitted') {
+                this.appointmentService.createAppointment(result.appointment).subscribe(() => {
+                    this.ngAfterViewInit();
+                    this.refresh.next();
+                }, error => {
+                    console.log(error);
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+            }
         });
     }
 

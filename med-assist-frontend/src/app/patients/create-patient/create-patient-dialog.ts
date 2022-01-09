@@ -5,6 +5,7 @@ import {PatientService} from "../../core/services/patient.service";
 
 interface CreatePatientDialogData {
     patient: any;
+    status: string;
 }
 
 @Component({
@@ -20,7 +21,13 @@ export class CreatePatientDialog implements OnInit {
     }
 
     onNoClick(): void {
-        this.dialogRef.close();
+        this.data.status = 'Closed';
+        this.dialogRef.close(this.data);
+    }
+
+    onSubmit() {
+        this.data.status = 'Submitted';
+        this.dialogRef.close(this.data);
     }
 
     ngOnInit(): void {

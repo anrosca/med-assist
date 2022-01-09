@@ -42,12 +42,14 @@ export class AddToothTreatmentDialog implements OnInit, AfterViewInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close({ data: 'closed' });
+    this.data.status = 'Closed';
+    this.dialogRef.close(this.data);
   }
 
 
   onSubmit(): void {
-    this.dialogRef.close({ data: this.data.treatment });
+    this.data.status = 'Submitted';
+    this.dialogRef.close(this.data);
   }
 
   ngOnInit(): void {
@@ -92,6 +94,7 @@ export class AddToothTreatmentDialog implements OnInit, AfterViewInit {
 }
 
 export interface CreateToothTreatmentData {
+  status: string;
   treatment: any;
   patient: Patient;
   tooth: Tooth;

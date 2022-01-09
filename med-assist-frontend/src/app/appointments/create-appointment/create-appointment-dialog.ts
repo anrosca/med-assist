@@ -37,7 +37,13 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
     }
 
     onNoClick(): void {
-        this.dialogRef.close();
+        this.data.status = 'Closed';
+        this.dialogRef.close(this.data);
+    }
+
+    onSubmit(): void {
+        this.data.status = 'Submitted';
+        this.dialogRef.close(this.data);
     }
 
     protected setInitialValue() {
@@ -64,8 +70,6 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
         }
         // get the search keyword
         let search = this.patientFilterCtrl.value;
-        console.log(search);
-        console.log('nanana');
         if (!search) {
             this.filteredPatients.next(this.patients.slice());
             return;
@@ -85,7 +89,6 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
         // get the search keyword
         let search = this.doctorFilterCtrl.value;
         console.log(search);
-        console.log('nanana');
         if (!search) {
             this.filteredDoctors.next(this.doctors.slice());
             return;
@@ -123,5 +126,6 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
 }
 
 export interface CreateAppointmentDialogData {
+    status: string;
     appointment: any;
 }

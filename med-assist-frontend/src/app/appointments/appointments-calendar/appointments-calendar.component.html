@@ -15,7 +15,7 @@
                 <small style="margin: 5px">There are {{ day.events.length }} events on this day</small>
             </ng-template>
 
-            <button mat-raised-button color="primary" style="margin-bottom: 10px;" (click)="openCreateAppointmentDialog()">Create appointment</button>
+            <button mat-raised-button color="primary" style="margin-bottom: 10px;" (click)="weekDayClicked(viewDate)">Create appointment</button>
 
             <div [ngSwitch]="view">
                 <mwl-calendar-month-view

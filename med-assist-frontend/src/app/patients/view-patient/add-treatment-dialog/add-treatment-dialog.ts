@@ -40,8 +40,16 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
                 @Inject(MAT_DIALOG_DATA) public data: CreateTreatmentData,) {
     }
 
+
     onNoClick(): void {
-        this.dialogRef.close();
+        this.data.status = 'Closed';
+        this.dialogRef.close(this.data);
+    }
+
+
+    onSubmit(): void {
+        this.data.status = 'Submitted';
+        this.dialogRef.close(this.data);
     }
 
     protected setInitialValue() {
@@ -146,6 +154,7 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
 }
 
 export interface CreateTreatmentData {
+    status: string;
     treatment: any;
     patient: Patient;
 }

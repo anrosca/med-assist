@@ -74,18 +74,20 @@ export class PatientListComponent implements OnInit {
     openCreatePatientDialog(): void {
         const dialogRef = this.dialog.open(CreatePatientDialog, {
             width: 'auto',
+            disableClose: true,
             data: {patient: {}}
         });
 
         dialogRef.afterClosed().subscribe(result => {
-
-            this.patientService.createPatient(result).subscribe(() => {
-                this.ngOnInit();
-            }, error => {
-                console.log(error);
-                const resMessage = error.error.messages || error.message || error.error.message || error.toString();
-                this.notificationService.openSnackBar(resMessage);
-            });
+            if (result.status === 'Submitted') {
+                this.patientService.createPatient(result.patient).subscribe(() => {
+                    this.ngOnInit();
+                }, error => {
+                    console.log(error);
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+            }
         });
     }
 
