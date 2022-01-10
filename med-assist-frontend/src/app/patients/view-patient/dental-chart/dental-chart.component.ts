@@ -34,6 +34,7 @@ export class DentalChartComponent implements OnInit {
         scientificName: 'n/a',
         id: 'n/a',
         number: 'n/a',
+        numericCode: 'n/a',
         patientId: 'n/a',
         isSelected: false
     };
@@ -150,7 +151,7 @@ export class DentalChartComponent implements OnInit {
 @Pipe({name: 'teethPrinter'})
 export class TeethPrinter implements PipeTransform {
     transform(input: Tooth[]): any {
-        return input.map(value => ' ' + value.code);
+        return input.map(value => ' ' + value.numericCode);
     }
 }
 

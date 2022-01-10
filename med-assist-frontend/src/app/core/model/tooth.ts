@@ -6,6 +6,7 @@ export interface Tooth {
     number: string;
     extracted: boolean;
     patientId: string;
+    numericCode: string;
 
     isSelected: boolean;
 
