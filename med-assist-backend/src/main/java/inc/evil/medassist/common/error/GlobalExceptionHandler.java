@@ -15,6 +15,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
@@ -139,6 +140,18 @@ public class GlobalExceptionHandler {
 				"Value '" + e.getValue() + "' could not be bound to type: '" + parameter.getParameterType().getSimpleName().toLowerCase(Locale.ROOT) + "'";
 		log.warn("Exception while handling request: {}", message);
 		var errorMessages = Set.of(message);
+		ErrorResponse errorModel = ErrorResponse.builder()
+				.messages(errorMessages)
+				.path(request.getServletPath())
+				.build();
+		return ResponseEntity.badRequest()
+				.body(errorModel);
+	}
+
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public ResponseEntity<ErrorResponse> onMaxUploadSizeExceededException(MaxUploadSizeExceededException e, HttpServletRequest request) {
+		log.warn("Invalid file: {}", e.getMessage());
+		var errorMessages = Set.of("Maximum upload size exceeded");
 		ErrorResponse errorModel = ErrorResponse.builder()
 				.messages(errorMessages)
 				.path(request.getServletPath())
