@@ -29,12 +29,17 @@ public class AbstractWebIntegrationTest extends AbstractIntegrationTest {
     }
 
     protected <T> RequestEntity<T> makeAuthenticatedRequestFor(String urlTemplate, HttpMethod httpMethod, T payload) {
+        return makeAuthenticatedRequestFor(urlTemplate, httpMethod, new HttpHeaders(), payload);
+    }
+
+    protected <T> RequestEntity<T> makeAuthenticatedRequestFor(String urlTemplate, HttpMethod httpMethod, HttpHeaders headers, T payload) {
         AuthRequest authRequest = new AuthRequest("square-pants-1", "123456");
         ResponseEntity<UserResponse> authResponse = restTemplate.postForEntity("/api/v1/auth/login", authRequest, UserResponse.class);
 
         return RequestEntity.method(httpMethod, "http://localhost:{port}" + urlTemplate, port)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + authResponse.getBody().getAccessToken())
                 .contentType(MediaType.APPLICATION_JSON)
+                .headers(headers)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + authResponse.getBody().getAccessToken())
                 .body(payload);
     }
 }
