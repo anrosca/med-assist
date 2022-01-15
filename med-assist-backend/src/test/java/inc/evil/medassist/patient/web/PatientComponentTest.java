@@ -87,6 +87,7 @@ public class PatientComponentTest extends AbstractWebIntegrationTest {
                      "firstName": "Patrick",
                      "lastName": "Stewart",
                      "birthDate": "1994-12-15",
+                     "source": "Facebook",
                      "phoneNumber": "+37369985244"
                 }
                 """;

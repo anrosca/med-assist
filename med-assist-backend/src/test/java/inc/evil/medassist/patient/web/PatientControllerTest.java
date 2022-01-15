@@ -75,6 +75,7 @@ public class PatientControllerTest extends AbstractRestTest {
                 {
                      "lastName": "Stewart",
                      "birthDate": "1994-12-15",
+                     "source": "Facebook",
                      "phoneNumber": "+37369985244"
                 }
                 """;
@@ -107,7 +108,8 @@ public class PatientControllerTest extends AbstractRestTest {
                 {
                       "firstName": "Patrick",
                       "lastName": "Stewart",
-                      "phoneNumber": "+37369985244"
+                      "phoneNumber": "+37369985244",
+                      "source": "Facebook"
                  }
                  """;
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/patients").contentType(MediaType.APPLICATION_JSON_VALUE).content(payload))

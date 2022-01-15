@@ -30,6 +30,7 @@ class TeethComponentTest extends AbstractWebIntegrationTest {
                 .extracted(false)
                 .patientId("123e4567-e89b-12d3-a456-426614174000")
                 .number(1)
+                .numericCode(21)
                 .build();
 
 
@@ -53,6 +54,7 @@ class TeethComponentTest extends AbstractWebIntegrationTest {
                         .extracted(false)
                         .patientId("123e4567-e89b-12d3-a456-426614174000")
                         .number(1)
+                        .numericCode(21)
                         .build()
         };
 
