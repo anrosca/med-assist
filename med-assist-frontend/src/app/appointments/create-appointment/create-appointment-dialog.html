@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Create appointment</h1>
 <div style="margin-top: 10px; margin-bottom: 10px;">
-    <div class="row" >
+    <div class="row">
         <mat-form-field class="full-width col-10" appearance="fill">
             <mat-label>Title</mat-label>
             <input matInput [(ngModel)]="data.appointment.title"/>
@@ -18,10 +18,33 @@
         ></textarea>
     </mat-form-field>
 
-    <mat-form-field class="full-width" appearance="fill">
+<!--    <div *ngIf="data.appointment.existingPatient">-->
+<!--        <div class="row">-->
+<!--            <mat-form-field class="full-width col-sm" appearance="fill" #singleSelect>-->
+<!--                <mat-label>Patient</mat-label>-->
+<!--                <mat-select [formControl]="patientCtrl" [(ngModel)]="data.appointment.patientId">-->
+<!--                    <mat-option>-->
+<!--                        <ngx-mat-select-search [formControl]="patientFilterCtrl"-->
+<!--                                               [placeholderLabel]="'Search'"-->
+<!--                                               [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search>-->
+<!--                    </mat-option>-->
+<!--                    <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id">-->
+<!--                        {{patient.firstName + ' ' + patient.lastName}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
+<!--            </mat-form-field>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <mat-form-field class="full-width" appearance="fill" #doctorSingleSelect>
         <mat-label>Doctor</mat-label>
-        <mat-select [(ngModel)]="data.appointment.doctorId" name="food">
-            <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+        <mat-select [formControl]="doctorCtrl" [(ngModel)]="data.appointment.doctorId" >
+                                <mat-option>
+                                    <ngx-mat-select-search [formControl]="doctorFilterCtrl"
+                                                           [placeholderLabel]="'Search'"
+                                                           [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search>
+                                </mat-option>
+            <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor.id">
                 {{doctor.firstName + ' ' + doctor.lastName}}
             </mat-option>
         </mat-select>
@@ -37,6 +60,7 @@
                     [altInput]="true"
                     [convertModelValue]="true"
                     [enableTime]="true"
+                    [time24hr]="true"
                     dateFormat="Y-m-dTH:i"
                     altFormat="F j, Y H:i"
                     placeholder="Not set"
@@ -52,6 +76,8 @@
                     [altInput]="true"
                     [convertModelValue]="true"
                     [enableTime]="true"
+                    [time24hr]="true"
+                    [minDate]="data.appointment.start"
                     dateFormat="Y-m-dTH:i"
                     altFormat="F j, Y H:i"
                     placeholder="Not set"
@@ -60,7 +86,7 @@
     </div>
 
     <section class="example-section">
-        <mat-radio-group  [(ngModel)]="data.appointment.existingPatient">
+        <mat-radio-group [(ngModel)]="data.appointment.existingPatient">
             <mat-radio-button [value]="true" style="margin-right: 5px">Existing Patient
             </mat-radio-button>
             <mat-radio-button [value]="false">New Patient
@@ -70,10 +96,15 @@
 
     <div *ngIf="data.appointment.existingPatient">
         <div class="row">
-            <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-form-field class="full-width col-sm" appearance="fill" #patientSingleSelect>
                 <mat-label>Patient</mat-label>
-                <mat-select [(ngModel)]="data.appointment.patientId" name="food">
-                    <mat-option *ngFor="let patient of patients" [value]="patient.id">
+                <mat-select [formControl]="patientCtrl" [(ngModel)]="data.appointment.patientId">
+                    <mat-option>
+                        <ngx-mat-select-search [formControl]="patientFilterCtrl"
+                                               [placeholderLabel]="'Search'"
+                                               [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id">
                         {{patient.firstName + ' ' + patient.lastName}}
                     </mat-option>
                 </mat-select>
@@ -114,10 +145,16 @@
                 />
             </mat-form-field>
         </div>
+        <div class="row">
+            <mat-form-field class="full-width col-sm" appearance="fill">
+                <mat-label>Source</mat-label>
+                <input matInput [(ngModel)]="data.appointment.patientSource"/>
+            </mat-form-field>
+        </div>
     </div>
 
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">Close</button>
-        <button mat-button [mat-dialog-close]="data.appointment" cdkFocusInitial>Submit</button>
+        <button mat-button (click)="onSubmit()">Submit</button>
     </div>
 </div>

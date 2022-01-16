@@ -38,6 +38,7 @@ create table patients
     created_at timestamp not null,
     updated_at timestamp not null,
     first_name varchar(255),
+    source varchar(255),
     last_name varchar(255),
     birth_date date not null,
     phone_number varchar(20) not null,

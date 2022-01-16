@@ -7,6 +7,8 @@ import {MatSort} from '@angular/material/sort';
 import {PatientService} from '../../core/services/patient.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ViewPatientDialog} from '../view-patient/view-patient-dialog';
+import {CreateAppointmentDialog} from "../../appointments/create-appointment/create-appointment-dialog";
+import {CreatePatientDialog} from "../create-patient/create-patient-dialog";
 
 @Component({
     selector: 'app-patient-list',
@@ -14,7 +16,7 @@ import {ViewPatientDialog} from '../view-patient/view-patient-dialog';
     styleUrls: ['./patient-list.component.css']
 })
 export class PatientListComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'firstName', 'lastName', 'phoneNumber', 'birthDate', 'action'];
+    displayedColumns: string[] = ['id', 'firstName', 'lastName', 'phoneNumber', 'birthDate', 'source', 'action'];
     dataSource;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -67,4 +69,26 @@ export class PatientListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(() => {
         });
     }
+
+
+    openCreatePatientDialog(): void {
+        const dialogRef = this.dialog.open(CreatePatientDialog, {
+            width: 'auto',
+            disableClose: true,
+            data: {patient: {}}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result.status === 'Submitted') {
+                this.patientService.createPatient(result.patient).subscribe(() => {
+                    this.ngOnInit();
+                }, error => {
+                    console.log(error);
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+            }
+        });
+    }
+
 }

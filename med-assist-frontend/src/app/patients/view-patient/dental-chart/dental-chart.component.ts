@@ -34,6 +34,7 @@ export class DentalChartComponent implements OnInit {
         scientificName: 'n/a',
         id: 'n/a',
         number: 'n/a',
+        numericCode: 'n/a',
         patientId: 'n/a',
         isSelected: false
     };
@@ -123,26 +124,26 @@ export class DentalChartComponent implements OnInit {
     openAddTreatmentDialog() {
         const dialogRef = this.dialog.open(AddToothTreatmentDialog, {
             width: 'auto',
+            disableClose: true,
             data: {treatment: {}, patient: this.patient, tooth: this.currentTooth}
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            console.log(result);
-
-            this.treatmentService.createTreatment({
-                doctorId: result.doctorId,
-                description: result.description,
-                patientId: this.patient.id,
-                price: result.price,
-                teethIds: [this.currentTooth.id]
-            }).subscribe(() => {
-                this.viewTooth(this.currentTooth);
-            }, error => {
-                console.log(error);
-                const resMessage = error.error.messages || error.message || error.error.message || error.toString();
-                this.notificationService.openSnackBar(resMessage);
-            });
+            if (result.status === 'Submitted') {
+                this.treatmentService.createTreatment({
+                    doctorId: result.treatment.doctorId,
+                    description: result.treatment.description,
+                    patientId: this.patient.id,
+                    price: result.treatment.price,
+                    teethIds: [this.currentTooth.id]
+                }).subscribe(() => {
+                    this.viewTooth(this.currentTooth);
+                }, error => {
+                    console.log(error);
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+            }
         });
     }
 }
@@ -150,7 +151,7 @@ export class DentalChartComponent implements OnInit {
 @Pipe({name: 'teethPrinter'})
 export class TeethPrinter implements PipeTransform {
     transform(input: Tooth[]): any {
-        return input.map(value => ' ' + value.code);
+        return input.map(value => ' ' + value.numericCode);
     }
 }
 

@@ -15,6 +15,7 @@ public class ToothResponse {
     private String id;
     private String scientificName;
     private String code;
+    private int numericCode;
     private int number;
     private boolean extracted;
     private String patientId;
@@ -27,6 +28,7 @@ public class ToothResponse {
                 .number(tooth.getName().getNumber())
                 .extracted(tooth.isExtracted())
                 .patientId(tooth.getPatient().getId())
+                .numericCode(tooth.getName().getNumericCode())
                 .build();
     }
 }

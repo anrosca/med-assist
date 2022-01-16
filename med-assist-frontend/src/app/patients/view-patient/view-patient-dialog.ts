@@ -118,26 +118,27 @@ export class ViewPatientDialog implements OnInit {
     openAddTreatmentDialog() {
         const dialogRef = this.dialog.open(AddTreatmentDialog, {
             width: 'auto',
+            disableClose: true,
             data: {treatment: {}, patient: this.data.patient}
         });
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
-            console.log(result);
-
-            this.treatmentService.createTreatment({
-                doctorId: result.doctorId,
-                description: result.description,
-                patientId: this.data.patient.id,
-                price: result.price,
-                teethIds: result.teethIds
-            }).subscribe(() => {
-                this.ngOnInit();
-            }, error => {
-                console.log(error);
-                const resMessage = error.error.messages || error.message || error.error.message || error.toString();
-                this.notificationService.openSnackBar(resMessage);
-            });
+            if (result.status === 'Submitted') {
+                this.treatmentService.createTreatment({
+                    doctorId: result.treatment.doctorId,
+                    description: result.treatment.description,
+                    patientId: this.data.patient.id,
+                    price: result.treatment.price,
+                    teethIds: result.treatment.teethIds
+                }).subscribe(() => {
+                    this.ngOnInit();
+                }, error => {
+                    console.log(error);
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+            }
         });
     }
 

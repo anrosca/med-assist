@@ -20,6 +20,9 @@ public class CreatePatientRequest {
     @NotBlank
     private String phoneNumber;
 
+    @NotBlank
+    private String source;
+
     @NotNull
     private LocalDate birthDate;
 
@@ -28,6 +31,7 @@ public class CreatePatientRequest {
                 .firstName(firstName)
                 .lastName(lastName)
                 .phoneNumber(phoneNumber)
+                .source(source)
                 .birthDate(birthDate)
                 .build();
     }

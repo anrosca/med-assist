@@ -75,6 +75,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                 public dialog: MatDialog) {
 
     }
+
     @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
 
     currentUser: any;
@@ -96,6 +97,10 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
 
     events: CalendarEvent[] = [];
 
+    clickedDate: Date;
+
+    clickedColumn: number;
+
     activeDayIsOpen = true;
 
     appointmentToCreate: any = {
@@ -111,6 +116,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
         patientFirstName: '',
         patientLastName: '',
         patientPhoneNumber: '',
+        patientSource: '',
         draggable: true,
         resizable: {
             beforeStart: true,
@@ -180,6 +186,13 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
             }
             this.viewDate = date;
         }
+        this.setAppointmentDates(date);
+        this.openCreateAppointmentDialog();
+    }
+
+    private setAppointmentDates(date: Date) {
+        this.appointmentToCreate.start = date;
+        this.appointmentToCreate.end = date;
     }
 
     eventTimesChanged({
@@ -243,19 +256,21 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
     openCreateAppointmentDialog(): void {
         const dialogRef = this.dialog.open(CreateAppointmentDialog, {
             width: 'auto',
+            disableClose: true,
             data: {appointment: this.appointmentToCreate}
         });
 
         dialogRef.afterClosed().subscribe(result => {
-
-            this.appointmentService.createAppointment(result).subscribe(() => {
-                this.ngAfterViewInit();
-                this.refresh.next();
-            }, error => {
-                console.log(error);
-                const resMessage = error.error.messages || error.message || error.error.message || error.toString();
-                this.notificationService.openSnackBar(resMessage);
-            });
+            if (result.status === 'Submitted') {
+                this.appointmentService.createAppointment(result.appointment).subscribe(() => {
+                    this.ngAfterViewInit();
+                    this.refresh.next();
+                }, error => {
+                    console.log(error);
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+            }
         });
     }
 
@@ -263,7 +278,10 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
     deleteAppointment(eventToDelete: CalendarEvent) {
         const patient = eventToDelete.meta.patient;
         const dialogRef = this.dialog.open(ConfirmDialog, {
-            data: {title: 'Delete appointment', message: 'Are you sure you want to delete ' + patient.firstName + ' ' + patient.lastName + '\'s appointment?'}
+            data: {
+                title: 'Delete appointment',
+                message: 'Are you sure you want to delete ' + patient.firstName + ' ' + patient.lastName + '\'s appointment?'
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -287,6 +305,15 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
 
         dialogRef.afterClosed().subscribe(() => {
         });
+    }
+
+    openCreateAppointmentDialogOnDate($event: { event: MouseEvent | KeyboardEvent; item: any }) {
+        console.log($event);
+    }
+
+    weekDayClicked(date: Date) {
+        this.setAppointmentDates(date);
+        this.openCreateAppointmentDialog();
     }
 }
 

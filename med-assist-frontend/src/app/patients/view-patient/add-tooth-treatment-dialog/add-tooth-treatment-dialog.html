@@ -8,10 +8,15 @@
         ></textarea>
     </mat-form-field>
 
-    <mat-form-field class="full-width" appearance="fill">
+    <mat-form-field class="full-width" appearance="fill" #doctorSingleSelect>
         <mat-label>Doctor</mat-label>
-        <mat-select [(ngModel)]="data.treatment.doctorId" name="food">
-            <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+        <mat-select [formControl]="doctorCtrl" [(ngModel)]="data.treatment.doctorId" >
+            <mat-option>
+                <ngx-mat-select-search [formControl]="doctorFilterCtrl"
+                                       [placeholderLabel]="'Search'"
+                                       [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor.id">
                 {{doctor.firstName + ' ' + doctor.lastName}}
             </mat-option>
         </mat-select>
@@ -32,7 +37,7 @@
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Tooth code</mat-label>
             <input matInput readonly
-                   [value]="data.tooth.code"/>
+                   [value]="data.tooth.numericCode"/>
         </mat-form-field>
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Tooth is extracted</mat-label>
@@ -46,6 +51,6 @@
 
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">Close</button>
-        <button mat-button [mat-dialog-close]="data.treatment" cdkFocusInitial>Submit</button>
+        <button mat-button (click)="onSubmit()">Submit</button>
     </div>
 </div>

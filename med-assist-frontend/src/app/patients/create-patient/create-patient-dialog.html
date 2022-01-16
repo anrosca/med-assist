@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Create patient</h1>
+<div style="margin-top: 10px; margin-bottom: 10px;">
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Patient's first name</mat-label>
+            <input matInput [(ngModel)]="data.patient.firstName"/>
+        </mat-form-field>
+
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Patient's last name</mat-label>
+            <input matInput [(ngModel)]="data.patient.lastName"/>
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Patient's phone number</mat-label>
+            <input matInput [(ngModel)]="data.patient.phoneNumber"/>
+        </mat-form-field>
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Patient's birth date</mat-label>
+            <input
+                    matInput
+                    mwlFlatpickr
+                    [(ngModel)]="data.patient.birthDate"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="false"
+                    dateFormat="Y-m-d"
+                    altFormat="F j, Y"
+                    placeholder="Not set"
+            />
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field class="full-width col-sm" appearance="fill">
+            <mat-label>Source</mat-label>
+            <input matInput [(ngModel)]="data.patient.source"/>
+        </mat-form-field>
+    </div>
+
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Close</button>
+        <button mat-button (click)="onSubmit()">Submit</button>
+    </div>
+</div>

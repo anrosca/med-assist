@@ -44,7 +44,8 @@ export class AppointmentService {
                 'firstName' : appointment.patientFirstName,
                 'lastName' : appointment.patientLastName,
                 'phoneNumber': appointment.patientPhoneNumber,
-                'birthDate': appointment.patientBirthDate
+                'birthDate': appointment.patientBirthDate,
+                'source': appointment.patientSource
             },
             'doctorId': appointment.doctorId,
             'patientId': appointment.patientId,
