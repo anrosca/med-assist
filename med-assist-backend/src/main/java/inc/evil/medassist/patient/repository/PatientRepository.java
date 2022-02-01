@@ -1,6 +1,5 @@
 package inc.evil.medassist.patient.repository;
 
-import inc.evil.medassist.appointment.repository.AppointmentRepository;
 import inc.evil.medassist.patient.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,12 +24,15 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
                        WHEN date_part('year', age(birth_date)) BETWEEN 65 AND 120 THEN '65+'
                        ELSE 'NaN' END as category,
                    count(id)
-            FROM patients
+            FROM patients where is_deleted = false
             group by category;
             """)
     List<AgeCategoryCountEntry> countAgeCategories();
 
-    @Query(value = "select to_char(created_at, 'Mon-YYYY') as month, count(id) from patients group by to_char(created_at, 'Mon-YYYY')", nativeQuery = true)
+    @Query(value = """
+        select to_char(created_at, 'Mon-YYYY') as month, count(id) from patients where is_deleted = false
+        group by to_char(created_at, 'Mon-YYYY')
+    """, nativeQuery = true)
     List<PatientsPerMonthCount> countPatientsCreatedPerMonth();
 
     interface PatientsPerMonthCount {
