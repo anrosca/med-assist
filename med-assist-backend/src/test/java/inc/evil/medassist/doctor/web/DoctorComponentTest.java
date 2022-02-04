@@ -27,7 +27,7 @@ public class DoctorComponentTest extends AbstractWebIntegrationTest {
         ResponseEntity<Map<String, Long>> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         AssertionsForClassTypes.assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
-        AssertionsForClassTypes.assertThat(response.getBody()).isEqualTo(Map.of("ORTHODONTIST", 2L));
+        AssertionsForClassTypes.assertThat(response.getBody()).isEqualTo(Map.of("ORTHODONTIST", 1L));
     }
 
     @Test
