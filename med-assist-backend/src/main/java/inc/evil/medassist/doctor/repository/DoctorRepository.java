@@ -27,7 +27,10 @@ public interface DoctorRepository extends JpaRepository<Doctor, String> {
     @Query("select d from Doctor d join fetch d.authorities where d.enabled = true")
     List<Doctor> findAllEnabledWithAuthorities();
 
-    @Query(nativeQuery = true, value = "select specialty, count(specialty) from doctors group by specialty")
+    @Query(nativeQuery = true, value = """
+        select specialty, count(specialty) from doctors d join users u on d.id = u.id where u.enabled = true
+         group by specialty
+    """)
     List<SpecialtyCount> countSpecialties();
 
     interface SpecialtyCount {
