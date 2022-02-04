@@ -2,13 +2,14 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Patient} from '../model/patient';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PatientService {
 
-    private patientsUrl = 'http://localhost:8080/api/v1/patients';
+    private patientsUrl = (environment.backendBaseUrl + '/api/v1/patients');
     constructor(private http: HttpClient,
         @Inject('LOCALSTORAGE') private localStorage: Storage) {
     }

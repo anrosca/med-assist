@@ -6,14 +6,14 @@ import {User} from '../model/user';
 import {of} from 'rxjs';
 import {delay, map} from 'rxjs/operators';
 import {UserService} from './user.service';
-
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
 
-    private authUrl = 'http://localhost:8080/api/v1/auth';
+    private authUrl = (environment.backendBaseUrl + '/api/v1/auth');
 
     constructor(private http: HttpClient,
                 @Inject('LOCALSTORAGE') private localStorage: Storage, private userService: UserService) {
