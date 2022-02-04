@@ -4,13 +4,14 @@ import {map} from 'rxjs/operators';
 import {Patient} from '../model/patient';
 import {FileRecord} from "../model/file-record";
 import {Observable} from "rxjs";
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FileRecordService {
 
-    private filesUrl = 'http://localhost:8080/api/v1/files';
+    private filesUrl = (environment.backendBaseUrl + '/api/v1/files');
 
     constructor(private http: HttpClient,
                 @Inject('LOCALSTORAGE') private localStorage: Storage) {

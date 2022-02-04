@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Treatment} from '../model/treatment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TreatmentService {
 
-    private treatmentUrl = 'http://localhost:8080/api/v1/treatments';
+    private treatmentUrl = (environment.backendBaseUrl + '/api/v1/treatments');
     constructor(private http: HttpClient) {
     }
 

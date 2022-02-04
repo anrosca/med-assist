@@ -2,13 +2,14 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Appointment} from '../model/appointment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppointmentService {
 
-    private appointmentsUrl = 'http://localhost:8080/api/v1/appointments';
+    private appointmentsUrl = (environment.backendBaseUrl + '/api/v1/appointments');
     constructor(private http: HttpClient,
         @Inject('LOCALSTORAGE') private localStorage: Storage) {
     }

@@ -11,7 +11,7 @@ import {User} from '../model/user';
 })
 export class TeethService {
 
-    private teethUrl = 'http://localhost:8080/api/v1/teeth';
+    private teethUrl = (environment.backendBaseUrl + '/api/v1/teeth');
     constructor(private http: HttpClient) {
     }
 
