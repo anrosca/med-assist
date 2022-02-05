@@ -103,26 +103,36 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
 
     activeDayIsOpen = true;
 
-    appointmentToCreate: any = {
-        title: '',
-        details: '',
-        doctorId: '',
-        patientId: '',
-        existingPatient: true,
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.blue,
-        patientBirthDate: new Date(),
-        patientFirstName: '',
-        patientLastName: '',
-        patientPhoneNumber: '',
-        patientSource: '',
-        draggable: true,
-        resizable: {
-            beforeStart: true,
-            afterEnd: true,
-        },
-    };
+    appointmentToCreate: any = AppointmentsCalendarComponent.makeEmptyAppointment();
+
+    private static makeEmptyAppointment() {
+        return {
+            title: '',
+            details: '',
+            doctorId: '',
+            patientId: '',
+            existingPatient: true,
+            start: startOfDay(new Date()),
+            end: endOfDay(new Date()),
+            color: colors.blue,
+            patientBirthDate: new Date(),
+            patientFirstName: '',
+            patientLastName: '',
+            patientPhoneNumber: '',
+            patientSource: '',
+            draggable: true,
+            resizable: {
+                beforeStart: true,
+                afterEnd: true,
+            },
+        };
+    }
+
+    private static toUtcDate(dateString) {
+        const now = new Date();
+        const millisecondsPerMinute = 60000;
+        return new Date(new Date(dateString).getTime() - now.getTimezoneOffset() * millisecondsPerMinute);
+    }
 
     ngAfterViewInit(): void {
 
@@ -166,12 +176,6 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
                     this.notificationService.openSnackBar(resMessage);
                 });
-    }
-
-    private static toUtcDate(dateString) {
-        const now = new Date();
-        const millisecondsPerMinute = 60000;
-        return new Date(new Date(dateString).getTime() - now.getTimezoneOffset() * millisecondsPerMinute)
     }
 
     dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
@@ -265,6 +269,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                 this.appointmentService.createAppointment(result.appointment).subscribe(() => {
                     this.ngAfterViewInit();
                     this.refresh.next();
+                    this.appointmentToCreate = AppointmentsCalendarComponent.makeEmptyAppointment();
                 }, error => {
                     console.log(error);
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
