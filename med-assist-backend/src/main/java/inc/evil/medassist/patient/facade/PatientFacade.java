@@ -1,6 +1,6 @@
 package inc.evil.medassist.patient.facade;
 
-import inc.evil.medassist.patient.web.CreatePatientRequest;
+import inc.evil.medassist.patient.web.UpsertPatientRequest;
 import inc.evil.medassist.patient.web.PatientResponse;
 
 import java.util.List;
@@ -17,5 +17,7 @@ public interface PatientFacade {
 
     void deleteById(String id);
 
-    PatientResponse create(CreatePatientRequest request);
+    PatientResponse create(UpsertPatientRequest request);
+
+    PatientResponse update(String id, UpsertPatientRequest request);
 }

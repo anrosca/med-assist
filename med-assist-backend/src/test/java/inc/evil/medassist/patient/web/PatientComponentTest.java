@@ -101,6 +101,34 @@ public class PatientComponentTest extends AbstractWebIntegrationTest {
     }
 
     @Test
+    @Sql("/test-data/patients/patients.sql")
+    public void shouldBeAbleToUpdatePatients() {
+        PatientResponse expectedPatient = PatientResponse.builder()
+                .id("123e4567-e89b-12d3-a456-426614174000")
+                .firstName("Patrick")
+                .lastName("Stewart")
+                .phoneNumber("+37369985244")
+                .birthDate("1994-12-15")
+                .source("Facebook")
+                .build();
+        String payload = """
+                {
+                     "firstName": "Patrick",
+                     "lastName": "Stewart",
+                     "birthDate": "1994-12-15",
+                     "source": "Facebook",
+                     "phoneNumber": "+37369985244"
+                }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/patients/123e4567-e89b-12d3-a456-426614174000", HttpMethod.PUT, payload);
+
+        ResponseEntity<PatientResponse> response = restTemplate.exchange(request, PatientResponse.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getBody()).isEqualTo(expectedPatient);
+    }
+
+    @Test
     public void shouldBeAbleToDeletePatients() {
         RequestEntity<Void> request = makeAuthenticatedRequestFor("/api/v1/patients/123e4567-e89b-12d3-a456-426614174000", HttpMethod.DELETE);
 

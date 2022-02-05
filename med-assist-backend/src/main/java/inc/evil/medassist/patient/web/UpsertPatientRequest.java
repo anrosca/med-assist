@@ -1,5 +1,6 @@
 package inc.evil.medassist.patient.web;
 
+import inc.evil.medassist.common.validation.OnCreate;
 import inc.evil.medassist.patient.model.Patient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,20 +11,20 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-public class CreatePatientRequest {
-    @NotBlank
+public class UpsertPatientRequest {
+    @NotBlank(groups = {OnCreate.class})
     private String firstName;
 
-    @NotBlank
+    @NotBlank(groups = {OnCreate.class})
     private String lastName;
 
-    @NotBlank
+    @NotBlank(groups = {OnCreate.class})
     private String phoneNumber;
 
-    @NotBlank
+    @NotBlank(groups = {OnCreate.class})
     private String source;
 
-    @NotNull
+    @NotNull(groups = {OnCreate.class})
     private LocalDate birthDate;
 
     public Patient toPatient() {

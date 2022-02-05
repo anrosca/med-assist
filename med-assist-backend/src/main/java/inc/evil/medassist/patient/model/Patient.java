@@ -45,4 +45,19 @@ public class Patient extends AbstractEntity {
         fileRecord.setPatient(null);
         this.fileRecords.remove(fileRecord);
     }
+
+    public Patient mergeWith(Patient otherPatient) {
+        return Patient.builder()
+                .id(id)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .teeth(teeth)
+                .fileRecords(fileRecords)
+                .firstName(otherPatient.getFirstName() != null ? otherPatient.getFirstName() : firstName)
+                .lastName(otherPatient.getLastName() != null ? otherPatient.getLastName() : lastName)
+                .birthDate(otherPatient.getBirthDate() != null ? otherPatient.getBirthDate() : birthDate)
+                .phoneNumber(otherPatient.getPhoneNumber() != null ? otherPatient.getPhoneNumber() : phoneNumber)
+                .source(otherPatient.getSource() != null ? otherPatient.getSource() : source)
+                .build();
+    }
 }

@@ -18,4 +18,6 @@ public interface PatientService {
     void deleteById(String id);
 
     Patient create(Patient patientToCreate);
+
+    Patient update(String id, Patient patientToUpdate);
 }
