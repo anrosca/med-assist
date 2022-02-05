@@ -1,13 +1,15 @@
 package inc.evil.medassist.patient.web;
 
+import inc.evil.medassist.common.validation.OnCreate;
+import inc.evil.medassist.common.validation.OnUpdate;
 import inc.evil.medassist.patient.facade.PatientFacade;
 import inc.evil.medassist.user.model.Authority;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +49,16 @@ public class PatientController {
         patientFacade.deleteById(id);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<PatientResponse> update(@PathVariable String id,
+                                                 @RequestBody @Validated(OnUpdate.class) UpsertPatientRequest request) {
+        final PatientResponse patientResponse = patientFacade.update(id, request);
+        return ResponseEntity.ok(patientResponse);
+    }
+
     @PostMapping
     @RolesAllowed(Authority.Fields.POWER_USER)
-    public ResponseEntity<?> create(@Valid @RequestBody CreatePatientRequest request) {
+    public ResponseEntity<?> create(@Validated(OnCreate.class) @RequestBody UpsertPatientRequest request) {
         PatientResponse createdPatient = patientFacade.create(request);
         URI location = MvcUriComponentsBuilder.fromMethodCall(MvcUriComponentsBuilder.on(getClass())
                         .findById(createdPatient.getId()))

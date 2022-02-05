@@ -75,7 +75,8 @@ Authorization: {{authKey}}
   "firstName": "Bilbo",
   "lastName": "Beggins",
   "phoneNumber": "37369666666",
-  "birthDate": "1995-11-15"
+  "birthDate": "1995-11-15",
+  "source": "Facebook"
 }
 
 ### Send POST request with json body

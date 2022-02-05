@@ -3,7 +3,7 @@ package inc.evil.medassist.appointment.web;
 import inc.evil.medassist.common.validation.ValidationSequence;
 import inc.evil.medassist.appointment.web.validation.ValidAppointmentTime;
 import inc.evil.medassist.common.validation.AtLeastOneNotNull;
-import inc.evil.medassist.patient.web.CreatePatientRequest;
+import inc.evil.medassist.patient.web.UpsertPatientRequest;
 import inc.evil.medassist.common.validation.OnCreate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,7 +37,7 @@ public class UpsertAppointmentRequest {
 
     private boolean existingPatient = true;
 
-    private CreatePatientRequest patientRequest;
+    private UpsertPatientRequest patientRequest;
 
     private String details;
 

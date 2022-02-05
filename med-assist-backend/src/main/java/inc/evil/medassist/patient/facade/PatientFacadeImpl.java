@@ -2,7 +2,7 @@ package inc.evil.medassist.patient.facade;
 
 import inc.evil.medassist.patient.model.Patient;
 import inc.evil.medassist.patient.service.PatientService;
-import inc.evil.medassist.patient.web.CreatePatientRequest;
+import inc.evil.medassist.patient.web.UpsertPatientRequest;
 import inc.evil.medassist.patient.web.PatientResponse;
 import org.springframework.stereotype.Component;
 
@@ -46,8 +46,13 @@ public class PatientFacadeImpl implements PatientFacade {
     }
 
     @Override
-    public PatientResponse create(CreatePatientRequest request) {
+    public PatientResponse create(UpsertPatientRequest request) {
         Patient createdPatient = patientService.create(request.toPatient());
         return PatientResponse.from(createdPatient);
+    }
+
+    @Override
+    public PatientResponse update(String id, UpsertPatientRequest request) {
+        return PatientResponse.from(patientService.update(id, request.toPatient()));
     }
 }

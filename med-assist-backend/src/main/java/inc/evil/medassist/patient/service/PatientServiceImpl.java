@@ -71,6 +71,14 @@ class PatientServiceImpl implements PatientService {
         return patientRepository.save(patientToCreate);
     }
 
+    @Override
+    @Transactional
+    public Patient update(String id, Patient patientToUpdate) {
+        Patient originalPatient = findById(id);
+        Patient updatedPatient = originalPatient.mergeWith(patientToUpdate);
+        return patientRepository.save(updatedPatient);
+    }
+
     private void addTeeth(final Patient patientToCreate) {
         final List<Tooth> teeth = Arrays.stream(values())
                 .map(t -> Tooth.builder().name(t).patient(patientToCreate).build()).collect(Collectors.toList());
