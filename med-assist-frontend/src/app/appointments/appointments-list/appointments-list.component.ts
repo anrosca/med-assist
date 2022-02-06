@@ -41,6 +41,11 @@ export class AppointmentsListComponent implements OnInit {
         this.titleService.setTitle('med-assist-client - Appointments');
         this.appointmentService.getAllAppointments()
             .subscribe(appointments => {
+                    appointments.map(appointment => {
+                        appointment.startDate = this.toLocalDate(appointment.startDate);
+                        appointment.endDate = this.toLocalDate(appointment.endDate);
+                        return appointment;
+                    });
                     this.dataSource = new MatTableDataSource(appointments);
                     this.dataSource.sort = this.sort;
                     this.dataSource.paginator = this.paginator;
@@ -56,5 +61,10 @@ export class AppointmentsListComponent implements OnInit {
 
     }
 
+    private toLocalDate(dateString) {
+        const now = new Date();
+        const millisecondsPerMinute = 60000;
+        return new Date(new Date(dateString).getTime() - now.getTimezoneOffset() * millisecondsPerMinute).toLocaleString('en-GB');
+    }
 
 }
