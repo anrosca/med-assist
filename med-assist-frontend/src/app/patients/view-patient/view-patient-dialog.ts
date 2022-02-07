@@ -8,6 +8,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {AddTreatmentDialog} from './add-treatment-dialog/add-treatment-dialog';
 import {FileRecord} from '../../core/model/file-record';
 import {FileRecordService} from '../../core/services/file-record.service';
+import {PatientService} from '../../core/services/patient.service';
 
 @Component({
     selector: 'app-view-patient',
@@ -15,12 +16,14 @@ import {FileRecordService} from '../../core/services/file-record.service';
     styleUrls: ['./view-patient-dialog.css']
 })
 export class ViewPatientDialog implements OnInit {
+    isEditable = false;
 
     constructor(public dialogRef: MatDialogRef<ViewPatientDialog>,
                 @Inject(MAT_DIALOG_DATA) public data: ViewPatientDialogData,
                 private treatmentService: TreatmentService,
                 private notificationService: NotificationService,
                 private fileRecordService: FileRecordService,
+                private patientService: PatientService,
                 public dialog: MatDialog) {
     }
 
@@ -142,6 +145,21 @@ export class ViewPatientDialog implements OnInit {
         });
     }
 
+    onSave() {
+        this.patientService.updatePatient(this.data.patient).subscribe(() => {
+            this.notificationService.openSnackBar('Patient successfully updated');
+            this.ngOnInit();
+        }, error => {
+            console.log(error);
+            const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+            this.notificationService.openSnackBar(resMessage);
+        });
+        this.isEditable = false;
+    }
+
+    onEdit() {
+        this.isEditable = true;
+    }
 }
 
 export interface ViewPatientDialogData {
