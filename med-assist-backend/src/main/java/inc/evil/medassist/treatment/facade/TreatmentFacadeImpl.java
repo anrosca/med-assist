@@ -1,12 +1,13 @@
 package inc.evil.medassist.treatment.facade;
 
-import inc.evil.medassist.teeth.service.ToothService;
-import inc.evil.medassist.treatment.web.CreateTreatmentRequest;
-import inc.evil.medassist.treatment.web.TreatmentResponse;
 import inc.evil.medassist.doctor.service.DoctorService;
 import inc.evil.medassist.patient.service.PatientService;
+import inc.evil.medassist.teeth.service.ToothService;
 import inc.evil.medassist.treatment.model.Treatment;
 import inc.evil.medassist.treatment.service.TreatmentService;
+import inc.evil.medassist.treatment.web.CreateTreatmentRequest;
+import inc.evil.medassist.treatment.web.TreatedTeeth;
+import inc.evil.medassist.treatment.web.TreatmentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +69,16 @@ class TreatmentFacadeImpl implements TreatmentFacade {
     public TreatmentResponse create(CreateTreatmentRequest request) {
         Treatment appointmentToCreate = toTreatment(request);
         Treatment createdTreatment = treatmentService.create(appointmentToCreate);
+        toothService.markAsExtracted(getExtractedTeeth(request.getTreatedTeeth()));
+        toothService.markAsNotExtracted(getNotExtractedTeeth(request.getTreatedTeeth()));
         return TreatmentResponse.from(createdTreatment);
+    }
+
+    private List<String> getNotExtractedTeeth(List<TreatedTeeth> treatedTeeth) {
+        return treatedTeeth.stream()
+                .filter(t -> !t.isExtracted())
+                .map(TreatedTeeth::toothId)
+                .toList();
     }
 
     private Treatment toTreatment(final CreateTreatmentRequest request) {
@@ -76,9 +86,21 @@ class TreatmentFacadeImpl implements TreatmentFacade {
                 .description(request.getDescription())
                 .doctor(request.getDoctorId() != null ? doctorService.findById(request.getDoctorId()) : null)
                 .patient(request.getPatientId() != null ? patientService.findById(request.getPatientId()) : null)
-                .teeth(toothService.findAllByIdsIn(request.getTeethIds()))
+                .teeth(toothService.findAllByIdsIn(getTeethIds(request.getTreatedTeeth())))
                 .price(request.getPrice())
                 .build();
     }
 
+    private List<String> getExtractedTeeth(List<TreatedTeeth> treatedTeeth) {
+        return treatedTeeth.stream()
+                .filter(TreatedTeeth::isExtracted)
+                .map(TreatedTeeth::toothId)
+                .toList();
+    }
+
+    private List<String> getTeethIds(List<TreatedTeeth> treatedTeeth) {
+        return treatedTeeth.stream()
+                .map(TreatedTeeth::toothId)
+                .toList();
+    }
 }

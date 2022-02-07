@@ -277,6 +277,11 @@
             <input matInput type="number" [(ngModel)]="data.treatment.price"/>
         </mat-form-field>
     </div>
+    <div class="row">
+        <section class="full-width col-sm" >
+            <mat-checkbox [(ngModel)]="markSelectedTeethAsExtracted" (ngModelChange)="onMarkSelectedTeethAsExtractedChange()">Mark selected teeth as extracted</mat-checkbox>
+        </section>
+    </div>
 
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">Close</button>

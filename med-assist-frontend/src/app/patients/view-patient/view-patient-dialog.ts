@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {TreatmentService} from '../../core/services/treatment.service';
 import {NotificationService} from '../../core/services/notification.service';
@@ -9,6 +9,8 @@ import {AddTreatmentDialog} from './add-treatment-dialog/add-treatment-dialog';
 import {FileRecord} from '../../core/model/file-record';
 import {FileRecordService} from '../../core/services/file-record.service';
 import {PatientService} from '../../core/services/patient.service';
+import {Subject} from 'rxjs';
+import {DentalChartComponent} from './dental-chart/dental-chart.component';
 
 @Component({
     selector: 'app-view-patient',
@@ -16,8 +18,6 @@ import {PatientService} from '../../core/services/patient.service';
     styleUrls: ['./view-patient-dialog.css']
 })
 export class ViewPatientDialog implements OnInit {
-    isEditable = false;
-
     constructor(public dialogRef: MatDialogRef<ViewPatientDialog>,
                 @Inject(MAT_DIALOG_DATA) public data: ViewPatientDialogData,
                 private treatmentService: TreatmentService,
@@ -31,9 +31,11 @@ export class ViewPatientDialog implements OnInit {
     treatmentsDataSource;
     @ViewChild(MatSort, {static: true}) treatmentsSort: MatSort;
     @ViewChild(MatPaginator, {static: true}) treatmentsPaginator: MatPaginator;
-
+    @ViewChild(DentalChartComponent, {static: true}) dentalChartComponent: DentalChartComponent;
+    refresh = new Subject<void>();
     files: File[] = [];
     fileRecords: FileRecord[] = [];
+    isEditable = false;
 
     onUpload(event) {
         event.addedFiles.forEach(f => {
@@ -133,9 +135,10 @@ export class ViewPatientDialog implements OnInit {
                     description: result.treatment.description,
                     patientId: this.data.patient.id,
                     price: result.treatment.price,
-                    teethIds: result.treatment.teethIds
+                    treatedTeeth: result.treatment.treatedTeeth
                 }).subscribe(() => {
                     this.ngOnInit();
+                    this.dentalChartComponent.ngOnInit();
                 }, error => {
                     console.log(error);
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();

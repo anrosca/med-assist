@@ -24,7 +24,8 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
     patients: Patient[] = [];
 
     dentalChart: DentalChart;
-    teethIds: string[] = [];
+    treatedTeeth: TreatedTooth[] = [];
+    markSelectedTeethAsExtracted = false;
 
     public filteredDoctors: ReplaySubject<Doctor[]> = new ReplaySubject<Doctor[]>(1);
     doctorCtrl: FormControl = new FormControl();
@@ -118,14 +119,17 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
     }
 
     selectTooth(tooth: Tooth) {
-        console.log(this.teethIds);
+        console.log(this.treatedTeeth);
         tooth.isSelected = !tooth.isSelected;
         if (tooth.isSelected) {
-            this.teethIds.push(tooth.id);
+            this.treatedTeeth.push({
+                'toothId': tooth.id,
+                'isExtracted': this.markSelectedTeethAsExtracted
+            });
         } else {
-            this.teethIds = this.teethIds.filter(id => id !== tooth.id);
+            this.treatedTeeth = this.treatedTeeth.filter(treatedTooth => treatedTooth.toothId !== tooth.id);
         }
-        this.data.treatment.teethIds = this.teethIds;
+        this.data.treatment.treatedTeeth = this.treatedTeeth;
     }
 
     ngAfterViewInit(): void {
@@ -151,10 +155,19 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
             this.doctors.filter(doctor => (doctor.firstName + ' ' + doctor.lastName).toLowerCase().indexOf(search) > -1)
         );
     }
+
+    onMarkSelectedTeethAsExtractedChange() {
+        this.treatedTeeth.forEach(treatedTooth => treatedTooth.isExtracted = this.markSelectedTeethAsExtracted);
+    }
 }
 
 export interface CreateTreatmentData {
     status: string;
     treatment: any;
     patient: Patient;
+}
+
+export interface TreatedTooth {
+    toothId: string;
+    isExtracted: boolean;
 }

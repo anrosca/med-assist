@@ -2,6 +2,7 @@ package inc.evil.medassist.treatment.web;
 
 import inc.evil.medassist.common.AbstractWebIntegrationTest;
 import inc.evil.medassist.common.component.ComponentTest;
+import inc.evil.medassist.common.error.ErrorResponse;
 import inc.evil.medassist.doctor.model.Specialty;
 import inc.evil.medassist.doctor.web.DoctorResponse;
 import inc.evil.medassist.patient.web.PatientResponse;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ComponentTest
 class TreatmentComponentTest extends AbstractWebIntegrationTest {
@@ -266,12 +266,67 @@ class TreatmentComponentTest extends AbstractWebIntegrationTest {
                       "price": 750.00,
                       "doctorId": "15297b89-045a-4daa-998f-5995fd44da3e",
                       "patientId": "123e4567-e89b-12d3-a456-426614174000",
-                      "teethIds": ["e29c2861-bdae-4190-a1f3-62a17acee817"]
+                      "treatedTeeth": [
+                        {
+                            "toothId": "e29c2861-bdae-4190-a1f3-62a17acee817",
+                            "isExtracted": true
+                        }
+                      ]
                 }
                 """;
         RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/treatments/", HttpMethod.POST, payload);
 
         ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.getHeaders().getLocation()).isNotNull();
+    }
+
+    @Test
+    public void whenCreatingTreatmentWithNoToothIds_shouldReturnErrorResponse() {
+        ErrorResponse expectedResponse = ErrorResponse.builder()
+                .path("/api/v1/treatments/")
+                .messages(Set.of(
+                        "Field 'treatedTeeth[0].isExtracted' must not be null but value was 'null'",
+                        "Field 'treatedTeeth[0].toothId' must not be blank but value was ''"
+                ))
+                .build();
+        String payload = """
+                {
+                      "description": "Extraction",
+                      "price": 750.00,
+                      "doctorId": "15297b89-045a-4daa-998f-5995fd44da3e",
+                      "patientId": "123e4567-e89b-12d3-a456-426614174000",
+                      "treatedTeeth": [
+                        {
+                            "toothId": "",
+                            "isExtracted": null
+                        }
+                      ]
+                }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/treatments/", HttpMethod.POST, payload);
+
+        ResponseEntity<ErrorResponse> response = restTemplate.exchange(request, ErrorResponse.class);
+
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(response.getBody()).isEqualTo(expectedResponse);
+    }
+
+    @Test
+    public void shouldBeAbleToCreateTreatments_withNoTeeth() {
+        String payload = """
+                {
+                      "description": "Extraction",
+                      "price": 750.00,
+                      "doctorId": "15297b89-045a-4daa-998f-5995fd44da3e",
+                      "patientId": "123e4567-e89b-12d3-a456-426614174000",
+                      "treatedTeeth": []
+                }
+                """;
+        RequestEntity<String> request = makeAuthenticatedRequestFor("/api/v1/treatments/", HttpMethod.POST, payload);
+
+        ResponseEntity<ErrorResponse> response = restTemplate.exchange(request, ErrorResponse.class);
 
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.getHeaders().getLocation()).isNotNull();
