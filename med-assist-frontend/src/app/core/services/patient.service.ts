@@ -39,4 +39,13 @@ export class PatientService {
         });
     }
 
+    updatePatient(patient: any) {
+        return this.http.put(this.patientsUrl + '/' + patient.id, {
+            'firstName': patient.firstName,
+            'lastName': patient.lastName,
+            'phoneNumber': patient.phoneNumber,
+            'birthDate': patient.birthDate,
+            'source': patient.source
+        });
+    }
 }
