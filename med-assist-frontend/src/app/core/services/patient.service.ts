@@ -48,4 +48,9 @@ export class PatientService {
             'source': patient.source
         });
     }
+
+    getPatientById(patientId) {
+        return this.http.get(this.patientsUrl + '/' + patientId)
+            .pipe(map(response => (response as unknown as Patient)));
+    }
 }

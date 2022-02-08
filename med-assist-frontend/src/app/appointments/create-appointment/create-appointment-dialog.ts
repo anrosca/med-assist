@@ -1,13 +1,15 @@
 import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Doctor} from '../../core/model/doctor';
 import {Patient} from '../../core/model/patient';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DoctorService} from '../../core/services/doctor.service';
 import {PatientService} from '../../core/services/patient.service';
 import {FormControl} from '@angular/forms';
 import {ReplaySubject, Subject} from 'rxjs';
 import {take, takeUntil} from 'rxjs/operators';
 import {MatSelect} from '@angular/material/select';
+import {ViewPatientDialog} from '../../patients/view-patient/view-patient-dialog';
+import {NotificationService} from '../../core/services/notification.service';
 
 @Component({
     selector: 'app-create-appointment-dialog',
@@ -33,6 +35,8 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
         @Inject(MAT_DIALOG_DATA) public data: CreateAppointmentDialogData,
         private doctorService: DoctorService,
         private patientService: PatientService,
+        public dialog: MatDialog,
+        private notificationService: NotificationService
     ) {
     }
 
@@ -122,6 +126,23 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
                 this.filterPatients();
             });
 
+    }
+
+    viewPatient(patientId) {
+        this.patientService.getPatientById(patientId).subscribe((patient) => {
+            const dialogRef = this.dialog.open(ViewPatientDialog, {
+                width: '95%',
+                height: '95%',
+                data: {patient: patient}
+            });
+
+            dialogRef.afterClosed().subscribe(() => {
+            });
+        }, error => {
+            console.log(error);
+            const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+            this.notificationService.openSnackBar(resMessage);
+        });
     }
 }
 

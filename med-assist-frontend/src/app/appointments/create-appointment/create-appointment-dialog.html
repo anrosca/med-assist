@@ -96,7 +96,7 @@
 
     <div *ngIf="data.appointment.existingPatient">
         <div class="row">
-            <mat-form-field class="full-width col-sm" appearance="fill" #patientSingleSelect>
+            <mat-form-field class="full-width col-10" appearance="fill" #patientSingleSelect>
                 <mat-label>Patient</mat-label>
                 <mat-select [formControl]="patientCtrl" [(ngModel)]="data.appointment.patientId">
                     <mat-option>
@@ -108,7 +108,12 @@
                         {{patient.firstName + ' ' + patient.lastName}}
                     </mat-option>
                 </mat-select>
+
             </mat-form-field>
+            <ng-container class="full-width col-2">
+                <button mat-button label="View patient"
+                        (click)="viewPatient(data.appointment.patientId)" [hidden]="!data.appointment.patientId"><i class="material-icons">pageview</i></button>
+            </ng-container>
         </div>
     </div>
 
