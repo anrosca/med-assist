@@ -135,7 +135,7 @@ export class DentalChartComponent implements OnInit {
                     description: result.treatment.description,
                     patientId: this.patient.id,
                     price: result.treatment.price,
-                    teethIds: [this.currentTooth.id]
+                    treatedTeeth: [{'toothId': this.currentTooth.id, 'isExtracted': this.currentTooth.extracted}]
                 }).subscribe(() => {
                     this.viewTooth(this.currentTooth);
                 }, error => {

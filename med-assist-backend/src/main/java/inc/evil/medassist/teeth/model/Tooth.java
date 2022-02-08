@@ -3,14 +3,8 @@ package inc.evil.medassist.teeth.model;
 import inc.evil.medassist.common.entity.AbstractEntity;
 import inc.evil.medassist.patient.model.Patient;
 import inc.evil.medassist.treatment.model.Treatment;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

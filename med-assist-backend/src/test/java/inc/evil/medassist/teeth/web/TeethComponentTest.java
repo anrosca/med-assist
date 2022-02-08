@@ -2,18 +2,12 @@ package inc.evil.medassist.teeth.web;
 
 import inc.evil.medassist.common.AbstractWebIntegrationTest;
 import inc.evil.medassist.common.component.ComponentTest;
-import inc.evil.medassist.doctor.model.Specialty;
-import inc.evil.medassist.doctor.web.DoctorResponse;
-import inc.evil.medassist.patient.web.PatientResponse;
-import inc.evil.medassist.treatment.web.TreatmentResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

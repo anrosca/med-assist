@@ -29,7 +29,7 @@ export class TreatmentService {
     }
 
     createTreatment(treatment: any) {
-        return this.http.post(this.treatmentUrl, treatment)
+        return this.http.post(this.treatmentUrl, treatment);
     }
 
 }

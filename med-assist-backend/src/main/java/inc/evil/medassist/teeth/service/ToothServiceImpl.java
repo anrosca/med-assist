@@ -34,4 +34,16 @@ public class ToothServiceImpl implements ToothService {
     public Tooth findById(final String id) {
         return toothRepository.findById(id).orElseThrow(() -> new NotFoundException(Tooth.class, "id", id));
     }
+
+    @Override
+    @Transactional
+    public void markAsExtracted(List<String> teethIds) {
+        toothRepository.markAsExtracted(teethIds);
+    }
+
+    @Override
+    @Transactional
+    public void markAsNotExtracted(List<String> teethIds) {
+        toothRepository.markAsNotExtracted(teethIds);
+    }
 }

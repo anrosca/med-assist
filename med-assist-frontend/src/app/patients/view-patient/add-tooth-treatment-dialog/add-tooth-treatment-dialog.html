@@ -41,7 +41,10 @@
         </mat-form-field>
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Tooth is extracted</mat-label>
-            <input matInput readonly [value]="data.tooth.extracted"/>
+            <mat-select [(ngModel)]="data.tooth.extracted">
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Price</mat-label>
