@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+
+hooks:
+  BeforeInstall:
+    - location: ./before-install.sh
+  AfterInstall:
+    - location: ./after-install.sh
+      timeout: 180
+  ApplicationStart:
+    - location: ./start.sh
+      timeout: 3600
+  ValidateService:
+    - location: ./check-health.sh
+      timeout: 3600

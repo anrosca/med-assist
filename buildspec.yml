@@ -1,0 +1,35 @@
+version: 0.2
+files:
+     - source: /
+       destination: /home/ubuntu
+phases:
+  install:
+    commands:
+      - echo installing Maven...
+      - apt-get update -y
+      - apt-get install -y maven
+      - echo installing JDK 17...
+      - apt-get install -y openjdk-17-jdk-headless
+      - echo $JAVA_HOME
+      - java -version
+      - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+      - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+      - chmod +x $HOME/.nvm/nvm.sh
+      - $HOME/.nvm/nvm.sh install v16.13.1
+      - npm install -g @angular/cli@13.1.1
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn verify -f ./med-assist-backend/pom.xml  -DskipTests
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Building frontend
+      - cd ./med-assist-frontend/ && npm install --silent && ng build --configuration=production && cd ..
+      - cd ./med-assist-frontend/dist/ && tar -cf fe.tar med-assist-client && cd ../../
+      - mv ./med-assist-backend/target/med-assist-backend-0.0.1-SNAPSHOT.jar ./med-assist-backend/target/med-assist.jar
+      - tar -czf med-assist.tar.gz -C ./med-assist-backend/target/ med-assist.jar -C ../../med-assist-frontend/dist/ fe.tar -C ../../ appspec.yml -C ./med-assist-backend/infrastructure/deployment before-install.sh after-install.sh start.sh check-health.sh
+artifacts:
+  files:
+     - ./med-assist.tar.gz
+  discard-paths: yes
