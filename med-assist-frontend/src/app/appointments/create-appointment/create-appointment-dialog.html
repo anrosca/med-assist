@@ -1,21 +1,26 @@
+<form [formGroup]="form">
 <h1 mat-dialog-title>Create appointment</h1>
 <div style="margin-top: 10px; margin-bottom: 10px;">
     <div class="row">
         <mat-form-field class="full-width col-10" appearance="fill">
             <mat-label>Title</mat-label>
-            <input matInput [(ngModel)]="data.appointment.title"/>
+            <input matInput formControlName="title" />
+            <mat-error *ngIf="form.controls['title'].hasError('required')">
+                Title is required
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width col-2" appearance="fill">
             <mat-label>Color</mat-label>
-            <input matInput type="color" [(ngModel)]="data.appointment.color.primary"/>
+            <input matInput type="color" formControlName="color" />
         </mat-form-field>
     </div>
 
     <mat-form-field class="full-width" appearance="fill">
         <mat-label>Details</mat-label>
-        <textarea matInput matTextareaAutosize
-                  [(ngModel)]="data.appointment.details"
-        ></textarea>
+        <textarea matInput matTextareaAutosize formControlName="details"></textarea>
+        <mat-error *ngIf="form.controls['details'].hasError('required')">
+            Details is required
+        </mat-error>
     </mat-form-field>
 
 <!--    <div *ngIf="data.appointment.existingPatient">-->
@@ -38,9 +43,9 @@
 
     <mat-form-field class="full-width" appearance="fill" #doctorSingleSelect>
         <mat-label>Doctor</mat-label>
-        <mat-select [formControl]="doctorCtrl" [(ngModel)]="data.appointment.doctorId" >
+        <mat-select  formControlName="doctor" ngDefaultControl>
                                 <mat-option>
-                                    <ngx-mat-select-search [formControl]="doctorFilterCtrl"
+                                    <ngx-mat-select-search [formControl]="doctorFilterCtrl" ngDefaultControl
                                                            [placeholderLabel]="'Search'"
                                                            [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search>
                                 </mat-option>
@@ -48,6 +53,9 @@
                 {{doctor.firstName + ' ' + doctor.lastName}}
             </mat-option>
         </mat-select>
+        <mat-error *ngIf="form.controls['doctor'].hasError('required')">
+            Doctor is required
+        </mat-error>
     </mat-form-field>
 
     <div class="row">
@@ -56,7 +64,7 @@
             <input
                     matInput
                     mwlFlatpickr
-                    [(ngModel)]="data.appointment.start"
+                    formControlName="startDate"
                     [altInput]="true"
                     [convertModelValue]="true"
                     [enableTime]="true"
@@ -65,6 +73,9 @@
                     altFormat="F j, Y H:i"
                     placeholder="Not set"
             />
+            <mat-error *ngIf="form.controls['startDate'].hasError('required')">
+                Start date is required
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width col-sm" appearance="fill">
@@ -72,7 +83,7 @@
             <input
                     matInput
                     mwlFlatpickr
-                    [(ngModel)]="data.appointment.end"
+                    formControlName="endDate"
                     [altInput]="true"
                     [convertModelValue]="true"
                     [enableTime]="true"
@@ -82,11 +93,14 @@
                     altFormat="F j, Y H:i"
                     placeholder="Not set"
             />
+            <mat-error *ngIf="form.controls['endDate'].hasError('required')">
+                End date is required
+            </mat-error>
         </mat-form-field>
     </div>
 
     <section class="example-section">
-        <mat-radio-group [(ngModel)]="data.appointment.existingPatient">
+        <mat-radio-group formControlName="existingPatient" (change)="onPatientTypeChange()">
             <mat-radio-button [value]="true" style="margin-right: 5px">Existing Patient
             </mat-radio-button>
             <mat-radio-button [value]="false">New Patient
@@ -98,7 +112,7 @@
         <div class="row">
             <mat-form-field class="full-width col-10" appearance="fill" #patientSingleSelect>
                 <mat-label>Patient</mat-label>
-                <mat-select [formControl]="patientCtrl" [(ngModel)]="data.appointment.patientId">
+                <mat-select formControlName="patient" ngDefaultControl>
                     <mat-option>
                         <ngx-mat-select-search [formControl]="patientFilterCtrl"
                                                [placeholderLabel]="'Search'"
@@ -108,7 +122,9 @@
                         {{patient.firstName + ' ' + patient.lastName}}
                     </mat-option>
                 </mat-select>
-
+                <mat-error *ngIf="form.controls['patient'].hasError('required')">
+                    Patient is required
+                </mat-error>
             </mat-form-field>
             <ng-container class="full-width col-2">
                 <button mat-button label="View patient"
@@ -121,26 +137,35 @@
         <div class="row">
             <mat-form-field class="full-width col-sm" appearance="fill">
                 <mat-label>Patient's first name</mat-label>
-                <input matInput [(ngModel)]="data.appointment.patientFirstName"/>
+                <input matInput formControlName="patientFirstName" />
+                <mat-error *ngIf="form.controls['patientFirstName'].hasError('required')">
+                    First name is required
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width col-sm" appearance="fill">
                 <mat-label>Patient's last name</mat-label>
-                <input matInput [(ngModel)]="data.appointment.patientLastName"/>
+                <input matInput formControlName="patientLastName"/>
+                <mat-error *ngIf="form.controls['patientLastName'].hasError('required')">
+                    Last name is required
+                </mat-error>
             </mat-form-field>
         </div>
 
         <div class="row">
             <mat-form-field class="full-width col-sm" appearance="fill">
                 <mat-label>Patient's phone number</mat-label>
-                <input matInput [(ngModel)]="data.appointment.patientPhoneNumber"/>
+                <input matInput  formControlName="patientPhoneNumber"/>
+                <mat-error *ngIf="form.controls['patientPhoneNumber'].hasError('required')">
+                    Phone number is required
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width col-sm" appearance="fill">
                 <mat-label>Patient's birth date</mat-label>
                 <input
                         matInput
                         mwlFlatpickr
-                        [(ngModel)]="data.appointment.patientBirthDate"
+                        formControlName="patientBirthDate"
                         [altInput]="true"
                         [convertModelValue]="true"
                         [enableTime]="false"
@@ -148,18 +173,25 @@
                         altFormat="F j, Y"
                         placeholder="Not set"
                 />
+                <mat-error *ngIf="form.controls['patientBirthDate'].hasError('required')">
+                    Birthdate is required
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="row">
             <mat-form-field class="full-width col-sm" appearance="fill">
                 <mat-label>Source</mat-label>
-                <input matInput [(ngModel)]="data.appointment.patientSource"/>
+                <input matInput formControlName="patientSource" />
+                <mat-error *ngIf="form.controls['patientSource'].hasError('required')">
+                    Birthdate is required
+                </mat-error>
             </mat-form-field>
         </div>
     </div>
 
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">Close</button>
-        <button mat-button (click)="onSubmit()">Submit</button>
+        <button mat-button (click)="onSubmit()" [disabled]="form.invalid">Submit</button>
     </div>
 </div>
+</form>

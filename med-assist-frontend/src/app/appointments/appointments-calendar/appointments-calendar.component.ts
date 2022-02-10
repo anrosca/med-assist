@@ -128,7 +128,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
         };
     }
 
-    private static toUtcDate(dateString) {
+    private static toLocalDate(dateString) {
         const now = new Date();
         const millisecondsPerMinute = 60000;
         return new Date(new Date(dateString).getTime() - now.getTimezoneOffset() * millisecondsPerMinute);
@@ -142,8 +142,8 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
                     appointments.forEach(appointment => {
                         const calendarEvent = {
                             title: appointment.operation,
-                            start: AppointmentsCalendarComponent.toUtcDate(appointment.startDate),
-                            end: AppointmentsCalendarComponent.toUtcDate(appointment.endDate),
+                            start: AppointmentsCalendarComponent.toLocalDate(appointment.startDate),
+                            end: AppointmentsCalendarComponent.toLocalDate(appointment.endDate),
                             color: appointment.color,
                             meta: {
                                 id: appointment.id,
@@ -190,7 +190,8 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
             }
             this.viewDate = date;
         }
-        this.setAppointmentDates(date);
+        const now = new Date();
+        this.setAppointmentDates(new Date(date.setHours(now.getHours(), now.getMinutes())));
         this.openCreateAppointmentDialog();
     }
 
