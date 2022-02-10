@@ -11,6 +11,7 @@ import {FileRecordService} from '../../core/services/file-record.service';
 import {PatientService} from '../../core/services/patient.service';
 import {Subject} from 'rxjs';
 import {DentalChartComponent} from './dental-chart/dental-chart.component';
+import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-view-patient',
@@ -36,6 +37,8 @@ export class ViewPatientDialog implements OnInit {
     files: File[] = [];
     fileRecords: FileRecord[] = [];
     isEditable = false;
+    form: FormGroup;
+    patientRequiredFields = ['firstName', 'lastName', 'phoneNumber', 'birthDate', 'source'];
 
     onUpload(event) {
         event.addedFiles.forEach(f => {
@@ -83,6 +86,7 @@ export class ViewPatientDialog implements OnInit {
 
     ngOnInit(): void {
         this.initFiles();
+        this.setUpValidationRules();
 
         this.treatmentService.getTreatmentsByPatientId(this.data.patient.id)
             .subscribe(treatments => {
@@ -158,10 +162,40 @@ export class ViewPatientDialog implements OnInit {
             this.notificationService.openSnackBar(resMessage);
         });
         this.isEditable = false;
+        this.clearValidators();
+    }
+
+    private clearValidators() {
+        this.patientRequiredFields.forEach(fieldName => this.form.get(fieldName).clearValidators());
     }
 
     onEdit() {
         this.isEditable = true;
+        this.setUpValidatorForRequiredFields();
+    }
+
+    private setUpValidatorForRequiredFields() {
+        this.patientRequiredFields.forEach(fieldName => this.form.get(fieldName).setValidators(Validators.required));
+    }
+
+    private setUpValidationRules() {
+        this.form = new FormGroup({
+            firstName: new FormControl(this.data.patient.firstName),
+            lastName: new FormControl(this.data.patient.lastName),
+            phoneNumber: new FormControl(this.data.patient.phoneNumber),
+            birthDate: new FormControl(this.data.patient.birthDate),
+            source: new FormControl(this.data.patient.source),
+        });
+        this.form.get('firstName').valueChanges
+            .subscribe(val => { this.data.patient.firstName = val; });
+        this.form.get('lastName').valueChanges
+            .subscribe(val => { this.data.patient.lastName = val; });
+        this.form.get('phoneNumber').valueChanges
+            .subscribe(val => { this.data.patient.phoneNumber = val; });
+        this.form.get('birthDate').valueChanges
+            .subscribe(val => { this.data.patient.birthDate = val; });
+        this.form.get('source').valueChanges
+            .subscribe(val => { this.data.patient.source = val; });
     }
 }
 
