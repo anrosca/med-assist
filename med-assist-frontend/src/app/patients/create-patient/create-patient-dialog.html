@@ -1,47 +1,64 @@
+<form [formGroup]="form">
 <h1 mat-dialog-title>Create patient</h1>
 <div style="margin-top: 10px; margin-bottom: 10px;">
     <div class="row">
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Patient's first name</mat-label>
-            <input matInput [(ngModel)]="data.patient.firstName"/>
+            <input matInput formControlName="firstName" />
+            <mat-error *ngIf="form.controls['firstName'].hasError('required')">
+                First name is required
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Patient's last name</mat-label>
-            <input matInput [(ngModel)]="data.patient.lastName"/>
+            <input matInput formControlName="lastName" />
+            <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+                Last name is required
+            </mat-error>
         </mat-form-field>
     </div>
 
     <div class="row">
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Patient's phone number</mat-label>
-            <input matInput [(ngModel)]="data.patient.phoneNumber"/>
+            <input matInput formControlName="phoneNumber" />
+            <mat-error *ngIf="form.controls['phoneNumber'].hasError('required')">
+                Phone number is required
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Patient's birth date</mat-label>
             <input
                     matInput
                     mwlFlatpickr
-                    [(ngModel)]="data.patient.birthDate"
                     [altInput]="true"
                     [convertModelValue]="true"
                     [enableTime]="false"
                     dateFormat="Y-m-d"
                     altFormat="F j, Y"
                     placeholder="Not set"
+                    formControlName="birthDate"
             />
+            <mat-error *ngIf="form.controls['birthDate'].hasError('required')">
+                Birthdate is required
+            </mat-error>
         </mat-form-field>
     </div>
     <div class="row">
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Source</mat-label>
-            <input matInput [(ngModel)]="data.patient.source"/>
+            <input matInput formControlName="source" />
+            <mat-error *ngIf="form.controls['source'].hasError('required')">
+                Source is required
+            </mat-error>
         </mat-form-field>
     </div>
 
 
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">Close</button>
-        <button mat-button (click)="onSubmit()">Submit</button>
+        <button mat-button (click)="onSubmit()" [disabled]="form.invalid">Submit</button>
     </div>
 </div>
+</form>
