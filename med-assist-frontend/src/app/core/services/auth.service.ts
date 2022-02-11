@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 
 import {User} from '../model/user';
-import {of} from 'rxjs';
+import {of, Subject} from 'rxjs';
 import {delay, map} from 'rxjs/operators';
 import {UserService} from './user.service';
 import { environment } from '../../../environments/environment';
@@ -12,11 +12,12 @@ import { environment } from '../../../environments/environment';
     providedIn: 'root'
 })
 export class AuthenticationService {
-
+    emailChangeSubject: Subject<string>;
     private authUrl = (environment.backendBaseUrl + '/api/v1/auth');
 
     constructor(private http: HttpClient,
                 @Inject('LOCALSTORAGE') private localStorage: Storage, private userService: UserService) {
+        this.emailChangeSubject = new Subject<string>();
     }
 
     login(username: string, password: string) {
@@ -61,5 +62,25 @@ export class AuthenticationService {
 
     passwordReset(username: string, token: string, password: string, confirmPassword: string): any {
         return of(true).pipe(delay(1000));
+    }
+
+    changeEmail(userId, newEmail: string) {
+        return this.userService.changeEmail(userId, newEmail)
+            .pipe(map(user => {
+                this.updateLocalStorageUserEmail(newEmail);
+                return user;
+            }))
+            .pipe(map(user => {
+                this.emailChangeSubject.next(user.email);
+                return user;
+            }))
+            .pipe(delay(1000));
+    }
+
+    private updateLocalStorageUserEmail(newEmail: string) {
+        const localUser = JSON.parse(this.localStorage.getItem('currentUser'));
+        localUser.email = newEmail;
+        this.localStorage.removeItem('currentUser');
+        this.localStorage.setItem('currentUser', JSON.stringify(localUser));
     }
 }
