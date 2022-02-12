@@ -24,6 +24,9 @@ export class ProfileDetailsComponent implements OnInit {
         this.email = this.authService.getCurrentUser().email;
         this.roles = this.authService.getCurrentUser().roles;
         this.token = this.authService.getCurrentUser().token;
+        this.authService.emailChangeSubject.subscribe(newEmail => {
+            this.email = newEmail;
+        });
     }
 
     openDialog() {

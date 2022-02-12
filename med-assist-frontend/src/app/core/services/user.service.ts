@@ -24,5 +24,10 @@ export class UserService {
         return this.http.put(this.usersUrl + '/' + userId, {'password': newPwd})
             .pipe(map(response => (response as unknown as User)));
     }
+
+    changeEmail(userId, newEmail: string) {
+        return this.http.put(this.usersUrl + '/' + userId, {'email': newEmail})
+            .pipe(map(response => (response as unknown as User)));
+    }
 }
 

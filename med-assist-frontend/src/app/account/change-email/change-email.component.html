@@ -1,0 +1,25 @@
+<form [formGroup]="form">
+  <p>Use the form below to change your email.</p>
+
+  <div fxLayout="row">
+
+    <div fxFlex="40%" fxFlex.md="60%" fxFlex.sm="50%" fxFlex.xs="100%">
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Current email" formControlName="currentEmail" autocomplete="current-email" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="New Email" formControlName="newEmail" [email]="true" autocomplete="new-email">
+        <mat-error *ngIf="form.controls['newEmail'].hasError('required')">
+          Please enter a valid email
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" [disabled]="form.invalid || disableSubmit" (click)="changeEmail()">Save</button>
+
+    </div>
+
+  </div>
+
+</form>
