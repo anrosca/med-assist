@@ -25,7 +25,7 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Building frontend
-      - cd ./med-assist-frontend/ && npm install --silent && ng build --aot --output-hashing=all --configuration=production && cd ..
+      - cd ./med-assist-frontend/ && npm install --silent && ng build --aot --outputHashing=all --configuration=production && cd ..
       - cd ./med-assist-frontend/dist/ && tar -cf fe.tar med-assist-client && cd ../../
       - mv ./med-assist-backend/target/med-assist-backend-0.0.1-SNAPSHOT.jar ./med-assist-backend/target/med-assist.jar
 artifacts:
