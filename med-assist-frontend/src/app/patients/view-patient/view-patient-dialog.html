@@ -16,39 +16,56 @@
                     <mat-tab label="Details">
                         <mat-card style="border: 2px solid rgba(55,55,55, 0.5); margin-top: 10px;">
                             <mat-card-content>
+                                <form [formGroup]="form">
                                 <div class="row">
                                     <mat-form-field class="full-width col-sm" appearance="fill">
                                         <mat-label>Patient's first name</mat-label>
                                         <input matInput [readonly]="!isEditable"
-                                               [(ngModel)]="data.patient.firstName"/>
+                                               formControlName="firstName"/>
+                                        <mat-error *ngIf="form.controls['firstName'].hasError('required')">
+                                            First name is required
+                                        </mat-error>
                                     </mat-form-field>
                                     <mat-form-field class="full-width col-sm" appearance="fill">
                                         <mat-label>Patient's last name</mat-label>
                                         <input matInput [readonly]="!isEditable"
-                                               [(ngModel)]="data.patient.lastName"/>
+                                              formControlName="lastName"/>
+                                        <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+                                            Last name is required
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="row">
                                     <mat-form-field class="full-width col-sm" appearance="fill">
                                         <mat-label>Patient's phone number</mat-label>
-                                        <input matInput [readonly]="!isEditable" [(ngModel)]="data.patient.phoneNumber"/>
+                                        <input matInput [readonly]="!isEditable" formControlName="phoneNumber"/>
+                                        <mat-error *ngIf="form.controls['phoneNumber'].hasError('required')">
+                                            Phone number is required
+                                        </mat-error>
                                     </mat-form-field>
                                     <mat-form-field class="full-width col-sm" appearance="fill">
                                         <mat-label>Patient's birth date</mat-label>
-                                        <input matInput [readonly]="!isEditable" [(ngModel)]="data.patient.birthDate"/>
+                                        <input matInput [readonly]="!isEditable" formControlName="birthDate"/>
+                                        <mat-error *ngIf="form.controls['birthDate'].hasError('required')">
+                                            Birthdate is required
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="row">
                                     <mat-form-field class="full-width col-sm" appearance="fill">
                                         <mat-label>Source</mat-label>
                                         <input matInput [readonly]="!isEditable"
-                                               [(ngModel)]="data.patient.source"/>
+                                               formControlName="source"/>
+                                        <mat-error *ngIf="form.controls['source'].hasError('required')">
+                                            Source is required
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div mat-dialog-actions>
                                     <button mat-button (click)="onEdit()">Edit</button>
-                                    <button mat-button [hidden]="!isEditable" (click)="onSave()">Save</button>
+                                    <button mat-button [hidden]="!isEditable" (click)="onSave()" [disabled]="form.invalid">Save</button>
                                 </div>
+                                </form>
                             </mat-card-content>
                         </mat-card>
 

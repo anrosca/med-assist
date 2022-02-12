@@ -8,10 +8,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DoctorService} from '../../../core/services/doctor.service';
 import {PatientService} from '../../../core/services/patient.service';
 import {Doctor} from '../../../core/model/doctor';
-import {ReplaySubject, Subject} from "rxjs";
-import {FormControl} from "@angular/forms";
-import {MatSelect} from "@angular/material/select";
-import {take, takeUntil} from "rxjs/operators";
+import {ReplaySubject, Subject} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {MatSelect} from '@angular/material/select';
+import {take, takeUntil} from 'rxjs/operators';
 
 @Component({
     selector: 'app-add-treatment-dialog',
