@@ -14,10 +14,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import {CreateAppointmentDialog} from './create-appointment/create-appointment-dialog';
 import {ViewAppointmentDialog} from './view-appointment/view-appointment-dialog';
 import {AppointmentsListComponent} from './appointments-list/appointments-list.component';
-import {MatSortModule} from "@angular/material/sort";
+import {MatSortModule} from '@angular/material/sort';
 import { ContextMenuModule } from 'ngx-contextmenu';
-import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
-
+import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 @NgModule({
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

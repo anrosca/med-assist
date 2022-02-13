@@ -53,9 +53,18 @@ export class AppointmentService {
             'existingPatient': appointment.existingPatient,
             'startDate' : appointment.start,
             'endDate' : appointment.end,
-            'operation': appointment.title,
+            'operation': appointment.operation,
             'details': appointment.details
         });
     }
 
+    getAppointmentById(appointmentId) {
+        return this.http.get(this.appointmentsUrl + '/' + appointmentId)
+            .pipe(map(response => (response as unknown as Appointment)));
+    }
+
+    updateAppointment(appointmentToUpdate) {
+        return this.http.put(this.appointmentsUrl + '/' + appointmentToUpdate.id, appointmentToUpdate)
+            .pipe(map(response => (response as unknown as Appointment)));
+    }
 }

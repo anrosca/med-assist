@@ -27,6 +27,7 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
     protected _onDestroy = new Subject<void>();
     @ViewChild('doctorSingleSelect', {static: true}) doctorSingleSelect: MatSelect;
     form: FormGroup;
+    dialogTitle;
 
     constructor(
         public dialogRef: MatDialogRef<CreateAppointmentDialog>,
@@ -36,6 +37,7 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
         public dialog: MatDialog,
         private notificationService: NotificationService
     ) {
+        this.dialogTitle = data.isCreate ? 'Create appointment' : 'Update appointment';
     }
 
     onNoClick(): void {
@@ -146,7 +148,7 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
 
     private setUpValidationRules() {
         this.form = new FormGroup({
-            title: new FormControl(this.data.appointment.title, Validators.required),
+            title: new FormControl(this.data.appointment.operation, Validators.required),
             color: new FormControl(this.data.appointment.color.primary),
             details: new FormControl(this.data.appointment.details, Validators.required),
             doctor: new FormControl(this.data.appointment.doctorId, Validators.required),
@@ -161,7 +163,7 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
             patientSource: new FormControl(this.data.appointment.patientSource)
         });
         this.form.get('title').valueChanges
-            .subscribe(val => { this.data.appointment.title = val; });
+            .subscribe(val => { this.data.appointment.operation = val; });
         this.form.get('color').valueChanges
             .subscribe(val => { this.data.appointment.color.primary = val; });
         this.form.get('details').valueChanges
@@ -189,20 +191,20 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
     }
 
     onPatientTypeChange() {
+        const newPatientRequiredFields = ['patientFirstName', 'patientLastName', 'patientPhoneNumber',
+            'patientBirthDate', 'patientSource'];
         if (!this.data.appointment.existingPatient) {
-            this.form.get('patientFirstName').setValidators(Validators.required);
-            this.form.get('patientLastName').setValidators(Validators.required);
-            this.form.get('patientPhoneNumber').setValidators(Validators.required);
-            this.form.get('patientBirthDate').setValidators(Validators.required);
-            this.form.get('patientSource').setValidators(Validators.required);
+            newPatientRequiredFields.forEach(fieldName => {
+                this.form.get(fieldName).setValidators(Validators.required);
+                this.form.get(fieldName).updateValueAndValidity();
+            });
             this.form.get('patient').clearValidators();
             this.form.get('patient').updateValueAndValidity();
         } else {
-            this.form.get('patientFirstName').clearValidators();
-            this.form.get('patientLastName').clearValidators();
-            this.form.get('patientPhoneNumber').clearValidators();
-            this.form.get('patientBirthDate').clearValidators();
-            this.form.get('patientSource').clearValidators();
+            newPatientRequiredFields.forEach(fieldName => {
+                this.form.get(fieldName).clearValidators();
+                this.form.get(fieldName).updateValueAndValidity();
+            });
             this.form.get('patient').setValidators(Validators.required);
             this.form.get('patient').updateValueAndValidity();
         }
@@ -212,4 +214,5 @@ export class CreateAppointmentDialog implements AfterViewInit, OnInit {
 export interface CreateAppointmentDialogData {
     status: string;
     appointment: any;
+    isCreate: boolean;
 }

@@ -38,9 +38,7 @@ export class ViewAppointmentDialog implements AfterViewInit {
     }
 
     private toLocalDate(dateString) {
-        const now = new Date();
-        const millisecondsPerMinute = 60000;
-        return new Date(new Date(dateString).getTime() - now.getTimezoneOffset() * millisecondsPerMinute).toLocaleString('en-GB');
+        return new Date(dateString).toLocaleString('en-GB');
     }
 }
 

@@ -107,7 +107,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
 
     private static makeEmptyAppointment() {
         return {
-            title: '',
+            operation: '',
             details: '',
             doctorId: '',
             patientId: '',
@@ -219,8 +219,10 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
     }
 
     handleEvent(action: string, event: CalendarEvent): void {
+        console.log('edit', event);
+        this.appointmentService.getAppointmentById(event.meta.id)
+            .subscribe(appointment => this.openUpdateAppointmentDialog(appointment));
         this.modalData = {event, action};
-        this.modal.open(this.modalContent, {size: 'lg'});
     }
 
     addEvent(): void {
@@ -262,7 +264,7 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
         const dialogRef = this.dialog.open(CreateAppointmentDialog, {
             width: 'auto',
             disableClose: true,
-            data: {appointment: this.appointmentToCreate}
+            data: {appointment: this.appointmentToCreate, isCreate: true}
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -280,6 +282,62 @@ export class AppointmentsCalendarComponent implements OnInit, AfterViewInit {
         });
     }
 
+    openUpdateAppointmentDialog(appointmentToUpdate): void {
+        const dialogRef = this.dialog.open(CreateAppointmentDialog, {
+            width: 'auto',
+            disableClose: true,
+            data: {appointment: {
+                    id: appointmentToUpdate.id,
+                    operation: appointmentToUpdate.operation,
+                    start: AppointmentsCalendarComponent.toLocalDate(appointmentToUpdate.startDate),
+                    end: AppointmentsCalendarComponent.toLocalDate(appointmentToUpdate.endDate),
+                    title: appointmentToUpdate.operation,
+                    doctorId: appointmentToUpdate.doctor.id,
+                    patientId: appointmentToUpdate.patient.id,
+                    existingPatient: true,
+                    patientRequest: {
+                        firstName: '',
+                        lastName: '',
+                        phoneNumber: '',
+                        birthDate: '',
+                        source: ''
+                    },
+                    details: appointmentToUpdate.details,
+                    color: appointmentToUpdate.color
+                }, isCreate: false}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result.status === 'Submitted') {
+                const newAppointment = {
+                    id: appointmentToUpdate.id,
+                    startDate: result.appointment.start,
+                    endDate: result.appointment.end,
+                    operation: result.appointment.operation,
+                    doctorId: result.appointment.doctorId,
+                    patientId: result.appointment.patientId,
+                    existingPatient: result.appointment.existingPatient,
+                    patientRequest: {
+                        firstName: result.appointment.patientFirstName,
+                        lastName: result.appointment.patientLastName,
+                        phoneNumber: result.appointment.patientPhoneNumber,
+                        birthDate: result.appointment.patientBirthDate,
+                        source: result.appointment.patientSource
+                    },
+                    details: result.appointment.details,
+                    color: result.appointment.color
+                };
+                this.appointmentService.updateAppointment(newAppointment).subscribe(() => {
+                    this.ngAfterViewInit();
+                    this.refresh.next();
+                }, error => {
+                    console.log(error);
+                    const resMessage = error.error.messages || error.message || error.error.message || error.toString();
+                    this.notificationService.openSnackBar(resMessage);
+                });
+            }
+        });
+    }
 
     deleteAppointment(eventToDelete: CalendarEvent) {
         const patient = eventToDelete.meta.patient;
