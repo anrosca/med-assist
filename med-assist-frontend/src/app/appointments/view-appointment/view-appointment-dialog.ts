@@ -27,8 +27,6 @@ export class ViewAppointmentDialog implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.data.appointment.start = this.toLocalDate(this.data.appointment.start);
-        this.data.appointment.end = this.toLocalDate(this.data.appointment.end);
         this.doctorService.getAllDoctors().subscribe(doctors => {
             this.doctors = doctors;
         });
@@ -37,7 +35,7 @@ export class ViewAppointmentDialog implements AfterViewInit {
         });
     }
 
-    private toLocalDate(dateString) {
+    toLocalDate(dateString) {
         return new Date(dateString).toLocaleString('en-GB');
     }
 }

@@ -34,14 +34,14 @@
     <div class="row">
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Start date</mat-label>
-            <input matInput readonly [value]="data.appointment.start"/>
+            <input matInput readonly [value]="toLocalDate(data.appointment.start)"/>
         </mat-form-field>
     </div>
 
     <div class="row">
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>End date</mat-label>
-            <input matInput readonly [value]="data.appointment.end"/>
+            <input matInput readonly [value]="toLocalDate(data.appointment.end)"/>
         </mat-form-field>
     </div>
 
