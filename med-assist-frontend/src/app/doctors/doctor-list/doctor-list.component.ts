@@ -12,7 +12,7 @@ import {MatSort} from '@angular/material/sort';
     styleUrls: ['./doctor-list.component.css']
 })
 export class DoctorListComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'email', 'authorities', 'mobile', 'specialty', 'enabled'];
+    displayedColumns: string[] = ['firstName', 'lastName', 'username', 'email', 'authorities', 'mobile', 'specialty', 'enabled'];
     dataSource;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;

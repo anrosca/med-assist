@@ -14,7 +14,7 @@ import {MatSort} from '@angular/material/sort';
     styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'firstName', 'lastName', 'username', 'email', 'authorities', 'enabled'];
+    displayedColumns: string[] = ['firstName', 'lastName', 'username', 'email', 'authorities', 'enabled'];
     dataSource;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;

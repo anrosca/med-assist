@@ -7,8 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {PatientService} from '../../core/services/patient.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ViewPatientDialog} from '../view-patient/view-patient-dialog';
-import {CreateAppointmentDialog} from "../../appointments/create-appointment/create-appointment-dialog";
-import {CreatePatientDialog} from "../create-patient/create-patient-dialog";
+import {CreatePatientDialog} from '../create-patient/create-patient-dialog';
 
 @Component({
     selector: 'app-patient-list',
@@ -16,7 +15,7 @@ import {CreatePatientDialog} from "../create-patient/create-patient-dialog";
     styleUrls: ['./patient-list.component.css']
 })
 export class PatientListComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'firstName', 'lastName', 'phoneNumber', 'birthDate', 'source', 'action'];
+    displayedColumns: string[] = ['firstName', 'lastName', 'phoneNumber', 'birthDate', 'source', 'action'];
     dataSource;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;

@@ -13,7 +13,7 @@ import {AppointmentService} from '../../core/services/appointment.service';
     styleUrls: ['./appointments-list.component.css']
 })
 export class AppointmentsListComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'startDate', 'endDate', 'operation', 'doctor', 'patient', 'details'];
+    displayedColumns: string[] = ['startDate', 'endDate', 'operation', 'doctor', 'patient', 'details'];
     dataSource;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;

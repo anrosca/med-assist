@@ -12,53 +12,48 @@
 
                 <table mat-table [dataSource]="dataSource" matSort>
 
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
-                        <td mat-cell *matCellDef="let doctor"> {{doctor.id}} </td>
-                    </ng-container>
-
                     <ng-container matColumnDef="firstName">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> first name </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> First name </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.firstName}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="lastName">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> last name </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last name </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.lastName}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="username">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> username </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.username}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="email">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> email </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.email}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="gender">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> gender </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.gender}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="authorities">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> authorities </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Authorities </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.authorities}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="mobile">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> mobile </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.telephoneNumber}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="specialty">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> specialty </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Specialty </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.specialty}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="enabled">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> enabled </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Enabled </th>
                         <td mat-cell *matCellDef="let doctor"> {{doctor.enabled ? "Yes" : "No"}} </td>
                     </ng-container>
 
