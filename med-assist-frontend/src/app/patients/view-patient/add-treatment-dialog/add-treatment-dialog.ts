@@ -9,7 +9,7 @@ import {DoctorService} from '../../../core/services/doctor.service';
 import {PatientService} from '../../../core/services/patient.service';
 import {Doctor} from '../../../core/model/doctor';
 import {ReplaySubject, Subject} from 'rxjs';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSelect} from '@angular/material/select';
 import {take, takeUntil} from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ import {take, takeUntil} from 'rxjs/operators';
     styleUrls: ['./add-treatment-dialog.css']
 })
 export class AddTreatmentDialog implements OnInit, AfterViewInit {
-
+    form: FormGroup;
     doctors: Doctor[] = [];
     patients: Patient[] = [];
 
@@ -41,7 +41,6 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
                 @Inject(MAT_DIALOG_DATA) public data: CreateTreatmentData,) {
     }
 
-
     onNoClick(): void {
         this.data.status = 'Closed';
         this.dialogRef.close(this.data);
@@ -62,6 +61,7 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        this.setUpValidationRules();
         this.doctorService.getAllDoctors().subscribe(doctors => {
             this.doctors = doctors;
             this.filteredDoctors.next(this.doctors.slice());
@@ -158,6 +158,23 @@ export class AddTreatmentDialog implements OnInit, AfterViewInit {
 
     onMarkSelectedTeethAsExtractedChange() {
         this.treatedTeeth.forEach(treatedTooth => treatedTooth.isExtracted = this.markSelectedTeethAsExtracted);
+    }
+
+    private setUpValidationRules() {
+        this.form = new FormGroup({
+            description: new FormControl('', Validators.required),
+            doctor: new FormControl('', Validators.required),
+            price: new FormControl('0.0', Validators.required),
+            markSelectedTeethAsExtracted: new FormControl(this.markSelectedTeethAsExtracted),
+        });
+        this.form.get('description').valueChanges
+            .subscribe(val => { this.data.treatment.description = val; });
+        this.form.get('doctor').valueChanges
+            .subscribe(val => { this.data.treatment.doctorId = val; });
+        this.form.get('price').valueChanges
+            .subscribe(val => { this.data.treatment.price = val; });
+        this.form.get('markSelectedTeethAsExtracted').valueChanges
+            .subscribe(val => { this.markSelectedTeethAsExtracted = val; });
     }
 }
 

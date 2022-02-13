@@ -128,7 +128,7 @@ export class ViewPatientDialog implements OnInit {
         const dialogRef = this.dialog.open(AddTreatmentDialog, {
             width: 'auto',
             disableClose: true,
-            data: {treatment: {}, patient: this.data.patient}
+            data: {treatment: {price: 0.0}, patient: this.data.patient}
         });
 
         dialogRef.afterClosed().subscribe(result => {
