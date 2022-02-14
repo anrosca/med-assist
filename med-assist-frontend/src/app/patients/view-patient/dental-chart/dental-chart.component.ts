@@ -113,7 +113,7 @@ export class DentalChartComponent implements OnInit {
                         LR7: mappedTeeth.filter((tooth) => tooth.code === 'LR7')[0],
                         LR8: mappedTeeth.filter((tooth) => tooth.code === 'LR8')[0]
                     };
-                    this.currentTooth = this.dentalChart.UL1;
+                    this.viewTooth(this.dentalChart.UL1);
                 },
                 error => {
                     const resMessage = error.error.messages || error.message || error.error.message || error.toString();
@@ -125,7 +125,7 @@ export class DentalChartComponent implements OnInit {
         const dialogRef = this.dialog.open(AddToothTreatmentDialog, {
             width: 'auto',
             disableClose: true,
-            data: {treatment: {}, patient: this.patient, tooth: this.currentTooth}
+            data: {treatment: {price: 0.0}, patient: this.patient, tooth: this.currentTooth}
         });
 
         dialogRef.afterClosed().subscribe(result => {

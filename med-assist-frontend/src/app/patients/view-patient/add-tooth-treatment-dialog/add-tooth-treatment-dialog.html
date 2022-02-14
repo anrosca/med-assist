@@ -1,16 +1,18 @@
+<form [formGroup]="form">
 <h1 mat-dialog-title>Create treatment</h1>
 <div style="margin-top: 10px; margin-bottom: 10px;">
 
     <mat-form-field class="full-width" appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput matTextareaAutosize
-                  [(ngModel)]="data.treatment.description"
-        ></textarea>
+        <textarea matInput matTextareaAutosize formControlName="description"></textarea>
+        <mat-error *ngIf="form.controls['description'].hasError('required')">
+            Description is required
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field class="full-width" appearance="fill" #doctorSingleSelect>
         <mat-label>Doctor</mat-label>
-        <mat-select [formControl]="doctorCtrl" [(ngModel)]="data.treatment.doctorId" >
+        <mat-select ngDefaultControl formControlName="doctor">
             <mat-option>
                 <ngx-mat-select-search [formControl]="doctorFilterCtrl"
                                        [placeholderLabel]="'Search'"
@@ -20,6 +22,9 @@
                 {{doctor.firstName + ' ' + doctor.lastName}}
             </mat-option>
         </mat-select>
+        <mat-error *ngIf="form.controls['doctor'].hasError('required')">
+            Doctor is required
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field class="full-width" appearance="fill">
@@ -41,19 +46,26 @@
         </mat-form-field>
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Tooth is extracted</mat-label>
-            <mat-select [(ngModel)]="data.tooth.extracted">
+            <mat-select formControlName="toothExtracted">
                 <mat-option [value]="true">Yes</mat-option>
                 <mat-option [value]="false">No</mat-option>
             </mat-select>
+            <mat-error *ngIf="form.controls['toothExtracted'].hasError('required')">
+                Tooth is required
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width col-sm" appearance="fill">
             <mat-label>Price</mat-label>
-            <input matInput type="number" [(ngModel)]="data.treatment.price"/>
+            <input matInput type="number" formControlName="price"/>
+            <mat-error *ngIf="form.controls['price'].hasError('required')">
+                Price is required
+            </mat-error>
         </mat-form-field>
     </div>
 
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">Close</button>
-        <button mat-button (click)="onSubmit()">Submit</button>
+        <button mat-button (click)="onSubmit()" [disabled]="form.invalid">Submit</button>
     </div>
 </div>
+</form>
