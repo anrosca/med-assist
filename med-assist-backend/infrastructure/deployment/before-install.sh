@@ -1,3 +1,4 @@
 #! /bin/bash
-echo $(pwd)
-ls -l
+
+sudo systemctl stop med-assist
+sudo systemctl stop nginx
