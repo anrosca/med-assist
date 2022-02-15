@@ -26,6 +26,7 @@ export class ViewPatientDialog implements OnInit {
                 private fileRecordService: FileRecordService,
                 private patientService: PatientService,
                 public dialog: MatDialog) {
+        this.editedPatient = Object.assign({}, data.patient);
     }
 
     treatmentsDisplayedColumns: string[] = ['description', 'doctor', 'teeth', 'price', 'createdAt'];
@@ -39,6 +40,7 @@ export class ViewPatientDialog implements OnInit {
     isEditable = false;
     form: FormGroup;
     patientRequiredFields = ['firstName', 'lastName', 'phoneNumber', 'birthDate', 'source'];
+    editedPatient;
 
     onUpload(event) {
         event.addedFiles.forEach(f => {
@@ -153,9 +155,10 @@ export class ViewPatientDialog implements OnInit {
     }
 
     onSave() {
-        this.patientService.updatePatient(this.data.patient).subscribe(() => {
+        this.patientService.updatePatient(this.editedPatient).subscribe(() => {
             this.notificationService.openSnackBar('Patient successfully updated');
             this.ngOnInit();
+            Object.assign(this.data.patient, this.editedPatient);
         }, error => {
             console.log(error);
             const resMessage = error.error.messages || error.message || error.error.message || error.toString();
@@ -180,22 +183,22 @@ export class ViewPatientDialog implements OnInit {
 
     private setUpValidationRules() {
         this.form = new FormGroup({
-            firstName: new FormControl(this.data.patient.firstName),
-            lastName: new FormControl(this.data.patient.lastName),
-            phoneNumber: new FormControl(this.data.patient.phoneNumber),
-            birthDate: new FormControl(this.data.patient.birthDate),
-            source: new FormControl(this.data.patient.source),
+            firstName: new FormControl(this.editedPatient.firstName),
+            lastName: new FormControl(this.editedPatient.lastName),
+            phoneNumber: new FormControl(this.editedPatient.phoneNumber),
+            birthDate: new FormControl(this.editedPatient.birthDate),
+            source: new FormControl(this.editedPatient.source),
         });
         this.form.get('firstName').valueChanges
-            .subscribe(val => { this.data.patient.firstName = val; });
+            .subscribe(val => { this.editedPatient.firstName = val; });
         this.form.get('lastName').valueChanges
-            .subscribe(val => { this.data.patient.lastName = val; });
+            .subscribe(val => { this.editedPatient.lastName = val; });
         this.form.get('phoneNumber').valueChanges
-            .subscribe(val => { this.data.patient.phoneNumber = val; });
+            .subscribe(val => { this.editedPatient.phoneNumber = val; });
         this.form.get('birthDate').valueChanges
-            .subscribe(val => { this.data.patient.birthDate = val; });
+            .subscribe(val => { this.editedPatient.birthDate = val; });
         this.form.get('source').valueChanges
-            .subscribe(val => { this.data.patient.source = val; });
+            .subscribe(val => { this.editedPatient.source = val; });
     }
 }
 
