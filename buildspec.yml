@@ -1,7 +1,5 @@
 version: 0.2
-files:
-     - source: /
-       destination: /home/ubuntu
+
 phases:
   install:
     commands:
