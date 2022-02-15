@@ -17,6 +17,7 @@ phases:
       - chmod +x $HOME/.nvm/nvm.sh
       - $HOME/.nvm/nvm.sh install v16.13.1
       - npm install -g @angular/cli@13.1.1
+      - apt-get install git
   build:
     commands:
       - echo Build started on `date`
