@@ -1,4 +1,5 @@
 --Clean up
+truncate treatment_plans cascade;
 truncate treatment_tooth cascade ;
 truncate teeth cascade;
 truncate treatments cascade ;

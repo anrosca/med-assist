@@ -64,3 +64,7 @@ INSERT INTO teeth (id, created_at, updated_at, extracted, name, patient_id) VALU
 
 INSERT INTO treatments (id, created_at, updated_at, description, price, doctor_id, patient_id) VALUES ('ff01f8ab-2ce9-46db-87be-a00142830a05', '2022-01-02 23:04:30.908247', '2022-01-02 23:04:30.908247', 'Veneers', 2000, '15297b89-045a-4daa-998f-5995fd44da3e', '123e4567-e89b-12d3-a456-426614174000');
 INSERT INTO treatment_tooth (treatment_id, tooth_id) VALUES ('ff01f8ab-2ce9-46db-87be-a00142830a05', 'e29c2861-bdae-4190-a1f3-62a17acee817');
+
+insert into treatment_plans(id, plan_name, patient_id, created_at, updated_at)
+values ('ae3e4567-e89b-e2d3-a4e6-426e14174b0a', 'Install braces', '123e4567-e89b-12d3-a456-426614174000',
+        '2021-11-11 21:10:28.133858', '2021-12-12 22:10:28.933858');
